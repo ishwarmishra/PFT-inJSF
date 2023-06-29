@@ -2,11 +2,12 @@ package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import personalfinancetrackerinweb.model.IncomeEntity;
 import personalfinancetrackerinweb.repository.IncomeRepository;
 
@@ -18,6 +19,7 @@ public class IncomeController implements Serializable {
     private IncomeRepository incomeRepository;
 
     private IncomeEntity income;
+    private List<IncomeEntity> incomeList;
 
     public IncomeRepository getIncomeRepository() {
         return incomeRepository;
@@ -35,32 +37,42 @@ public class IncomeController implements Serializable {
         this.income = income;
     }
 
-    public List<IncomeEntity> getIncomeEntity() {
-        return incomeEntity;
-    }
-
-    public void setIncomeEntity(List<IncomeEntity> incomeEntity) {
-        this.incomeEntity = incomeEntity;
-    }
-
-    List<IncomeEntity> incomeEntity;
-
     public List<IncomeEntity> getIncomeList() {
-        return incomeEntity;
-
+        return incomeList;
     }
 
-    public void setIncomeList(List<IncomeEntity> incomeEntity) {
-        this.incomeEntity = incomeEntity;
+    public void setIncomeList(List<IncomeEntity> incomeList) {
+        this.incomeList = incomeList;
     }
 
     @PostConstruct
     public void init() {
         income = new IncomeEntity();
+        findAll();
     }
 
     public void saveData() {
-        incomeRepository.add(income);
-        income=new IncomeEntity();
+        incomeRepository.create(income);
+        income = new IncomeEntity();
+        findAll();
+    }
+    
+    public void deleteData(int id) {
+        incomeRepository.delete(id);
+        findAll();
+    }
+    
+    public void updateData() {
+        incomeRepository.update(income);
+        income = new IncomeEntity();
+        findAll();
+    }
+    
+    public void findAll() {
+        incomeList = incomeRepository.findAll();
+    }
+    
+    public void findById(int id) {
+        income = incomeRepository.findById(id);
     }
 }

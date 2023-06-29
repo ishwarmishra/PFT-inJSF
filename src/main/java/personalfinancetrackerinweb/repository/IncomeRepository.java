@@ -1,23 +1,12 @@
 package personalfinancetrackerinweb.repository;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
+
 import personalfinancetrackerinweb.model.IncomeEntity;
+import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 @Stateless
-public class IncomeRepository extends GenericAbstractRepository<IncomeEntity> {
-
-    @PersistenceContext(name = "pft")
-    private  EntityManager entityManager;
-
-    
-   
-    @Override
-    protected EntityManager getEntitiManager() {
-        return entityManager;
-    }
+public class IncomeRepository extends  GenericAbstractRepository<IncomeEntity> {
 
     public IncomeRepository() {
         super(IncomeEntity.class);
