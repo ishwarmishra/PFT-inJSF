@@ -5,9 +5,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head >
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>addIncome</title>
+        <title>Add Income</title>
     </h:head>
-    
+
     <h:body>
         <h:form>
             <h:outputLabel for ="txtName" value="Enter the source of the Income:" />
@@ -26,28 +26,8 @@
             <p:calendar id="txtDate" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" />
 
             <br/>
-            <p:commandButton id="cmdInsert" value="Add Income" action="#{incomeController.addIncome}" />
-            <br/>
-        
-        
-        
+            <p:commandButton id="cmdInsert" value="Add Income" action="#{incomeController.saveData()}" />
+            <br/>    
+        </h:form>
     </h:body>
-        
-    
-    
-    
-    
-    
-    
-    
-    
-</html>
-
-
-
-
-
-
-
-
 </html>

@@ -3,23 +3,26 @@ package personalfinancetrackerinweb.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class IncomeEntity extends AbstractEntity implements Serializable {
-    private int id;
+@Entity
+@Table(name = "income_entity")
+public class IncomeEntity extends AbstractEntity implements Serializable,GenericEntityInterface{
     private String name;
     private String category;
     private BigDecimal amount;
     private Date date;
 
     public IncomeEntity(int id, String name,String category, BigDecimal amount, Date date) {
-        this.id = id;
+        this.setId(id);
         this.name = name;
         this.category=category;
         this.amount = amount;
         this.date = date;
     }
-    public int getId() {
-        return id;
+
+    public IncomeEntity() {
     }
 
     

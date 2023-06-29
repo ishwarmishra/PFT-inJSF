@@ -1,3 +1,9 @@
-personalfinancetrackerinweb/model/Income.class
+personalfinancetrackerinweb/repository/generic/GenericRepositoryInterface.class
+personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.class
+personalfinancetrackerinweb/model/AbstractEntity_.class
+personalfinancetrackerinweb/model/IncomeEntity.class
+personalfinancetrackerinweb/model/AbstractEntity.class
+personalfinancetrackerinweb/model/GenericEntityInterface.class
+personalfinancetrackerinweb/model/IncomeEntity_.class
 personalfinancetrackerinweb/controller/IncomeController.class
 personalfinancetrackerinweb/repository/IncomeRepository.class
