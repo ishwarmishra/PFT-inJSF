@@ -10,7 +10,6 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable, GenericEntityInterface {
-    //@GeneratedValue(strategy = GenerationType.AUTO)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
