@@ -5,24 +5,21 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "income_entity")
-public class IncomeEntity implements Serializable, GenericEntityInterface {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class IncomeEntity extends AbstractEntity implements Serializable, GenericEntityInterface {
+
     private String name;
     private String category;
     private BigDecimal amount;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
 
-    public IncomeEntity(int id, String name, String category, BigDecimal amount, Date date) {
-        this.id = id;
+    public IncomeEntity(String name, String category, BigDecimal amount, Date date) {
         this.name = name;
         this.category = category;
         this.amount = amount;
@@ -30,14 +27,6 @@ public class IncomeEntity implements Serializable, GenericEntityInterface {
     }
 
     public IncomeEntity() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -7,9 +7,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import personalfinancetrackerinweb.repository.*;
 
 import personalfinancetrackerinweb.model.IncomeEntity;
-import personalfinancetrackerinweb.repository.IncomeRepository;
 
 @Named
 @ViewScoped
@@ -52,26 +52,28 @@ public class IncomeController implements Serializable {
     }
 
     public void saveData() {
+       // income.setId(1009);
+
         incomeRepository.create(income);
         income = new IncomeEntity();
         findAll();
     }
-    
+
     public void deleteData(int id) {
         incomeRepository.delete(id);
         findAll();
     }
-    
+
     public void updateData() {
         incomeRepository.update(income);
         income = new IncomeEntity();
         findAll();
     }
-    
+
     public void findAll() {
         incomeList = incomeRepository.findAll();
     }
-    
+
     public void findById(int id) {
         income = incomeRepository.findById(id);
     }
