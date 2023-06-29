@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Manage Income</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <p:dataTable id="incomeTable" var="income" value="#{incomeController.incomeList}">
+                <p:column headerText="Source of Income">
+                    #{income.name}
+                </p:column>
+                <p:column headerText="Category">
+                    #{income.category}
+                </p:column>
+                <p:column headerText="Amount">
+                    #{income.amount}
+                </p:column>
+                <p:column headerText="Date">
+                    #{income.date}
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Delete" action="#{incomeController.deleteData(income.id)}"
+                                     update="incomeTable" process="@this" ajax="true" />
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Edit" action="#{incomeController.findById(income.id)}"
+                                     update=":updateForm" process="@this" ajax="true" />
+                </p:column>
+            </p:dataTable>
+
+            <h:panelGrid id="updateForm" columns="2" rendered="#{not empty incomeController.income}">
+                <h:outputLabel for="txtName" value="Enter the source of the Income:" />
+                <p:inputText id="name" value="#{incomeController.income.name}" />
+
+                <br/>
+                <h:outputLabel for="txtCat" value="Enter the category of the income: " />
+                <p:inputText id="category" value="#{incomeController.income.category}" />
+
+                <br/>
+                <h:outputLabel for="txtAmount" value="Enter the amount: " />
+                <p:inputText id="amount" value="#{incomeController.income.amount}" />
+
+                <br/>
+                <h:outputLabel for="txtDate" value="Enter the Date:" />
+                <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" />
+
+                <br/>
+                <p:commandButton id="cmdUpdate" value="Update Income" action="#{incomeController.updateData()}"
+                                 update="incomeTable" process="@form" ajax="true" />
+
+                <p:commandButton id="cmdCancel" value="Cancel" action="#{incomeController.clearIncome()}"
+                                 update=":updateForm" process="@this" ajax="true" />
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
