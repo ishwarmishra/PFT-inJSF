@@ -9,6 +9,8 @@
     </h:head>
 
     <h:body>
+        <h1> Update Income List</h1>
+
         <h:form>
             <p:dataTable id="incomeTable" var="income" value="#{incomeController.incomeList}" editable="true">
                 <p:ajax event="rowEdit" listener="#{incomeController.updateData(income)}" update="incomeTable" />

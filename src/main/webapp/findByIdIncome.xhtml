@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Income Details</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <h3>Income Details</h3>
+            <p>Enter Income ID: <h:inputText value="#{incomeController.income.id}" /></p>
+            <p><h:commandButton value="Find" action="#{incomeController.findById(incomeController.income.id)}" /></p>
+
+            <h:panelGroup rendered="#{not empty incomeController.income}">
+                <h3>Income Information</h3>
+                <p>Name: #{incomeController.income.name}</p>
+                <p>Category: #{incomeController.income.category}</p>
+                <p>Amount: #{incomeController.income.amount}</p>
+                <p>Date: #{incomeController.income.date}</p>
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+
+</html>
+
+

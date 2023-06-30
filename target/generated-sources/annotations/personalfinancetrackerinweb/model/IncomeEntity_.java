@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2023-06-30T09:45:06")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2023-06-30T14:02:15")
 @StaticMetamodel(IncomeEntity.class)
 public class IncomeEntity_ extends AbstractEntity_ {
 
