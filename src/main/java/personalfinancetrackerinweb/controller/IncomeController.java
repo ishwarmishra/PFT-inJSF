@@ -52,7 +52,6 @@ public class IncomeController implements Serializable {
     }
 
     public void saveData() {
-       // income.setId(1009);
 
         incomeRepository.create(income);
         income = new IncomeEntity();
@@ -64,9 +63,8 @@ public class IncomeController implements Serializable {
         findAll();
     }
 
-    public void updateData() {
-        incomeRepository.update(income);
-        income = new IncomeEntity();
+    public void updateData(IncomeEntity incomeEntity) {
+        incomeRepository.update(incomeEntity);
         findAll();
     }
 

@@ -6,10 +6,9 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import personalfinancetrackerinweb.model.AbstractEntity;
 
-
 public abstract class GenericAbstractRepository<T extends AbstractEntity> implements GenericRepositoryInterface<T> {
 
-   protected abstract EntityManager getEntityManager();
+    protected abstract EntityManager getEntityManager();
 
     private Class<T> entityClass;
 
