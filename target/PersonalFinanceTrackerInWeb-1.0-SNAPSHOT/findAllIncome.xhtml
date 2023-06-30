@@ -13,7 +13,7 @@
         <h1>Income List</h1>
 
         <h:form>
-            <p:commandButton value="Load Income List" action="#{incomeController.findAll}" update="incomeTable"/>
+            <p:commandButton value="Income List Report" action="#{incomeController.findAll}" update="incomeTable"/>
 
 
             <p:dataTable id="incomeTable" value="#{incomeController.incomeList}" var="income">
