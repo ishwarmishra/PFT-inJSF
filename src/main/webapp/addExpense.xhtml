@@ -72,7 +72,6 @@
                         <f:selectItem itemLabel="Select Category" itemValue="" />
                         <f:selectItem itemLabel="Food" itemValue="Food" />
                         <f:selectItem itemLabel="Transportation" itemValue="Transportation" />
-                        <f:selectItem itemLabel="Rent" itemValue="Rent" />
                         <f:selectItem itemLabel="Utilities" itemValue="Utilities" />
                     </p:selectOneMenu>
                 </div>
@@ -86,6 +85,7 @@
                 </div>
                 <div class="button-row">
                     <p:commandButton value="Save" action="#{expenseController.saveData}" styleClass="button-style" />
+                    <p:button value="Back" outcome="expenseSource.xhtml" styleClass="button-style" />
                 </div>
             </h:form>
         </div>
