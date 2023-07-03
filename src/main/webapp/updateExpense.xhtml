@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Manage Expense</title>
+    </h:head>
+
+    <h:body>
+        <h1>Update Expense List</h1>
+
+        <h:form>
+            <p:dataTable id="expenseTable" var="expense" value="#{expenseController.expenseList}" editable="true">
+                <p:ajax event="rowEdit" listener="#{expenseController.updateData(expense)}" update="expenseTable" />
+                <p:ajax event="rowEditCancel" listener="#{expenseController.cancelEdit}" update="expenseTable" />
+
+                <p:column headerText="Expense Source">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            #{expense.name}
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{expense.name}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Category">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            #{expense.category}
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{expense.category}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Amount">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            #{expense.amount}
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{expense.amount}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Date">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            #{expense.date}
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar value="#{expense.date}" pattern="yyyy-MM-dd" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width: 85px">
+                    <p:rowEditor />
+                </p:column>
+                <p:column style="width: 85px">
+                    <p:commandButton value="Delete" action="#{expenseController.deleteData(expense.id)}"
+                                     update="expenseTable" process="@this" ajax="true" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

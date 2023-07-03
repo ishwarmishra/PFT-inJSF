@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Delete Expense</title>
+    </h:head>
+
+    <h:body>
+        <h1>Delete Expense List</h1>
+
+        <h:form>
+            <p:dataTable id="expenseTable" var="expense" value="#{expenseController.expenseList}">
+                <p:column headerText="Source of Expense">
+                    #{expense.name}
+                </p:column>
+                <p:column headerText="Category">
+                    #{expense.category}
+                </p:column>
+                <p:column headerText="Amount">
+                    #{expense.amount}
+                </p:column>
+                <p:column headerText="Date">
+                    #{expense.date}
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Delete" action="#{expenseController.deleteData(expense.id)}"
+                                     update="expenseTable" process="@this" ajax="true" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
