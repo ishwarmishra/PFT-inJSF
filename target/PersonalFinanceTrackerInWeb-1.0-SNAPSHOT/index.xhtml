@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-  <h:head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
@@ -39,11 +41,14 @@
 
       .button-container {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
         margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 10px 0;
       }
 
-      .button {
+      .button-container .button {
         display: inline-block;
         padding: 10px 20px;
         background-color: #007bff;
@@ -58,21 +63,28 @@
         margin: 0 10px;
       }
 
-      .button:hover {
+      .button-container .button:hover {
         background-color: #0056b3;
       }
 
-      .button:active {
+      .button-container .button:active {
         transform: translateY(1px);
       }
 
-      .button:focus {
+      .button-container .button:focus {
         outline: none;
       }
-    </style>
-  </h:head>
 
-  <h:body>
+      .button-container .vertical-line {
+        width: 1px;
+        height: 100%;
+        background-color: #000000; /* Black color */
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+
+  <body>
     <header>
       <h1>Personal Finance Tracker</h1>
     </header>
@@ -83,14 +95,15 @@
           <h2>Track your income and expenses</h2>
           <p>Welcome to the Expense Tracker. Keep your finances in check by tracking your income and expenses.</p>
         </div>
-        <div class="col-md-6">
-          <div class="button-container">
-            <h:form>
-              <h:commandLink value="Add Income" action="incomeSource.xhtml" styleClass="button btn btn-primary" />
-              <h:commandLink value="Add Expense" action="expenseSource.xhtml" styleClass="button btn btn-primary" />
-            </h:form>
-          </div>
-        </div>
+      </div>
+      <div class="button-container">
+        <form action="incomeSource.xhtml">
+          <input type="submit" value="Add Income" class="button btn btn-primary" />
+        </form>
+        <div class="vertical-line"></div>
+        <form action="expenseSource.xhtml">
+          <input type="submit" value="Add Expense" class="button btn btn-primary" />
+        </form>
       </div>
     </div>
 
@@ -101,5 +114,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </h:body>
+  </body>
 </html>
