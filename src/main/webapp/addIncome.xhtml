@@ -1,34 +1,141 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head >
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Add Income</title>
+        <title>Income</title>
+        <h:outputStylesheet library="primefaces" name="primefaces.css" />
+        <style>
+            .container {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .button-row {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .label-style {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+            .input-style {
+                width: 100%;
+                padding: 5px;
+            }
+            .select-style {
+                width: 100%;
+                padding: 5px;
+            }
+            .button-style {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
     </h:head>
 
     <h:body>
-        <h1> Add Income List</h1>
-
-        <h:form>
-            <h:outputLabel for ="txtName" value="Enter the source of the Income:" />
-            <p:inputText id ="name" value="#{incomeController.income.name}"/>
-
-            <br/>
-            <h:outputLabel for ="txtCat" value ="Enter the category of the income: " />
-            <p:inputText id ="category" value="#{incomeController.income.category}"/>
-
-            <br/>
-            <h:outputLabel for ="txtAmount"  value ="Enter the amount: " />
-            <p:inputText id ="amount" value="#{incomeController.income.amount}"/>
-
-            <br/>
-            <h:outputLabel for="txtDate" value="Enter the Date:" />
-            <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" />
-
-            <br/>
-            <p:commandButton id="cmdInsert" value="Add Income" action="#{incomeController.saveData()}" />
-            <br/>    
-        </h:form>
+        <div class="container">
+            <h2>Add Income Source</h2>
+            <h:form>
+                <div class="form-group">
+                    <p:outputLabel for="name" value="Name:" styleClass="label-style" />
+                    <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" />
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="txtCat" value="Category:" styleClass="label-style" />
+                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="select-style">
+                        <f:selectItem itemLabel="Select Category" itemValue="" />
+                        <f:selectItem itemLabel="Salary" itemValue="Salary" />
+                        <f:selectItem itemLabel="Business" itemValue="Business" />
+                        <f:selectItem itemLabel="Investments" itemValue="Investments" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="amount" value="Amount:" styleClass="label-style" />
+                    <p:inputText id="amount" value="#{incomeController.income.amount}" styleClass="input-style" />
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="date" value="Date:" styleClass="label-style" />
+                    <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
+                </div>
+                <div class="button-row">
+                    <p:commandButton value="Save" action="#{incomeController.saveData}" styleClass="button-style" />
+                </div>
+            </h:form>
+        </div>
     </h:body>
 </html>
+
+
+
+
+
+<!--<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Income</title>
+        <h:outputStylesheet library="primefaces" name="primefaces.css" />
+        <style>
+            .container {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .button-row {
+                text-align: center;
+                margin-top: 20px;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <div class="container">
+            <h2>Add Income Source</h2>
+            <h:form>
+                <div class="form-group">
+                    <p:outputLabel for="name" value="Name:" />
+                    <p:inputText id="name" value="#{incomeController.income.name}" />
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="txtCat" value="Category:" />
+            <p:selectOneMenu id="category" value="#{incomeController.income.category}">
+                <f:selectItem itemLabel="Select Category" itemValue="" />
+                <f:selectItem itemLabel="Salary" itemValue="Salary" />
+                <f:selectItem itemLabel="Business" itemValue="Business" />
+                <f:selectItem itemLabel="Investments" itemValue="Investments" />
+            </p:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="amount" value="Amount:" />
+                    <p:inputText id="amount" value="#{incomeController.income.amount}" />
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="date" value="Date:" />
+            <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" />
+                </div>
+                <div class="button-row">
+                    <p:commandButton value="Save" action="#{incomeController.saveData}" />
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
+
+
+
+-->

@@ -12,15 +12,33 @@
                 margin-right: 10px;
             }
         </style>
+        <h:outputStylesheet library="primefaces-aristo" name="theme.css" />
     </h:head>
 
-    <h:body>
-        <div id="navbar">
-            <h:link value="Add Income Source" outcome="addIncome.xhtml" styleClass="nav-links" />
-            <h:link value="Delete Income Source" outcome="deleteIncome.xhtml" styleClass="nav-links" />
-            <h:link value="Update Income Source" outcome="updateIncome.xhtml" styleClass="nav-links" />
-            <h:link value="Income List Report" outcome="findAllIncome.xhtml" styleClass="nav-links" />
-            <h:link value="Find Income Source By Id" outcome="findByIdIncome.xhtml" styleClass="nav-links" />
-        </div>
+    <h:body id="layoutBody">
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="60">
+                <h:outputText value="Personal Finance Tracker" style="font-size: 24px; font-weight: bold; margin: 20px;" />
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="250">
+                <p:panelMenu style="width: 100%">
+                    <p:submenu label="Income">
+                        <p:menuitem value="Add Income Source" outcome="addIncome.xhtml" />
+                        <p:menuitem value="Delete Income Source" outcome="deleteIncome.xhtml" />
+                        <p:menuitem value="Update Income Source" outcome="updateIncome.xhtml" />
+                        <p:menuitem value="Income List Report" outcome="findAllIncome.xhtml" />
+                        <p:menuitem value="Find Income Source By Id" outcome="findByIdIncome.xhtml" />
+                    </p:submenu>
+                </p:panelMenu>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <p:outputPanel>
+                    <h2>Welcome to the Income Page</h2>
+                    <!-- Add your content here -->
+                </p:outputPanel>
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
+
+
