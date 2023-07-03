@@ -1,45 +1,61 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Income</title>
+<head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <style>
-            .nav-links {
-                display: inline-block;
-                margin-right: 10px;
-            }
-        </style>
-        <h:outputStylesheet library="primefaces-aristo" name="theme.css" />
-    </h:head>
+    <title>Income</title>
 
-    <h:body id="layoutBody">
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="60">
-                <h:outputText value="Personal Finance Tracker" style="font-size: 24px; font-weight: bold; margin: 20px;" />
-            </p:layoutUnit>
-            <p:layoutUnit position="west" size="250">
-                <p:panelMenu style="width: 100%">
-                    <p:submenu label="Income">
-                        <p:menuitem value="Add Income Source" outcome="addIncome.xhtml" />
-                        <p:menuitem value="Delete Income Source" outcome="deleteIncome.xhtml" />
-                        <p:menuitem value="Update Income Source" outcome="updateIncome.xhtml" />
-                        <p:menuitem value="Income List Report" outcome="findAllIncome.xhtml" />
-                        <p:menuitem value="Find Income Source By Id" outcome="findByIdIncome.xhtml" />
-                    </p:submenu>
-                </p:panelMenu>
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <p:outputPanel>
-                    <h2>Welcome to the Income Page</h2>
-                    <h:button value="Back" outcome="index.xhtml" styleClass="nav-links" />
-                    <!-- Add your content here -->
-                </p:outputPanel>
-            </p:layoutUnit>
-        </p:layout>
-    </h:body>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+    <style>
+        .nav-links {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-primary py-3">
+        <div class="container">
+            <h1 class="text-white">Personal Finance Tracker</h1>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.xhtml">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="incomeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Income
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="incomeDropdown">
+                        <a class="dropdown-item" href="addIncome.xhtml">Add Income Source</a>
+                        <a class="dropdown-item" href="deleteIncome.xhtml">Delete Income Source</a>
+                        <a class="dropdown-item" href="updateIncome.xhtml">Update Income Source</a>
+                        <a class="dropdown-item" href="findAllIncome.xhtml">Income List Report</a>
+                        <a class="dropdown-item" href="findByIdIncome.xhtml">Find Income Source By Id</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="py-5">
+        <div class="container">
+            <h2 class="mb-4">Welcome to the Income Page</h2>
+            <!-- Add your content here -->
+        </div>
+    </main>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
-
-
