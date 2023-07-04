@@ -3,8 +3,10 @@
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/ExpenseController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/ExpenseRepository.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/IncomeEntity.java
+/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/CategoryType.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/AbstractEntity.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/ExpenseEntity.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/generic/GenericRepositoryInterface.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/GenericEntityInterface.java
+/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/CategoryEntity.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.java
