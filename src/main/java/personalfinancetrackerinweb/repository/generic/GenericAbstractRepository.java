@@ -23,8 +23,6 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
                 .getResultList();
     }
 
-   
-
     @Override
     public T create(T data) {
 
