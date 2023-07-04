@@ -71,7 +71,5 @@ public class ExpenseController implements Serializable {
         expenseList = expenseRepository.findAll();
     }
 
-    public void findById(int id) {
-        expense = expenseRepository.findById(id);
-    }
+    
 }

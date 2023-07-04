@@ -23,10 +23,7 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
                 .getResultList();
     }
 
-    @Override
-    public T findById(int id) {
-        return getEntityManager().find(entityClass, id);
-    }
+   
 
     @Override
     public T create(T data) {

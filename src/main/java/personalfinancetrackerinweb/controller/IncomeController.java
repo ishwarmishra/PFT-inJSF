@@ -72,7 +72,5 @@ public class IncomeController implements Serializable {
         incomeList = incomeRepository.findAll();
     }
 
-    public void findById(int id) {
-        income = incomeRepository.findById(id);
-    }
+    
 }
