@@ -24,8 +24,6 @@ public class IncomeEntity extends AbstractEntity implements Serializable, Generi
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
 
-    // Constructors, getters, and setters
-
     public IncomeEntity() {
     }
 
@@ -35,8 +33,6 @@ public class IncomeEntity extends AbstractEntity implements Serializable, Generi
         this.amount = amount;
         this.date = date;
     }
-
-    // Getters and setters
 
     public String getName() {
         return name;

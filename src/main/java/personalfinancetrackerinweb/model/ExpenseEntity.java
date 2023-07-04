@@ -16,7 +16,7 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", referencedColumnName = "categoryId")
     private CategoryEntity category;
 
     private BigDecimal amount;
@@ -24,7 +24,6 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
 
-    // Constructors, getters, and setters
 
     public ExpenseEntity() {
     }
@@ -36,7 +35,6 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
         this.date = date;
     }
 
-    // Getters and setters
 
     public String getName() {
         return name;
