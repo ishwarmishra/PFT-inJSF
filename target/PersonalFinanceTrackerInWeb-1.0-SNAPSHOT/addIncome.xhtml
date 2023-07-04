@@ -88,15 +88,7 @@
                     <h:outputLabel for="name" value="Income Source:" styleClass="label-style" />
                     <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" />
                 </div>
-                <div class="form-group">
-                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="select-style">
-                        <f:selectItem itemLabel="Select Category" itemValue="" />
-                        <f:selectItem itemLabel="Salary" itemValue="Salary" />
-                        <f:selectItem itemLabel="Business" itemValue="Business" />
-                        <f:selectItem itemLabel="Investments" itemValue="Investments" />
-                    </p:selectOneMenu>
-                </div>
+
                 <div class="form-group">
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
                     <p:inputText id="amount" value="#{incomeController.income.amount}" styleClass="input-style" />
@@ -107,7 +99,7 @@
                 </div>
                 <div class="button-row">
                     <p:commandButton value="Save" action="#{incomeController.saveData}" styleClass="button-style" />
-                    <p:button value="Back" outcome="incomeSource.xhtml" styleClass="button-style" />
+                    <p:button value="Back" outcome="incomeExpenseDetails.xhtml" styleClass="button-style" />
                 </div>
             </h:form>
         </div>

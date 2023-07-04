@@ -46,7 +46,6 @@ public class CategoryController implements Serializable {
     @PostConstruct
     public void init() {
         category = new CategoryEntity();
-        findAll();
     }
 
     public void saveCategory() {

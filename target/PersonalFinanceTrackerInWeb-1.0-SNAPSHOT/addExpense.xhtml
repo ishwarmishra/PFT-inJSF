@@ -88,15 +88,7 @@
                     <h:outputLabel for="name" value="Expense Name:" styleClass="label-style" />
                     <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
                 </div>
-                <div class="form-group">
-                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="select-style">
-                        <f:selectItem itemLabel="Select Category" itemValue="" />
-                        <f:selectItem itemLabel="Food" itemValue="Food" />
-                        <f:selectItem itemLabel="Transportation" itemValue="Transportation" />
-                        <f:selectItem itemLabel="Entertainment" itemValue="Entertainment" />
-                    </p:selectOneMenu>
-                </div>
+                
                 <div class="form-group">
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
                     <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />

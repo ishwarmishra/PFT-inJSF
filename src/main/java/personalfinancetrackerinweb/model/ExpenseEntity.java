@@ -1,8 +1,8 @@
 package personalfinancetrackerinweb.model;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,9 +15,10 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "categoryId")
-    private CategoryEntity category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    
+    private CategoryEntity categoryEntity;
 
     private BigDecimal amount;
 
@@ -28,9 +29,9 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
     public ExpenseEntity() {
     }
 
-    public ExpenseEntity(String name, CategoryEntity category, BigDecimal amount, Date date) {
+    public ExpenseEntity(String name, CategoryEntity categoryEntity, BigDecimal amount, Date date) {
         this.name = name;
-        this.category = category;
+        this.categoryEntity = categoryEntity;
         this.amount = amount;
         this.date = date;
     }
@@ -45,11 +46,11 @@ public class ExpenseEntity extends AbstractEntity implements Serializable, Gener
     }
 
     public CategoryEntity getCategory() {
-        return category;
+        return categoryEntity;
     }
 
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
+    public void setCategory(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
     public BigDecimal getAmount() {

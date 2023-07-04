@@ -7,22 +7,22 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <title>Income List</title>
+        <title>Income  List</title>
     </h:head>
     <h:body>
-        <h1>Income List</h1>
+        <h1>IncomeExpense List</h1>
 
         <h:form>
             <p:commandButton value="Income List Report" action="#{incomeController.findAll}" update="incomeTable"/>
 
 
             <p:dataTable id="incomeTable" value="#{incomeController.incomeList}" var="income">
-                <p:column headerText="Name">
+                <p:column headerText="Remark">
                     #{income.name}
                 </p:column>
-                <p:column headerText="Category">
-                    #{income.category}
-                </p:column>
+<!--                <p:column headerText="Category">
+                    #{income.categoryEntity}
+                </p:column>-->
                 <p:column headerText="Amount">
                     #{income.amount}
                 </p:column>

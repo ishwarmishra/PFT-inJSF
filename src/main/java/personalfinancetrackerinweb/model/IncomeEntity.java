@@ -1,8 +1,8 @@
 package personalfinancetrackerinweb.model;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,21 +15,24 @@ public class IncomeEntity extends AbstractEntity implements Serializable, Generi
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private CategoryEntity category;
-
     private BigDecimal amount;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
+    
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    
+    private CategoryEntity categoryEntity;
+
 
     public IncomeEntity() {
     }
 
-    public IncomeEntity(String name, CategoryEntity category, BigDecimal amount, Date date) {
+    public IncomeEntity(String name,CategoryEntity categoryEntity ,BigDecimal amount, Date date) {
         this.name = name;
-        this.category = category;
+        this.categoryEntity=categoryEntity;
         this.amount = amount;
         this.date = date;
     }
@@ -37,19 +40,20 @@ public class IncomeEntity extends AbstractEntity implements Serializable, Generi
     public String getName() {
         return name;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
 
-    public CategoryEntity getCategory() {
-        return category;
+
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
     }
 
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
-
+    
     public BigDecimal getAmount() {
         return amount;
     }
