@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import personalfinancetrackerinweb.repository.*;
 
-import personalfinancetrackerinweb.model.IncomeEntity;
+import personalfinancetrackerinweb.model.Income;
 
 @Named
 @ViewScoped
@@ -18,8 +18,8 @@ public class IncomeController implements Serializable {
     @Inject
     private IncomeRepository incomeRepository;
 
-    private IncomeEntity income;
-    private List<IncomeEntity> incomeList;
+    private Income income;
+    private List<Income> incomeList;
 
     public IncomeRepository getIncomeRepository() {
         return incomeRepository;
@@ -29,43 +29,40 @@ public class IncomeController implements Serializable {
         this.incomeRepository = incomeRepository;
     }
 
-    public IncomeEntity getIncome() {
+    public Income getIncome() {
         return income;
     }
 
-    public void setIncome(IncomeEntity income) {
+    public void setIncome(Income income) {
         this.income = income;
     }
 
-    public List<IncomeEntity> getIncomeList() {
+    public List<Income> getIncomeList() {
         return incomeList;
     }
 
-    public void setIncomeList(List<IncomeEntity> incomeList) {
+    public void setIncomeList(List<Income> incomeList) {
         this.incomeList = incomeList;
     }
 
     @PostConstruct
     public void init() {
-        income = new IncomeEntity();
-        findAll();
+        income = new Income();
+       
     }
 
     public void saveData() {
 
         incomeRepository.create(income);
-        income = new IncomeEntity();
-        findAll();
+        income = new Income();
     }
 
     public void deleteData(int id) {
         incomeRepository.delete(id);
-        findAll();
     }
 
-    public void updateData(IncomeEntity incomeEntity) {
+    public void updateData(Income incomeEntity) {
         incomeRepository.update(incomeEntity);
-        findAll();
     }
 
     public void findAll() {

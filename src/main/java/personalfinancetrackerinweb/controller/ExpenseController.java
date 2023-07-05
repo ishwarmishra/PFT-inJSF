@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import personalfinancetrackerinweb.repository.ExpenseRepository;
-import personalfinancetrackerinweb.model.ExpenseEntity;
+import personalfinancetrackerinweb.model.Expense;
 
 @Named
 @ViewScoped
@@ -18,8 +18,8 @@ public class ExpenseController implements Serializable {
     @Inject
     private ExpenseRepository expenseRepository;
 
-    private ExpenseEntity expense;
-    private List<ExpenseEntity> expenseList;
+    private Expense expense;
+    private List<Expense> expenseList;
 
     public ExpenseRepository getExpenseRepository() {
         return expenseRepository;
@@ -29,42 +29,40 @@ public class ExpenseController implements Serializable {
         this.expenseRepository = expenseRepository;
     }
 
-    public ExpenseEntity getExpense() {
+    public Expense getExpense() {
         return expense;
     }
 
-    public void setExpense(ExpenseEntity expense) {
+    public void setExpense(Expense expense) {
         this.expense = expense;
     }
 
-    public List<ExpenseEntity> getExpenseList() {
+    public List<Expense> getExpenseList() {
         return expenseList;
     }
 
-    public void setExpenseList(List<ExpenseEntity> expenseList) {
+    public void setExpenseList(List<Expense> expenseList) {
         this.expenseList = expenseList;
     }
 
     @PostConstruct
     public void init() {
-        expense = new ExpenseEntity();
-        findAll();
+        expense = new Expense();
+     
     }
 
     public void saveData() {
         expenseRepository.create(expense);
-        expense = new ExpenseEntity();
-        findAll();
+        expense = new Expense();
     }
 
     public void deleteData(int id) {
         expenseRepository.delete(id);
-        findAll();
+        
     }
 
-    public void updateData(ExpenseEntity expenseEntity) {
+    public void updateData(Expense expenseEntity) {
         expenseRepository.update(expenseEntity);
-        findAll();
     }
 
     public void findAll() {

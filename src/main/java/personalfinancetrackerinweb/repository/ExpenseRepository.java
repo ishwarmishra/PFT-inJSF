@@ -3,11 +3,11 @@ package personalfinancetrackerinweb.repository;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import personalfinancetrackerinweb.model.ExpenseEntity;
+import personalfinancetrackerinweb.model.Expense;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 @Stateless
-public class ExpenseRepository extends GenericAbstractRepository<ExpenseEntity> {
+public class ExpenseRepository extends GenericAbstractRepository<Expense> {
 
     @PersistenceContext(name = "pft")
     private EntityManager entityManager;
@@ -18,6 +18,6 @@ public class ExpenseRepository extends GenericAbstractRepository<ExpenseEntity> 
     }
 
     public ExpenseRepository() {
-        super(ExpenseEntity.class);
+        super(Expense.class);
     }
 }

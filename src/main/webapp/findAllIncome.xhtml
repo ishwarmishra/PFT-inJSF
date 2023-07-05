@@ -10,7 +10,7 @@
         <title>Income  List</title>
     </h:head>
     <h:body>
-        <h1>IncomeExpense List</h1>
+        <h1>Income List</h1>
 
         <h:form>
             <p:commandButton value="Income List Report" action="#{incomeController.findAll}" update="incomeTable"/>
@@ -20,9 +20,9 @@
                 <p:column headerText="Remark">
                     #{income.name}
                 </p:column>
-<!--                <p:column headerText="Category">
+                <p:column headerText="Category">
                     #{income.categoryEntity}
-                </p:column>-->
+                </p:column>
                 <p:column headerText="Amount">
                     #{income.amount}
                 </p:column>

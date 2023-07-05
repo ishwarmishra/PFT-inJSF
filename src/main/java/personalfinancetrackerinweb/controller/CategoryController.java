@@ -6,7 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import personalfinancetrackerinweb.repository.CategoryRepository;
-import personalfinancetrackerinweb.model.CategoryEntity;
+import personalfinancetrackerinweb.model.Category;
 
 @Named
 @ViewScoped
@@ -14,8 +14,8 @@ public class CategoryController implements Serializable {
 
     @Inject
     private CategoryRepository categoryRepository;
-    private CategoryEntity category;
-    private List<CategoryEntity> categoryList;
+    private Category category;
+    private List<Category> categoryList;
 
 
     public CategoryRepository getCategoryRepository() {
@@ -26,42 +26,42 @@ public class CategoryController implements Serializable {
         this.categoryRepository = categoryRepository;
     }
 
-    public CategoryEntity getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEntity category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public List<CategoryEntity> getCategoryList() {
+    public List<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<CategoryEntity> categoryList) {
+    public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
     
     
     @PostConstruct
     public void init() {
-        category = new CategoryEntity();
+        category = new Category();
     }
 
     public void saveCategory() {
         categoryRepository.create(category);
-        category = new CategoryEntity();
-        findAll();
+        category = new Category();
+    
     }
 
     public void deleteCategory(int id) {
         categoryRepository.delete(id);
-        findAll();
+  
     }
 
-    public void updateCategory(CategoryEntity categoryEntity) {
+    public void updateCategory(Category categoryEntity) {
         categoryRepository.update(categoryEntity);
-        findAll();
+
     }
 
     public void findAll() {

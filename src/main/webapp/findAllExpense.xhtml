@@ -16,7 +16,7 @@
             <p:commandButton value="Expense List Report" action="#{expenseController.findAll}" update="expenseTable"/>
 
             <p:dataTable id="expenseTable" value="#{expenseController.expenseList}" var="expense">
-                <p:column headerText="Name">
+                <p:column headerText="Remark">
                     #{expense.name}
                 </p:column>
                 <p:column headerText="Category">

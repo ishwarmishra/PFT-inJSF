@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,71 +13,6 @@
                 font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
             }
-            .container {
-                max-width: 400px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 4px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            }
-            .form-group {
-                margin-bottom: 20px;
-            }
-            .form-group:last-child {
-                margin-bottom: 0;
-            }
-            .label-style {
-                font-weight: bold;
-                margin-right: 5px;
-                display: block;
-            }
-            .input-style {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-                font-size: 16px;
-                margin-top: 5px;
-            }
-            .select-style {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-                font-size: 16px;
-                margin-top: 5px;
-            }
-            .button-row {
-                text-align: center;
-                margin-top: 20px;
-            }
-            .button-style {
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-                font-size: 16px;
-                border-radius: 4px;
-                text-transform: uppercase;
-                transition: background-color 0.3s ease;
-            }
-            .button-style:hover {
-                background-color: #007bff; /* Change this to the desired hover color if needed */
-            }
-            .button-style:active {
-                transform: translateY(1px);
-            }
-            .ui-selectonemenu-trigger::before {
-                font-family: "Font Awesome"; /* Assuming you want to use Font Awesome */
-                content: "\f007"; /* Change this to the code of your desired icon */
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                font-size: 16px;
-            }
         </style>
     </h:head>
 
@@ -85,10 +21,17 @@
             <h2 style="text-align: center;">Add Expense</h2>
             <h:form>
                 <div class="form-group">
-                    <h:outputLabel for="name" value="Expense Name:" styleClass="label-style" />
+                    <h:outputLabel for="name" value="Expense Source:" styleClass="label-style" />
                     <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
                 </div>
-                
+                <div class="form-group">
+                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
+                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style">
+                        <f:selectItem itemLabel="Select Category name" itemValue="" />
+                        <f:selectItems value="##{categoryController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                   </p:selectOneMenu>
+                </div>
+
                 <div class="form-group">
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
                     <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />
