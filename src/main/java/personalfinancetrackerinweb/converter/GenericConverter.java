@@ -1,11 +1,8 @@
 package personalfinancetrackerinweb.converter;
-
 import java.util.logging.Logger;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-
 import personalfinancetrackerinweb.model.AbstractEntity;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
