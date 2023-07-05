@@ -1,6 +1,7 @@
 package personalfinancetrackerinweb.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,6 +40,17 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
 
     public void setType(CategoryType type) {
         this.type = type;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Category otherCategory = (Category) obj;
+        return Objects.equals(this.getId(), otherCategory.getId());
     }
 
 }

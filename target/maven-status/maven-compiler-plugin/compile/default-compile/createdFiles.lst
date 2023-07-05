@@ -5,6 +5,7 @@ personalfinancetrackerinweb/model/Expense.class
 personalfinancetrackerinweb/controller/CategoryController.class
 personalfinancetrackerinweb/controller/ExpenseController.class
 personalfinancetrackerinweb/repository/ExpenseRepository.class
+personalfinancetrackerinweb/converter/CategoryConverter.class
 personalfinancetrackerinweb/model/Category.class
 personalfinancetrackerinweb/model/CategoryType.class
 personalfinancetrackerinweb/model/AbstractEntity.class
@@ -12,7 +13,9 @@ personalfinancetrackerinweb/model/Category_.class
 personalfinancetrackerinweb/model/GenericEntityInterface.class
 personalfinancetrackerinweb/model/Income.class
 personalfinancetrackerinweb/model/AbstractEntity_.class
+personalfinancetrackerinweb/converter/GenericConverter.class
 personalfinancetrackerinweb/model/Expense_.class
 personalfinancetrackerinweb/controller/IncomeController.class
 personalfinancetrackerinweb/repository/IncomeRepository.class
 personalfinancetrackerinweb/model/Income_.class
+.netbeans_automatic_build

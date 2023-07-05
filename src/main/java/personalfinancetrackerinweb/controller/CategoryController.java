@@ -35,7 +35,7 @@ public class CategoryController implements Serializable {
     }
 
     public List<Category> getCategoryList() {
-        return categoryList;
+        return categoryRepository.findAll();
     }
 
     public void setCategoryList(List<Category> categoryList) {
@@ -64,7 +64,7 @@ public class CategoryController implements Serializable {
 
     }
 
-    public void findAll() {
-        categoryList = categoryRepository.findAll();
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 }

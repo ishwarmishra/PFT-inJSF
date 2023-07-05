@@ -6,6 +6,7 @@ public interface GenericRepositoryInterface<T> {
     T create(T data);
     void delete(int id);
     T update(T data);
+    T getById(int id);
   
     List<T> findAll();
 }
