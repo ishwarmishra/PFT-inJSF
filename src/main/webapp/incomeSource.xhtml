@@ -10,20 +10,43 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     </h:head>
     <h:body>
+
         <p:layout fullPage="true">
 
             <p:layoutUnit position="center">
                 <h:form id="incomeListForm">
+<<<<<<< HEAD
                     
                     <p:commandButton value="Add" action="#{incomeController.beforeCreate()}" styleClass="button-style"  update=":incomeForm"
                                      oncomplete="PF('incomeDialogVar').show();"  />
                     
                     <ui:include src="incomeReport.xhtml" />
+=======
+                    <p:dataTable var="customer" value="#{dtPaginatorView.customers}" rows="10"
+                                 paginator="true" >
+
+                        <p:commandButton value="Add" type="button" onclick="PF('incomeDialogVar').show();" />  
+                        <ui:include src="incomeReport.xhtml" />
+
+                        <f:facet name="paginatorTopLeft">
+                            <p:commandButton type="button" icon="pi pi-refresh"/>
+                        </f:facet>
+
+                        <f:facet name="paginatorBottomRight">
+                            <p:commandButton type="button" icon="pi pi-cloud-upload"/>
+                        </f:facet>
+
+                    </p:dataTable>
+
+
+>>>>>>> testbranch
                 </h:form>
             </p:layoutUnit>
         </p:layout>
         <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Source" modal="true" resizable="false">
             <h:form id="incomeForm">
+
+
                 <h:panelGrid columns="2">
                     <h:outputLabel for="name" value="Income Source:" styleClass="label-style" />
                     <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" />
@@ -43,6 +66,7 @@
                     <p:commandButton value="Save" action="#{incomeController.saveData}" styleClass="button-style"  update=":incomeListForm"
                                      oncomplete="PF('incomeDialogVar').hide();"  />
                 </h:panelGrid>
+
             </h:form>
         </p:dialog>
 
