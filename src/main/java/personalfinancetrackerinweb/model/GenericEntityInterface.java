@@ -1,4 +1,3 @@
-// GenericEntityInterface.java
 package personalfinancetrackerinweb.model;
 
 public interface GenericEntityInterface {

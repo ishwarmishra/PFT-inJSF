@@ -10,17 +10,13 @@ import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 
 @FacesConverter(value = "categoryConverter", forClass = Category.class)
-
-public class CategoryConverter extends GenericConverter<Category> {
+public class CategoryConverter extends GenericConverter {
 
     @Inject
-
     private  CategoryRepository categoryRepository;
 
     @Override
-
-    protected GenericAbstractRepository<Category> getGenericRepository() {
-
+    protected GenericAbstractRepository getGenericRepository() {
         return categoryRepository;
 
     }

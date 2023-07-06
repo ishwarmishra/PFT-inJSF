@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.converter;
+
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -6,39 +7,49 @@ import javax.faces.convert.Converter;
 import personalfinancetrackerinweb.model.AbstractEntity;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
-public abstract class GenericConverter<T extends AbstractEntity> implements Converter {
+public abstract class GenericConverter implements Converter {
 
-    protected abstract GenericAbstractRepository<T> getGenericRepository();
-
-    private static final Logger LOGGER = Logger.getLogger(GenericConverter.class.getName());
+    protected abstract GenericAbstractRepository getGenericRepository();
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value == null || value.isEmpty()) {
+    public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+
+        if (value == null || value.length() == 0 || value.equals("") || value.equalsIgnoreCase("null") || value.toLowerCase().startsWith("sel")) {
             return null;
         }
-
         try {
-            int id = Integer.parseInt(value);
-            return getGenericRepository().getById(id);
-        } catch (NumberFormatException e) {
-            LOGGER.warning("Invalid ID: " + value);
+            return getGenericRepository().getById(getKey(value));
+        } catch (NumberFormatException nfe) {
+            Logger.getLogger("Severe: Number format Exception, Can't convert value " + value);
             return null;
         }
     }
 
+    java.lang.Integer getKey(String value) {
+        java.lang.Integer key;
+        key = Integer.valueOf(value);
+        return key;
+    }
+
+    String getStringKey(Object value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(value);
+        return sb.toString();
+    }
+
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value == null) {
+    public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+        if ("".equals(object)) {
             return "";
         }
-
-        if (value instanceof AbstractEntity) {
-            AbstractEntity entity = (AbstractEntity) value;
-            return String.valueOf(entity.getId());
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof AbstractEntity) {
+            AbstractEntity o = (AbstractEntity) object;
+            return getStringKey(Integer.valueOf(o.getId()));
         } else {
-            LOGGER.warning("Invalid object type: " + value.getClass().getName());
-            return "";
+            throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: converter for " + this.getClass());
         }
     }
 }

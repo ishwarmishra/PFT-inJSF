@@ -46,6 +46,8 @@ public class CategoryController implements Serializable {
     @PostConstruct
     public void init() {
         category = new Category();
+        categoryList = categoryRepository.findAll();
+
     }
 
     public void saveCategory() {
@@ -64,7 +66,5 @@ public class CategoryController implements Serializable {
 
     }
 
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
-    }
+    
 }

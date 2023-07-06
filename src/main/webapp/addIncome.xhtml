@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style">
+                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style" converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
                         <f:selectItems value="#{categoryController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
                    </p:selectOneMenu>
@@ -42,6 +42,7 @@
                 </div>
                 <div class="button-row">
                     <p:commandButton value="Save" action="#{incomeController.saveData}" styleClass="button-style" />
+                    
                     <p:button value="Back" outcome="incomeSource.xhtml" styleClass="button-style" />
                 </div>
             </h:form>

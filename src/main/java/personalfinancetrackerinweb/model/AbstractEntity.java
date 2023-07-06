@@ -1,4 +1,3 @@
-// AbstractEntity.java
 package personalfinancetrackerinweb.model;
 
 import java.io.Serializable;

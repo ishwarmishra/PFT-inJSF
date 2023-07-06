@@ -25,10 +25,10 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style">
+                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style" converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
                         <f:selectItems value="#{categoryController.categoryList}" var="e" itemLabel="#{e.name}" itemValue="#{e}" />
-                   </p:selectOneMenu>
+                   </p:selectOneMenu>s
                 </div>
 
                 <div class="form-group">

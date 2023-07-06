@@ -48,7 +48,8 @@ public class ExpenseController implements Serializable {
     @PostConstruct
     public void init() {
         expense = new Expense();
-     
+        expenseList = expenseRepository.findAll();
+
     }
 
     public void saveData() {
@@ -58,15 +59,11 @@ public class ExpenseController implements Serializable {
 
     public void deleteData(int id) {
         expenseRepository.delete(id);
-        
+
     }
 
     public void updateData(Expense expenseEntity) {
         expenseRepository.update(expenseEntity);
-    }
-
-    public void findAll() {
-        expenseList = expenseRepository.findAll();
     }
 
     

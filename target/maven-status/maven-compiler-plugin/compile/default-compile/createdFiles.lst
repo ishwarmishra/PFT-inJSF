@@ -18,3 +18,4 @@ personalfinancetrackerinweb/model/Expense_.class
 personalfinancetrackerinweb/controller/IncomeController.class
 personalfinancetrackerinweb/repository/IncomeRepository.class
 personalfinancetrackerinweb/model/Income_.class
+.netbeans_automatic_build
