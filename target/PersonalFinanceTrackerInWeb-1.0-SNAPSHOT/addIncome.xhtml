@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Income</title>
@@ -16,36 +16,31 @@
         </style>
     </h:head>
 
-    <h:body>
-        <div class="container">
-            <h2 style="text-align: center;">Add Income Source</h2>
-            <h:form>
-                <div class="form-group">
+    <h:body onload="PF('incomeDialogVar').show();">
+        <h2 style="text-align: center;">Add Income Source</h2>
+        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Source" modal="true" resizable="false">
+            <h:form id="incomeForm">
+                <h:panelGrid columns="2">
                     <h:outputLabel for="name" value="Income Source:" styleClass="label-style" />
                     <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" />
-                </div>
-                <div class="form-group">
+
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
                     <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style" converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
                         <f:selectItems value="#{categoryController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
-                   </p:selectOneMenu>
-                </div>
+                    </p:selectOneMenu>
 
-                <div class="form-group">
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
                     <p:inputText id="amount" value="#{incomeController.income.amount}" styleClass="input-style" />
-                </div>
-                <div class="form-group">
+
                     <h:outputLabel for="date" value="Date:" styleClass="label-style" />
                     <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
-                </div>
-                <div class="button-row">
+
                     <p:commandButton value="Save" action="#{incomeController.saveData}" styleClass="button-style" />
-                    
                     <p:button value="Back" outcome="incomeSource.xhtml" styleClass="button-style" />
-                </div>
+                </h:panelGrid>
             </h:form>
-        </div>
+        </p:dialog>
     </h:body>
-</html>
+</ui:component>
+

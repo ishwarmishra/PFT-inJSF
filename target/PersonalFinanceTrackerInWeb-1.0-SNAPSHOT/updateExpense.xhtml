@@ -29,10 +29,10 @@
                 <p:column headerText="Category">
                     <p:cellEditor>
                         <f:facet name="output">
-                            #{expense.category}
+                            #{expense.category.name}
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{expense.category}" />
+                            <p:inputText value="#{expense.category.name}" />
                         </f:facet>
                     </p:cellEditor>
                 </p:column>

@@ -1,7 +1,6 @@
 package personalfinancetrackerinweb.repository.generic;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import personalfinancetrackerinweb.model.AbstractEntity;
 
 public abstract class GenericAbstractRepository<T extends AbstractEntity> implements GenericRepositoryInterface<T> {
@@ -29,16 +28,17 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     }
 
     @Override
-    @Transactional
+
     public void delete(int id) {
         T entity = getEntityManager().find(entityClass, id);
         if (entity != null) {
             getEntityManager().remove(entity);
+            getEntityManager().flush();
         }
     }
 
     @Override
-    @Transactional
+
     public T update(T data) {
         return getEntityManager().merge(data);
     }

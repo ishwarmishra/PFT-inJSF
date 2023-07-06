@@ -48,14 +48,14 @@ public class IncomeController implements Serializable {
     @PostConstruct
     public void init() {
         income = new Income();
-        incomeList = incomeRepository.findAll();
-
+       findAll();
     }
 
     public void saveData() {
 
         incomeRepository.create(income);
         income = new Income();
+        findAll();
     }
 
     public void deleteData(int id) {
@@ -64,6 +64,11 @@ public class IncomeController implements Serializable {
 
     public void updateData(Income incomeEntity) {
         incomeRepository.update(incomeEntity);
+    }
+    
+    public void findAll(){
+      incomeList = incomeRepository.findAll();
+
     }
 
 }

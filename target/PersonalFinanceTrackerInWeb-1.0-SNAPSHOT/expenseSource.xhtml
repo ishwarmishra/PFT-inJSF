@@ -1,88 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
-      xmlns:p="http://primefaces.org/ui">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Expense</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</h:head>
+<h:body>
+    <p:layout fullPage="true">
+        <p:layoutUnit position="north" size="100" header="Personal Finance Tracker" resizable="false">
+            <h:outputStylesheet library="primefaces" name="layout/layout.css" />
+        </p:layoutUnit>
+        <p:layoutUnit position="west" size="200">
+            <h:form>
+                <p:button value="Add Expense" outcome="addExpense.xhtml" />
+            </h:form>
+        </p:layoutUnit>
+        <p:layoutUnit position="center">
+            <h:form>
+                <ui:include src="expenseReport.xhtml" />
+            </h:form>
+        </p:layoutUnit>
+    </p:layout>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Expense</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-        <style>
-            .nav-links {
-                margin-right: 10px;
-            }
-
-            .main-content {
-                padding: 20px;
-                margin-bottom: 20px;
-                background-color: #f8f9fa;
-                border: 1px solid #ced4da;
-                border-radius: 4px;
-            }
-
-            .iframe-container {
-                position: relative;
-                overflow: hidden;
-                padding-top: 56.25%; /* 16:9 aspect ratio */
-            }
-
-            .iframe-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: 0;
-            }
-            /* Custom styles for the navbar */
-            .navbar-nav .nav-link {
-                color: white !important;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-
-    <body>
-        <header class="bg-primary py-3">
-            <div class="container">
-                <h1 class="text-white">Personal Finance Tracker</h1>
-            </div>
-        </header>
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.xhtml">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="addExpense.xhtml">Add Expense</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="deleteExpense.xhtml">Delete Expense</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="updateExpense.xhtml">Update Expense</a>
-                    </li>
-                    
-                </ul>
-            </div>
-        </nav>
-
-        <main class="py-5">
-            <div class="container">
-                <h2 class="mb-4">Welcome to the Expense Page</h2>
-                <div class="iframe-container">
-                    <iframe src="expenseReport.xhtml"></iframe>
-                </div>
-            </div>
-        </main>
-
-        <!-- Bootstrap JS and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
-
+    <h:outputScript library="primefaces" name="jquery/jquery.js" />
+    <h:outputScript library="primefaces" name="layout/layout.js" />
+</h:body>
 </html>

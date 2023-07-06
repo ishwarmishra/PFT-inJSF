@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Expense</title>
@@ -16,34 +17,27 @@
     </h:head>
 
     <h:body>
-        <div class="container">
-            <h2 style="text-align: center;">Add Expense</h2>
-            <h:form>
-                <div class="form-group">
-                    <h:outputLabel for="name" value="Expense Source:" styleClass="label-style" />
-                    <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
-                </div>
-                <div class="form-group">
-                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style" converter="categoryConverter">
-                        <f:selectItem itemLabel="Select Category name" itemValue="" />
-                        <f:selectItems value="#{categoryController.categoryList}" var="e" itemLabel="#{e.name}" itemValue="#{e}" />
-                   </p:selectOneMenu>s
-                </div>
+        <h2 style="text-align: center;">Add Expense</h2>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="name" value="Expense Name:" styleClass="label-style" />
+                <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
 
-                <div class="form-group">
-                    <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
-                    <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />
-                </div>
-                <div class="form-group">
-                    <h:outputLabel for="date" value="Date:" styleClass="label-style" />
-                    <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
-                </div>
-                <div class="button-row">
-                    <p:commandButton value="Save" action="#{expenseController.saveData}" styleClass="button-style" />
-                    <p:button value="Back" outcome="expenseSource.xhtml" styleClass="button-style" />
-                </div>
-            </h:form>
-        </div>
+                <h:outputLabel for="category" value="Category:" styleClass="label-style" />
+                <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style" converter="categoryConverter">
+                    <f:selectItem itemLabel="Select Category" itemValue="" />
+                    <f:selectItems value="#{categoryController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                </p:selectOneMenu>
+
+                <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
+                <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />
+
+                <h:outputLabel for="date" value="Date:" styleClass="label-style" />
+                <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
+
+                <p:commandButton value="Save" action="#{expenseController.saveData}" styleClass="button-style" />
+                <p:button value="Back" outcome="expenseSource.xhtml" styleClass="button-style" />
+            </h:panelGrid>
+        </h:form>
     </h:body>
-</html>
+</ui:component>

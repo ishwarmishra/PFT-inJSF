@@ -13,7 +13,6 @@
         <h1>Expense List</h1>
 
         <h:form>
-            <p:commandButton value="Expense List Report" action="#{expenseController.findAll}" update="expenseTable"/>
 
             <p:dataTable id="expenseTable" value="#{expenseController.expenseList}" var="expense">
                 <p:column headerText="Remark">
