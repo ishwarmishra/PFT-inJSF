@@ -33,9 +33,7 @@ public class IncomeController implements Serializable {
         return income;
     }
 
-    public void setIncome(Income income) {
-        this.income = income;
-    }
+   
 
     public List<Income> getIncomeList() {
         return incomeList;
@@ -50,16 +48,29 @@ public class IncomeController implements Serializable {
         income = new Income();
        findAll();
     }
+    public void beforeCreate(){
+        income=new Income();
+    }
 
+    
+     public void setIncome(Income income) {
+        this.income = income;
+    }
+    //TODO
+    
     public void saveData() {
-
-        incomeRepository.create(income);
+        if (income.getId() == 0) {
+            incomeRepository.create(income);
+        } else {
+            incomeRepository.update(income);
+        }
         income = new Income();
         findAll();
     }
 
-    public void deleteData(int id) {
-        incomeRepository.delete(id);
+    public void deleteData(Income income) {
+        incomeRepository.delete(income.getId());
+        findAll();
     }
 
     public void updateData(Income incomeEntity) {

@@ -6,7 +6,10 @@
 
         <h:form>
 
-            <p:dataTable id="incomeTable" value="#{incomeController.incomeList}" var="income">
+            <p:dataTable id="incomeTable" value="#{incomeController.incomeList}" var="income"
+                         paginator="true" paginatorPosition="bottom" rows="5"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15">
                 <p:column headerText="Income Source">
                     #{income.name}
                 </p:column>
@@ -18,6 +21,13 @@
                 </p:column>
                 <p:column headerText="Date">
                     #{income.date}
+                </p:column>
+                
+                <p:column headerText="Action">
+                    <p:commandButton value="Edit" action="#{incomeController.setIncome(income)}" styleClass="button-style"  update=":incomeForm"
+                                     oncomplete="PF('incomeDialogVar').show();"  />
+                    <p:commandButton value="Delete" action="#{incomeController.deleteData(income)}" styleClass="button-style"  update="incomeTable"
+                                       />
                 </p:column>
             </p:dataTable>
         </h:form>
