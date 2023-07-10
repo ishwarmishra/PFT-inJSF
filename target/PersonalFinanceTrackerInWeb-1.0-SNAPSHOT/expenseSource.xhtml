@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html lang="en" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="primefaces" name="primefaces.css" />
+
+        <title>Expense</title>
+    </h:head>
+    <h:body>      
+        <h:form class="my-navbar">
+            <ui:include src="topMenu.xhtml" />
+        </h:form>  
+
+        <p:layoutUnit position="center">
+            <h:form id="expenseListForm">
+
+                <p:commandButton value="Add Expense" action="#{expenseController.beforeCreate()}" styleClass="button-style"  update=":expenseForm"
+                                 oncomplete="PF('expenseDialogVar').show();"  />
+                <ui:include src="expenseReport.xhtml" />
+            </h:form>
+        </p:layoutUnit>    
+        <p:dialog id="expenseDialog" widgetVar="expenseDialogVar" header="Add Expense Source" modal="true" resizable="false">
+            <h:form id="expenseForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="name" value="Expense Source:" styleClass="label-style" />
+                    <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
+
+                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
+                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style" converter="categoryConverter">
+                        <f:selectItem itemLabel="Select Category name" itemValue="" />
+                        <f:selectItems value="#{expenseController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
+                    <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />
+
+                    <h:outputLabel for="date" value="Date:" styleClass="label-style" />
+                    <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
+
+                    <p:commandButton value="Save" 
+                                     action="#{expenseController.saveData}" styleClass="button-style"  update=":expenseListForm"
+                                     oncomplete="PF('expenseDialogVar').hide();"  />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
