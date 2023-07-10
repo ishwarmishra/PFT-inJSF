@@ -56,7 +56,7 @@ public class IncomeController implements Serializable {
      public void setIncome(Income income) {
         this.income = income;
     }
-    //TODO
+    
     
     public void saveData() {
         if (income.getId() == 0) {

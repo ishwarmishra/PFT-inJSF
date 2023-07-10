@@ -7,8 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import personalfinancetrackerinweb.repository.ExpenseRepository;
+import personalfinancetrackerinweb.repository.*;
 import personalfinancetrackerinweb.model.Expense;
 
 @Named
@@ -33,10 +32,6 @@ public class ExpenseController implements Serializable {
         return expense;
     }
 
-    public void setExpense(Expense expense) {
-        this.expense = expense;
-    }
-
     public List<Expense> getExpenseList() {
         return expenseList;
     }
@@ -48,23 +43,37 @@ public class ExpenseController implements Serializable {
     @PostConstruct
     public void init() {
         expense = new Expense();
-        expenseList = expenseRepository.findAll();
-
+        findAll();
     }
 
-    public void saveData() {
-        expenseRepository.create(expense);
+    public void beforeCreate() {
         expense = new Expense();
     }
 
-    public void deleteData(int id) {
-        expenseRepository.delete(id);
+    public void setExpense(Expense expense) {
+        this.expense = expense;
+    }
 
+    public void saveData() {
+        if (expense.getId() == 0) {
+            expenseRepository.create(expense);
+        } else {
+            expenseRepository.update(expense);
+        }
+        expense = new Expense();
+        findAll();
+    }
+
+    public void deleteData(Expense expense) {
+        expenseRepository.delete(expense.getId());
+        findAll();
     }
 
     public void updateData(Expense expenseEntity) {
         expenseRepository.update(expenseEntity);
     }
 
-    
+    public void findAll() {
+        expenseList = expenseRepository.findAll();
+    }
 }

@@ -65,6 +65,7 @@ public class CategoryController implements Serializable {
         categoryRepository.update(categoryEntity);
 
     }
+    
 
     
 }
