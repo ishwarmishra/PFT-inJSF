@@ -12,9 +12,8 @@ import javax.persistence.Temporal;
 @Table(name = "income_entity")
 public class Income extends AbstractEntity implements Serializable, GenericEntityInterface {
 
-    private String name;
-
-    private BigDecimal amount;
+   private String name;
+   private BigDecimal amount;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;

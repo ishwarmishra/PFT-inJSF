@@ -21,7 +21,7 @@
         <p:layoutUnit position="center">
             <h:form id="incomeListForm">
 
-                <p:commandButton value="Add" action="#{incomeController.beforeCreate()}" styleClass="button-style"  update=":incomeForm"
+                <p:commandButton value="Add Income" action="#{incomeController.beforeCreate()}" styleClass="button-style"  update=":incomeForm"
                                  oncomplete="PF('incomeDialogVar').show();"  />
                 <ui:include src="incomeReport.xhtml" />
             </h:form>
@@ -35,7 +35,7 @@
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
                     <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style" converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
-                        <f:selectItems value="#{categoryController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                        <f:selectItems value="#{incomeController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
@@ -52,3 +52,4 @@
         </p:dialog>
     </h:body>
 </html>
+

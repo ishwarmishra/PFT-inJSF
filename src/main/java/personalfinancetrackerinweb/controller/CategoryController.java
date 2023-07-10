@@ -1,12 +1,13 @@
 package personalfinancetrackerinweb.controller;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import personalfinancetrackerinweb.repository.CategoryRepository;
 import personalfinancetrackerinweb.model.Category;
+import personalfinancetrackerinweb.repository.CategoryRepository;
 
 @Named
 @ViewScoped
@@ -16,7 +17,6 @@ public class CategoryController implements Serializable {
     private CategoryRepository categoryRepository;
     private Category category;
     private List<Category> categoryList;
-
 
     public CategoryRepository getCategoryRepository() {
         return categoryRepository;
@@ -35,37 +35,37 @@ public class CategoryController implements Serializable {
     }
 
     public List<Category> getCategoryList() {
-        return categoryRepository.findAll();
+        return categoryList;
     }
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
     
-    
     @PostConstruct
     public void init() {
         category = new Category();
-        categoryList = categoryRepository.findAll();
-
+        findAll();
     }
 
     public void saveCategory() {
         categoryRepository.create(category);
         category = new Category();
-    
+        findAll();
     }
 
     public void deleteCategory(int id) {
         categoryRepository.delete(id);
-  
+        findAll();
     }
 
     public void updateCategory(Category categoryEntity) {
         categoryRepository.update(categoryEntity);
-
+        findAll();
     }
     
-
+    public void findAll() {
+        categoryList = categoryRepository.findAll();
+    }
     
 }
