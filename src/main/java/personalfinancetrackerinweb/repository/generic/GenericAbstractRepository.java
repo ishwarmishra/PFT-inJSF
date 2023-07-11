@@ -1,10 +1,8 @@
 package personalfinancetrackerinweb.repository.generic;
+
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.AbstractEntity;
-import personalfinancetrackerinweb.model.Category;
-import personalfinancetrackerinweb.model.CategoryType;
 
 public abstract class GenericAbstractRepository<T extends AbstractEntity> implements GenericRepositoryInterface<T> {
 
@@ -45,12 +43,10 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     public T update(T data) {
         return getEntityManager().merge(data);
     }
-    
+
     @Override
-    public T getById(int id){
-      return getEntityManager().find(entityClass,id);
-        
+    public T getById(int id) {
+        return getEntityManager().find(entityClass, id);
+
     }
-    
-    
 }

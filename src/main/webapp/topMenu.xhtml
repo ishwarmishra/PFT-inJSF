@@ -9,6 +9,11 @@
     <h:outputStylesheet name="primefaces/primefaces.css" library="primefaces" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <title>Navigation-Bar</title>
+    <style>
+        .my-navbar .ui-menuitem-link {
+            margin-right: 40px; 
+        }
+    </style>
 </h:head>
 <h:body>
     <h:form class="my-navbar">
@@ -16,7 +21,7 @@
             <p:menuitem value="Home" outcome="index" icon="fa fa-home" />
             <p:menuitem value="Income Details" outcome="incomeSource" icon="fa fa-money-bill" />
             <p:menuitem value="Expense Details" outcome="expenseSource" icon="fa fa-chart-bar" />
-            <p:menuitem value="Category" outcome="categoryReport" icon="fa fa-tags" />
+            <p:menuitem value="Category" outcome="categorySource" icon="fa fa-tags" />
         </p:menubar>
     </h:form>
 </h:body>

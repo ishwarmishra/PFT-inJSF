@@ -1,27 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-   <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="primefaces" name="primefaces.css" />
-        <title>Category Report</title>
-    </h:head>
-    <h:body>
-        <h:form class="my-navbar">
-            <ui:include src="topMenu.xhtml" />
-        </h:form>
-        <h1>Category Report</h1>
-        <h:form>
-            <p:dataTable id="categoryTable" value="#{categoryController.categoryList}" var="category">
-                <p:column headerText="Category Name">
-                    #{category.name}
-                </p:column>
-                <p:column headerText="Category Type">
-                    #{category.type}
-                </p:column>
-            </p:dataTable>
-        </h:form>
-    </h:body>
-</html>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:form>
+
+        <p:dataTable id="categoryTable" value="#{categoryController.categoryList}" var="category"
+                     paginator="true" paginatorPosition="bottom" rows="5"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15">
+
+            <p:column headerText="Category Name">
+                #{category.name}
+            </p:column>
+            <p:column headerText="Category Type">
+                #{category.type}
+            </p:column>
+
+            <p:column headerText="Action">
+                <p:commandButton value="Edit" action="#{categoryController.setCategory(category)}" styleClass="button-style"  update=":categoryForm"
+                                 oncomplete="PF('categoryDialogVar').show();"  />
+                <p:commandButton value="Delete" action="#{categoryController.deleteData(category)}" styleClass="button-style"  update="categoryTable"
+                                 />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:component>
