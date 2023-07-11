@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:form>
+
+        <p:dataTable id="budgetTable" value="#{budgetController.budgetList}" var="budget"
+                     paginator="true" paginatorPosition="bottom" rows="5"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15" >
+
+            <p:column headerText="Category">
+                #{budget.category.name}
+            </p:column>
+            <p:column headerText="Amount">
+                #{budget.amount}
+            </p:column>
+
+            <p:column headerText="Action">
+                <p:commandButton value="Edit" action="#{budgetController.setBudget(budget)}" styleClass="button-style" update=":budgetForm"
+                                 oncomplete="PF('budgetDialogVar').show();"  />
+                <p:commandButton value="Delete" action="#{budgetController.deleteData(budget)}" styleClass="button-style" update="budgetTable"
+                                 />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</ui:component>

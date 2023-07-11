@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="primefaces" name="primefaces.css" />
+
+        <title>Budget</title>
+    </h:head>
+    <h:body>
+        <h:form class="my-navbar">
+            <ui:include src="topMenu.xhtml" />
+        </h:form>
+
+        <p:layoutUnit position="center">
+            <h:form id="budgetListForm">
+
+                <p:commandButton value="Add Budget" action="#{budgetController.beforeCreate()}" styleClass="button-style" update=":budgetForm"
+                                 oncomplete="PF('budgetDialogVar').show();"  />
+                <ui:include src="budgetReport.xhtml" />
+            </h:form>
+        </p:layoutUnit>
+        <p:dialog id="budgetDialog" widgetVar="budgetDialogVar" header="Add Budget Source" modal="true" resizable="false">
+            <h:form id="budgetForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="category" value="Category:" styleClass="label-style" />
+                    <p:selectOneMenu id="category" value="#{budgetController.budget.category}" styleClass="input-style" converter="categoryConverter">
+                        <f:selectItem itemLabel="Select Category name" itemValue="" />
+                        <f:selectItems value="#{budgetController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
+                    <p:inputText id="amount" value="#{budgetController.budget.amount}" styleClass="input-style" />
+
+                    <p:commandButton value="Save"
+                                     action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm"
+                                     oncomplete="PF('budgetDialogVar').hide();"  />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

@@ -16,9 +16,7 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
     @Enumerated(EnumType.STRING)
     private CategoryType type;
     
-    
-
-    public Category() {
+        public Category() {
     }
 
     public Category(String name, CategoryType type) {
@@ -52,5 +50,4 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         Category otherCategory = (Category) obj;
         return Objects.equals(this.getId(), otherCategory.getId());
     }
-
 }

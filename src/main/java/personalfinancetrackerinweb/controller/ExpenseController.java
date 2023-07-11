@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.controller;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,15 +18,14 @@ public class ExpenseController implements Serializable {
 
     @Inject
     private ExpenseRepository expenseRepository;
-    
+
     @Inject
     private CategoryRepository categoryRepository;
- 
+
     private Expense expense;
     private List<Expense> expenseList;
     private List<Category> categoryList;
 
-    
     public ExpenseRepository getExpenseRepository() {
         return expenseRepository;
     }
@@ -41,8 +41,7 @@ public class ExpenseController implements Serializable {
     public void setCategoryRepository(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    
-       
+
     public Expense getExpense() {
         return expense;
     }
@@ -54,7 +53,7 @@ public class ExpenseController implements Serializable {
     public void setExpenseList(List<Expense> expenseList) {
         this.expenseList = expenseList;
     }
-    
+
     public List<Category> getCategoryList() {
         return categoryList;
     }
@@ -62,22 +61,22 @@ public class ExpenseController implements Serializable {
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
-    
+
     @PostConstruct
     public void init() {
-       expense = new Expense();
-       findAll();
+        expense = new Expense();
+        findAll();
     }
-    
-    public void beforeCreate(){
+
+    public void beforeCreate() {
         expense = new Expense();
         categoryList = categoryRepository.findByCategoryType(CategoryType.EXPENSE);
     }
-    
+
     public void setExpense(Expense expense) {
         this.expense = expense;
     }
-    
+
     public void saveData() {
         if (expense.getId() == 0) {
             expenseRepository.create(expense);
@@ -96,7 +95,7 @@ public class ExpenseController implements Serializable {
     public void updateData(Expense expenseEntity) {
         expenseRepository.update(expenseEntity);
     }
-    
+
     public void findAll() {
         expenseList = expenseRepository.findAll();
     }

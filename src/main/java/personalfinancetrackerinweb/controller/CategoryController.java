@@ -16,7 +16,7 @@ public class CategoryController implements Serializable {
     private CategoryRepository categoryRepository;
     private Category category;
     private List<Category> categoryList;
-    
+
     public CategoryRepository getCategoryRepository() {
         return categoryRepository;
     }
@@ -24,7 +24,7 @@ public class CategoryController implements Serializable {
     public void setCategoryRepository(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    
+
     public Category getCategory() {
         return category;
     }
@@ -40,17 +40,17 @@ public class CategoryController implements Serializable {
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
-    
+
     @PostConstruct
     public void init() {
         category = new Category();
         findAll();
     }
-    
+
     public void beforeCreate() {
         category = new Category();
     }
-    
+
     public void saveData() {
         if (category.getId() == 0) {
             categoryRepository.create(category);
@@ -69,7 +69,7 @@ public class CategoryController implements Serializable {
     public void updateData(Category categoryEntity) {
         categoryRepository.update(categoryEntity);
     }
-    
+
     public void findAll() {
         categoryList = categoryRepository.findAll();
     }

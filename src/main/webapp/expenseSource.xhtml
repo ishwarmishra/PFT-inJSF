@@ -45,7 +45,7 @@
                     <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
 
                     <p:commandButton value="Save" 
-                                     action="#{expenseController.saveData}" styleClass="button-style"  update=":expenseListForm"
+                                     action="#{expenseController.saveData()}" styleClass="button-style"  update=":expenseListForm"
                                      oncomplete="PF('expenseDialogVar').hide();"  />
                 </h:panelGrid>
             </h:form>
