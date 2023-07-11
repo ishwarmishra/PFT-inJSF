@@ -22,7 +22,7 @@
         <p:layoutUnit position="center">
             <h:form id="incomeListForm">
 
-                <p:commandButton value="Add Income" action="#{incomeController.beforeCreate()}" styleClass="button-style"  update=":incomeForm"
+                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreate()}" styleClass="button-style"  update=":incomeForm"
                                  oncomplete="PF('incomeDialogVar').show();"  />
                 <ui:include src="incomeReport.xhtml" />
             </h:form>

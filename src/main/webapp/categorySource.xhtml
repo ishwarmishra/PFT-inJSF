@@ -22,7 +22,7 @@
         <p:layoutUnit position="center">
             <h:form id="categoryListForm">
 
-                <p:commandButton value="Add Category" action="#{categoryController.beforeCreate()}" styleClass="button-style"  update=":categoryForm"
+                <p:commandButton icon="fa fa-plus" action="#{categoryController.beforeCreate()}" styleClass="button-style"  update=":categoryForm"
                                  oncomplete="PF('categoryDialogVar').show();"  />
                 <ui:include src="categoryReport.xhtml" />
             </h:form>

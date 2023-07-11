@@ -21,7 +21,7 @@
         <p:layoutUnit position="center">
             <h:form id="expenseListForm">
 
-                <p:commandButton value="Add Expense" action="#{expenseController.beforeCreate()}" styleClass="button-style"  update=":expenseForm"
+                <p:commandButton icon="fa fa-plus" action="#{expenseController.beforeCreate()}" styleClass="button-style"  update=":expenseForm"
                                  oncomplete="PF('expenseDialogVar').show();"  />
                 <ui:include src="expenseReport.xhtml" />
             </h:form>

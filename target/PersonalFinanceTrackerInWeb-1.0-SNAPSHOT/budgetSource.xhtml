@@ -21,7 +21,7 @@
         <p:layoutUnit position="center">
             <h:form id="budgetListForm">
 
-                <p:commandButton value="Add Budget" action="#{budgetController.beforeCreate()}" styleClass="button-style" update=":budgetForm"
+                <p:commandButton icon="fa fa-plus" action="#{budgetController.beforeCreate()}" styleClass="button-style" update=":budgetForm"
                                  oncomplete="PF('budgetDialogVar').show();"  />
                 <ui:include src="budgetReport.xhtml" />
             </h:form>

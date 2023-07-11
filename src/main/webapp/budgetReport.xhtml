@@ -11,17 +11,17 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15" >
 
-            <p:column headerText="Category">
+            <p:column headerText="Category" filterBy="#{budget.category.name}" style="width: 45%">
                 #{budget.category.name}
             </p:column>
-            <p:column headerText="Amount">
+            <p:column headerText="Amount" filterBy=" #{budget.amount}" style="width: 45%">
                 #{budget.amount}
             </p:column>
 
-            <p:column headerText="Action">
-                <p:commandButton value="Edit" action="#{budgetController.setBudget(budget)}" styleClass="button-style" update=":budgetForm"
+            <p:column headerText="Action" style="width: 10%">
+                <p:commandButton icon="fa fa-edit" action="#{budgetController.setBudget(budget)}" styleClass="button-style" update=":budgetForm"
                                  oncomplete="PF('budgetDialogVar').show();"  />
-                <p:commandButton value="Delete" action="#{budgetController.deleteData(budget)}" styleClass="button-style" update="budgetTable"
+                <p:commandButton icon="fa fa-trash" action="#{budgetController.deleteData(budget)}" styleClass="button-style" update="budgetTable"
                                  />
             </p:column>
         </p:dataTable>

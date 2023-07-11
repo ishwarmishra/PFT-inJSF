@@ -11,23 +11,23 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
 
-            <p:column headerText="Income Source">
+            <p:column filterBy="#{income.name}" headerText="Income Source" style="width: 25%">
                 #{income.name}
             </p:column>
-            <p:column headerText="Category">
+            <p:column headerText="Category" filterBy="#{income.category.name}" style="width: 25%">
                 #{income.category.name}
             </p:column>
-            <p:column headerText="Amount">
+            <p:column headerText="Amount" filterBy="#{income.amount}" style="width: 15%">
                 #{income.amount}
             </p:column>
-            <p:column headerText="Date">
+            <p:column headerText="Date" filterBy="#{income.date}" style="width: 20%">
                 #{income.date}
             </p:column>
 
             <p:column headerText="Action">
-                <p:commandButton value="Edit" action="#{incomeController.setIncome(income)}" styleClass="button-style"  update=":incomeForm"
+                <p:commandButton icon="fa fa-edit" action="#{incomeController.setIncome(income)}" styleClass="button-style"  update=":incomeForm"
                                  oncomplete="PF('incomeDialogVar').show();"  />
-                <p:commandButton value="Delete" action="#{incomeController.deleteData(income)}" styleClass="button-style"  update="incomeTable"
+                <p:commandButton icon="fa fa-trash" action="#{incomeController.deleteData(income)}" styleClass="button-style"  update="incomeTable"
                                  />
             </p:column>
         </p:dataTable>

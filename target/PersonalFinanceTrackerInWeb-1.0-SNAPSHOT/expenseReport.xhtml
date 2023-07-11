@@ -11,23 +11,23 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15" >
 
-            <p:column headerText="Expense Source">
+            <p:column headerText="Expense Source" filterBy="#{expense.name}" style="width: 25%">
                 #{expense.name}
             </p:column>
-            <p:column headerText="Category">
+            <p:column headerText="Category"  filterBy="#{expense.category.name}" style="width: 25%">
                 #{expense.category.name}
             </p:column>
-            <p:column headerText="Amount">
+            <p:column headerText="Amount"  filterBy="#{expense.amount}" style="width: 15%">
                 #{expense.amount}
             </p:column>
-            <p:column headerText="Date">
+            <p:column headerText="Date"  filterBy="#{expense.date}" style="width: 20%">
                 #{expense.date}
             </p:column>
 
             <p:column headerText="Action">
-                <p:commandButton value="Edit" action="#{expenseController.setExpense(expense)}" styleClass="button-style"  update=":expenseForm"
+                <p:commandButton icon="fa fa-edit" action="#{expenseController.setExpense(expense)}" styleClass="button-style"  update=":expenseForm"
                                  oncomplete="PF('expenseDialogVar').show();"  />
-                <p:commandButton value="Delete" action="#{expenseController.deleteData(expense)}" styleClass="button-style"  update="expenseTable"
+                <p:commandButton icon="fa fa-trash" action="#{expenseController.deleteData(expense)}" styleClass="button-style"  update="expenseTable"
                                  />
             </p:column>
         </p:dataTable>
