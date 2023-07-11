@@ -1,21 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet library="primefaces" name="primefaces.css" />
-        <title>Navigation-Bar</title>
-    </h:head>
-    <h:body>
-        <h:form class="my-navbar">
-            <p:menubar>
-                <p:menuitem value="Home" outcome="index" />
-                <p:menuitem value="Income Details" outcome="incomeSource" />
-                <p:menuitem value="Expense Details" outcome="expenseSource" />
-                <p:menuitem value="Category" outcome="categoryReport" />
-            </p:menubar>
-        </h:form>
-    </h:body>
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputScript name="primefaces/primefaces.js" library="primefaces" />
+    <h:outputStylesheet name="primefaces/primefaces.css" library="primefaces" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>Navigation-Bar</title>
+</h:head>
+<h:body>
+    <h:form class="my-navbar">
+        <p:menubar>
+            <p:menuitem value="Home" outcome="index" icon="fa fa-home" />
+            <p:menuitem value="Income Details" outcome="incomeSource" icon="fa fa-money-bill" />
+            <p:menuitem value="Expense Details" outcome="expenseSource" icon="fa fa-chart-bar" />
+            <p:menuitem value="Category" outcome="categoryReport" icon="fa fa-tags" />
+        </p:menubar>
+    </h:form>
+</h:body>
 </html>
