@@ -20,6 +20,9 @@
         <h:form>
             <p:chart type="line" model="#{expenseIncomeController.chartModel}" style="height:400px" responsive="true"/>
         </h:form>
+        <h:form>
+            <p:chart type="pie" model="#{budgetController.pieChartController.pieModel}" style="width:400px; height:300px;" responsive="true" />
+        </h:form>
 
     </h:body>
 </html>
