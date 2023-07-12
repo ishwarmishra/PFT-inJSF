@@ -49,4 +49,6 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         Category otherCategory = (Category) obj;
         return Objects.equals(this.getId(), otherCategory.getId());
     }
+    
+    
 }

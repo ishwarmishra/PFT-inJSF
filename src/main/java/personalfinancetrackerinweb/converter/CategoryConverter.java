@@ -2,7 +2,7 @@ package personalfinancetrackerinweb.converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import personalfinancetrackerinweb.model.Category;
-import personalfinancetrackerinweb.repository.CategoryRepository;
+import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 
@@ -10,7 +10,7 @@ import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 public class CategoryConverter extends GenericConverter {
 
     @Inject
-    private  CategoryRepository categoryRepository;
+    private  CategoryRepositoryImpl categoryRepository;
 
     @Override
     protected GenericAbstractRepository getGenericRepository() {

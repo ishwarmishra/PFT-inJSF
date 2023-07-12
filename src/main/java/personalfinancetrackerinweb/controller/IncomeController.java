@@ -17,29 +17,29 @@ import personalfinancetrackerinweb.model.Income;
 public class IncomeController implements Serializable {
 
     @Inject
-    private IncomeRepository incomeRepository;
+    private IncomeRepositoryImpl incomeRepositoryImpl;
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private CategoryRepositoryImpl categoryRepositoryImpl;
 
     private Income income;
     private List<Income> incomeList;
     private List<Category> categoryList;
 
-    public IncomeRepository getIncomeRepository() {
-        return incomeRepository;
+    public IncomeRepositoryImpl getIncomeRepositoryImpl() {
+        return incomeRepositoryImpl;
     }
 
-    public void setIncomeRepository(IncomeRepository incomeRepository) {
-        this.incomeRepository = incomeRepository;
+    public void setIncomeRepositoryImpl(IncomeRepositoryImpl incomeRepositoryImpl) {
+        this.incomeRepositoryImpl = incomeRepositoryImpl;
     }
 
-    public CategoryRepository getCategoryRepository() {
-        return categoryRepository;
+    public CategoryRepositoryImpl getCategoryRepositoryImpl() {
+        return categoryRepositoryImpl;
     }
 
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl ){
+        this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
     public Income getIncome() {
@@ -70,7 +70,7 @@ public class IncomeController implements Serializable {
 
     public void beforeCreate() {
         income = new Income();
-        categoryList = categoryRepository.findByCategoryType(CategoryType.INCOME);
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.INCOME);
     }
 
     public void setIncome(Income income) {
@@ -79,25 +79,25 @@ public class IncomeController implements Serializable {
 
     public void saveData() {
         if (income.getId() == 0) {
-            incomeRepository.create(income);
+            incomeRepositoryImpl.create(income);
         } else {
-            incomeRepository.update(income);
+            incomeRepositoryImpl.update(income);
         }
         income = new Income();
         findAll();
     }
 
     public void deleteData(Income income) {
-        incomeRepository.delete(income.getId());
+        incomeRepositoryImpl.delete(income.getId());
         findAll();
     }
 
     public void updateData(Income incomeEntity) {
-        incomeRepository.update(incomeEntity);
+        incomeRepositoryImpl.update(incomeEntity);
     }
 
     public void findAll() {
-        incomeList = incomeRepository.findAll();
+        incomeList = incomeRepositoryImpl.findAll();
 
     }
 

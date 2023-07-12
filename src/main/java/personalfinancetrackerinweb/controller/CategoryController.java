@@ -6,23 +6,23 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import personalfinancetrackerinweb.model.Category;
-import personalfinancetrackerinweb.repository.CategoryRepository;
+import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Named
 @ViewScoped
 public class CategoryController implements Serializable {
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private CategoryRepositoryImpl categoryRepositoryImpl;
     private Category category;
     private List<Category> categoryList;
 
-    public CategoryRepository getCategoryRepository() {
-        return categoryRepository;
+    public CategoryRepositoryImpl getCategoryRepository() {
+        return categoryRepositoryImpl;
     }
 
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
+        this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
     public Category getCategory() {
@@ -53,24 +53,24 @@ public class CategoryController implements Serializable {
 
     public void saveData() {
         if (category.getId() == 0) {
-            categoryRepository.create(category);
+            categoryRepositoryImpl.create(category);
         } else {
-            categoryRepository.update(category);
+            categoryRepositoryImpl.update(category);
         }
         category = new Category();
         findAll();
     }
 
     public void deleteData(Category category) {
-        categoryRepository.delete(category.getId());
+        categoryRepositoryImpl.delete(category.getId());
         findAll();
     }
 
     public void updateData(Category categoryEntity) {
-        categoryRepository.update(categoryEntity);
+        categoryRepositoryImpl.update(categoryEntity);
     }
 
     public void findAll() {
-        categoryList = categoryRepository.findAll();
+        categoryList = categoryRepositoryImpl.findAll();
     }
 }

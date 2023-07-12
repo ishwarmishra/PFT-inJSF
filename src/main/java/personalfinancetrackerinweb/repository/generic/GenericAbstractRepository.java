@@ -48,4 +48,19 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
         return getEntityManager().find(entityClass, id);
 
     }
+
+    @Override
+    public List<Object[]> getIncomesByMonth() {
+        return getEntityManager()
+                .createQuery("SELECT MONTH(e.date), SUM(e.amount) FROM " + entityClass.getSimpleName() + " e GROUP BY MONTH(e.date)")
+                .getResultList();
+    }
+
+    @Override
+    public List<Object[]> getExpensesByMonth() {
+        return getEntityManager()
+                .createQuery("SELECT MONTH(e.date), SUM(e.amount) FROM " + entityClass.getSimpleName() + " e GROUP BY MONTH(e.date)")
+                .getResultList();
+    }
+
 }

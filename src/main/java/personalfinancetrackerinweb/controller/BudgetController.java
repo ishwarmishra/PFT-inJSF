@@ -8,37 +8,37 @@ import javax.inject.Named;
 import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
-import personalfinancetrackerinweb.repository.BudgetRepository;
-import personalfinancetrackerinweb.repository.CategoryRepository;
+import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
+import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Named
 @ViewScoped
 public class BudgetController implements Serializable {
 
     @Inject
-    private BudgetRepository budgetRepository;
+    private BudgetRepositoryImpl budgetRepositoryImpl;
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private CategoryRepositoryImpl categoryRepositoryImpl;
 
     private Budget budget;
     private List<Budget> budgetList;
     private List<Category> categoryList;
 
-    public BudgetRepository getBudgetRepository() {
-        return budgetRepository;
+    public BudgetRepositoryImpl getBudgetRepositoryImpl() {
+        return budgetRepositoryImpl;
     }
 
-    public void setBudgetRepository(BudgetRepository budgetRepository) {
-        this.budgetRepository = budgetRepository;
+    public void setBudgetRepositoryImpl(BudgetRepositoryImpl budgetRepositoryImpl) {
+        this.budgetRepositoryImpl = budgetRepositoryImpl;
     }
 
-    public CategoryRepository getCategoryRepository() {
-        return categoryRepository;
+    public CategoryRepositoryImpl getCategoryRepositoryImpl() {
+        return categoryRepositoryImpl;
     }
 
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
+        this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
     public Budget getBudget() {
@@ -69,7 +69,7 @@ public class BudgetController implements Serializable {
 
     public void beforeCreate() {
         budget = new Budget();
-        categoryList = categoryRepository.findByCategoryType(CategoryType.EXPENSE);
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
     }
     public void setBudget(Budget budget) {
         this.budget = budget;
@@ -77,24 +77,24 @@ public class BudgetController implements Serializable {
 
     public void saveData() {
         if (budget.getId() == 0) {
-            budgetRepository.create(budget);
+            budgetRepositoryImpl.create(budget);
         } else {
-            budgetRepository.update(budget);
+            budgetRepositoryImpl.update(budget);
         }
         budget = new Budget();
         findAll();
     }
 
     public void deleteData(Budget budget) {
-        budgetRepository.delete(budget.getId());
+        budgetRepositoryImpl.delete(budget.getId());
         findAll();
     }
 
     public void updateData(Budget budgetEntity) {
-        budgetRepository.update(budgetEntity);
+        budgetRepositoryImpl.update(budgetEntity);
     }
 
     public void findAll() {
-        budgetList = budgetRepository.findAll();
+        budgetList = budgetRepositoryImpl.findAll();
     }
 }

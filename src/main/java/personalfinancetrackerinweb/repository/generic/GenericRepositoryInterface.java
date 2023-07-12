@@ -7,6 +7,10 @@ public interface GenericRepositoryInterface<T> {
     void delete(int id);
     T update(T data);
     T getById(int id);
-  
     List<T> findAll();
+    
+    List<Object[]> getIncomesByMonth();
+    List<Object[]> getExpensesByMonth();
+    
+
 }

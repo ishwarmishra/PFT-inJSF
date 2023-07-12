@@ -1,5 +1,4 @@
 package personalfinancetrackerinweb.controller;
-
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -8,38 +7,38 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
-import personalfinancetrackerinweb.repository.CategoryRepository;
-import personalfinancetrackerinweb.repository.ExpenseRepository;
 import personalfinancetrackerinweb.model.Expense;
+import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
+import personalfinancetrackerinweb.repository.ExpenseRepositoryImpl;
 
 @Named
 @ViewScoped
 public class ExpenseController implements Serializable {
 
     @Inject
-    private ExpenseRepository expenseRepository;
+    private ExpenseRepositoryImpl expenseRepositoryImpl;
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private CategoryRepositoryImpl categoryRepositoryImpl;
 
     private Expense expense;
     private List<Expense> expenseList;
     private List<Category> categoryList;
 
-    public ExpenseRepository getExpenseRepository() {
-        return expenseRepository;
+    public ExpenseRepositoryImpl getExpenseRepositoryImpl() {
+        return expenseRepositoryImpl;
     }
 
-    public void setExpenseRepository(ExpenseRepository expenseRepository) {
-        this.expenseRepository = expenseRepository;
+    public void setExpenseRepositoryImpl(ExpenseRepositoryImpl expenseRepositoryImpl) {
+        this.expenseRepositoryImpl = expenseRepositoryImpl;
     }
 
-    public CategoryRepository getCategoryRepository() {
-        return categoryRepository;
+    public CategoryRepositoryImpl getCategoryRepositoryImpl() {
+        return categoryRepositoryImpl;
     }
 
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public void setCategoryRepository(CategoryRepositoryImpl categoryRepositoryImpl) {
+        this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
     public Expense getExpense() {
@@ -70,7 +69,7 @@ public class ExpenseController implements Serializable {
 
     public void beforeCreate() {
         expense = new Expense();
-        categoryList = categoryRepository.findByCategoryType(CategoryType.EXPENSE);
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
     }
 
     public void setExpense(Expense expense) {
@@ -79,24 +78,24 @@ public class ExpenseController implements Serializable {
 
     public void saveData() {
         if (expense.getId() == 0) {
-            expenseRepository.create(expense);
+            expenseRepositoryImpl.create(expense);
         } else {
-            expenseRepository.update(expense);
+            expenseRepositoryImpl.update(expense);
         }
         expense = new Expense();
         findAll();
     }
 
     public void deleteData(Expense expense) {
-        expenseRepository.delete(expense.getId());
+        expenseRepositoryImpl.delete(expense.getId());
         findAll();
     }
 
     public void updateData(Expense expenseEntity) {
-        expenseRepository.update(expenseEntity);
+        expenseRepositoryImpl.update(expenseEntity);
     }
 
     public void findAll() {
-        expenseList = expenseRepository.findAll();
+        expenseList = expenseRepositoryImpl.findAll();
     }
 }
