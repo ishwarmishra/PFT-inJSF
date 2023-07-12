@@ -11,10 +11,10 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
 
-            <p:column headerText="Category Name" filterBy=" #{category.name}" style="width: 45%" >
+            <p:column headerText="Category Name" filterBy=" #{category.name}" style="width: 45%" sortBy="#{category.name}">
                 #{category.name}
             </p:column>
-            <p:column headerText="Category Type" filterBy=" #{category.type}" style="width: 45%">
+            <p:column headerText="Category Type" filterBy=" #{category.type}" style="width: 45%" sortBy="#{category.type}">
                 #{category.type}
             </p:column>
 

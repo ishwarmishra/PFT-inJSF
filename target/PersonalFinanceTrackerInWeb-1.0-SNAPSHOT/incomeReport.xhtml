@@ -11,16 +11,16 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
 
-            <p:column filterBy="#{income.name}" headerText="Income Source" style="width: 25%">
+            <p:column filterBy="#{income.name}" headerText="Income Source" style="width: 25%"  sortBy="#{income.name}">
                 #{income.name}
             </p:column>
-            <p:column headerText="Category" filterBy="#{income.category.name}" style="width: 25%">
+            <p:column headerText="Category" filterBy="#{income.category.name}" style="width: 25%" sortBy="#{income.category.name}">
                 #{income.category.name}
             </p:column>
-            <p:column headerText="Amount" filterBy="#{income.amount}" style="width: 15%">
+            <p:column headerText="Amount" filterBy="#{income.amount}" style="width: 15%" sortBy=" #{income.amount}">
                 #{income.amount}
             </p:column>
-            <p:column headerText="Date" filterBy="#{income.date}" style="width: 20%">
+            <p:column headerText="Date" filterBy="#{income.date}" style="width: 20%" sortBy=" #{income.date}">
                 #{income.date}
             </p:column>
 
