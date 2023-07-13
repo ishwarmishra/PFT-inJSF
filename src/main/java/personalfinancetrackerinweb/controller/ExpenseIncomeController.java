@@ -15,7 +15,10 @@ import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.BarChartModel;
+
 import org.primefaces.model.chart.LineChartSeries;
 
 import personalfinancetrackerinweb.model.Expense;
@@ -36,7 +39,8 @@ public class ExpenseIncomeController implements Serializable {
     private List<Expense> expenseList;
     private List<Income> incomeList;
 
-    private LineChartModel chartModel;
+    private LineChartModel lineChartModel;
+    private BarChartModel barChartModel;
 
     public ExpenseRepositoryImpl getExpenseRepositoryImpl() {
         return expenseRepositoryImpl;
@@ -70,19 +74,28 @@ public class ExpenseIncomeController implements Serializable {
         this.incomeList = incomeList;
     }
 
-    public LineChartModel getChartModel() {
-        return chartModel;
+    public LineChartModel getLineChartModel() {
+        return lineChartModel;
+    }
+
+    public BarChartModel getBarChartModel() {
+        return barChartModel;
     }
 
     @PostConstruct
     public void init() {
         expenseList = expenseRepositoryImpl.findAll();
         incomeList = incomeRepositoryImpl.findAll();
-        createChartModel();
+        createChartModels();
     }
 
-    private void createChartModel() {
-        chartModel = new LineChartModel();
+    private void createChartModels() {
+        createLineChartModel();
+        createBarChartModel();
+    }
+
+    private void createLineChartModel() {
+        lineChartModel = new LineChartModel();
 
         LineChartSeries incomeSeries = new LineChartSeries();
         incomeSeries.setLabel("Income");
@@ -104,17 +117,53 @@ public class ExpenseIncomeController implements Serializable {
             expenseSeries.set(month, amount);
         }
 
-        chartModel.addSeries(incomeSeries);
-        chartModel.addSeries(expenseSeries);
-        chartModel.setTitle("Income vs Expense Report");
-        chartModel.setLegendPosition("ne");
+        lineChartModel.addSeries(incomeSeries);
+        lineChartModel.addSeries(expenseSeries);
+        lineChartModel.setTitle("Income vs Expense Report");
+        lineChartModel.setLegendPosition("ne");
 
         Axis xAxis = new CategoryAxis("Month");
-        chartModel.getAxes().put(AxisType.X, xAxis);
+        lineChartModel.getAxes().put(AxisType.X, xAxis);
 
-        Axis yAxis = chartModel.getAxis(AxisType.Y);
+        Axis yAxis = lineChartModel.getAxis(AxisType.Y);
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
+    }
+
+    private void createBarChartModel() {
+        barChartModel = new BarChartModel();
+
+        ChartSeries incomeSeriesBar = new ChartSeries();
+        incomeSeriesBar.setLabel("Income");
+
+        ChartSeries expenseSeriesBar = new ChartSeries();
+        expenseSeriesBar.setLabel("Expense");
+
+        for (Income income : incomeList) {
+            String month = getMonthFromDate(income.getDate());
+            BigDecimal amount = income.getAmount();
+
+            incomeSeriesBar.set(month, amount);
+        }
+
+        for (Expense expense : expenseList) {
+            String month = getMonthFromDate(expense.getDate());
+            BigDecimal amount = expense.getAmount();
+
+            expenseSeriesBar.set(month, amount);
+        }
+
+        barChartModel.addSeries(incomeSeriesBar);
+        barChartModel.addSeries(expenseSeriesBar);
+        barChartModel.setTitle("Income vs Expense Report");
+        barChartModel.setLegendPosition("ne");
+
+        Axis xAxisBar = new CategoryAxis("Month");
+        barChartModel.getAxes().put(AxisType.X, xAxisBar);
+
+        Axis yAxisBar = barChartModel.getAxis(AxisType.Y);
+        yAxisBar.setLabel("Amount");
+        yAxisBar.setMin(0);
     }
 
     private String getMonthFromDate(Date date) {

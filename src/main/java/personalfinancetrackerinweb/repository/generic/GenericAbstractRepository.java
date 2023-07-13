@@ -1,4 +1,6 @@
 package personalfinancetrackerinweb.repository.generic;
+
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import personalfinancetrackerinweb.model.AbstractEntity;
@@ -60,6 +62,19 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     public List<Object[]> getExpensesByMonth() {
         return getEntityManager()
                 .createQuery("SELECT MONTH(e.date), SUM(e.amount) FROM " + entityClass.getSimpleName() + " e GROUP BY MONTH(e.date)")
+                .getResultList();
+    }
+
+    @Override
+    public List<T> getBudgetsForCurrentMonth() {
+        // Implement the logic to fetch budgets for the current month
+
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+
+        return getEntityManager()
+                .createQuery("SELECT b FROM " + entityClass.getSimpleName() + " b WHERE MONTH(b.date) = :currentMonth", entityClass)
+                .setParameter("currentMonth", currentMonth)
                 .getResultList();
     }
 

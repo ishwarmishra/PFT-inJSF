@@ -4,7 +4,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="primefaces" name="primefaces.css" />
@@ -18,11 +17,12 @@
         <h1>Personal Finance Tracker</h1>
 
         <h:form>
-            <p:chart type="line" model="#{expenseIncomeController.chartModel}" style="height:400px" responsive="true"/>
+            <p:chart type="line" model="#{expenseIncomeController.lineChartModel}" style=" width:1400px; height:400px;" responsive="true"/>
+            <p:chart type="bar" model="#{expenseIncomeController.barChartModel}" style=" width:1400px; height:400px;" responsive="true"/>
+
         </h:form>
         <h:form>
-            <p:chart type="pie" model="#{budgetController.pieChartController.pieModel}" style="width:400px; height:300px;" responsive="true" />
+            <p:chart type="pie" model="#{budgetController.pieChartController.pieModel}" style="width:600px; height:300px;" responsive="true" />
         </h:form>
-
     </h:body>
 </html>

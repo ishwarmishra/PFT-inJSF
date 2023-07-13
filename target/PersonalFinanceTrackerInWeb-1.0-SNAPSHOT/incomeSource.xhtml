@@ -1,13 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-
 <html lang="en" 
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="primefaces" name="primefaces.css" />
@@ -44,7 +41,7 @@
 
                     <h:outputLabel for="date" value="Date:" styleClass="label-style" />
                     <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
-
+                    
                     <p:commandButton value="Save" 
                                      action="#{incomeController.saveData}" styleClass="button-style"  update=":incomeListForm"
                                      oncomplete="PF('incomeDialogVar').hide();"  />

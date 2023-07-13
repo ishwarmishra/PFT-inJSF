@@ -12,5 +12,7 @@ public interface GenericRepositoryInterface<T> {
     List<Object[]> getIncomesByMonth();
     List<Object[]> getExpensesByMonth();
     
+    List<T> getBudgetsForCurrentMonth();
+    
 
 }

@@ -23,6 +23,11 @@ public class BudgetController implements Serializable {
     
     @Inject
     private PieChartController pieChartController;
+    
+    private Budget budget;
+    private List<Budget> budgetList;
+    private List<Category> categoryList;
+    
 
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
@@ -47,7 +52,10 @@ public class BudgetController implements Serializable {
     public void setPieChartController(PieChartController pieChartController) {
         this.pieChartController = pieChartController;
     }
-
+    public Budget getBudget() {
+        return budget;
+    }
+    
     public List<Budget> getBudgetList() {
         return budgetList;
     }
@@ -65,15 +73,9 @@ public class BudgetController implements Serializable {
     }
     
 
-    private Budget budget;
-    private List<Budget> budgetList;
-    private List<Category> categoryList;
-
-    // Getters and setters
-
     @PostConstruct
     public void init() {
-        budget = new Budget();
+        budget=new Budget();
         findAll();
     }
 
