@@ -14,9 +14,11 @@ public class Income extends AbstractEntity implements Serializable, GenericEntit
 
    private String name;
    private BigDecimal amount;
+   
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
+    
     
     
     @ManyToOne

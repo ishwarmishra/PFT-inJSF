@@ -34,6 +34,9 @@
 
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
                     <p:inputText id="amount" value="#{budgetController.budget.amount}" styleClass="input-style" />
+                    
+                    <h:outputLabel for="date" value="Date:" styleClass="label-style" />
+                    <p:calendar id="date" value="#{budgetController.budget.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
 
                     <p:commandButton value="Save"
                                      action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm"

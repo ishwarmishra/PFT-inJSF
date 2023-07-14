@@ -1,6 +1,8 @@
 package personalfinancetrackerinweb.repository.generic;
 
 import java.util.List;
+import personalfinancetrackerinweb.model.Category;
+import personalfinancetrackerinweb.model.CategoryType;
 
 public interface GenericRepositoryInterface<T> {
     T create(T data);
@@ -12,7 +14,10 @@ public interface GenericRepositoryInterface<T> {
     List<Object[]> getIncomesByMonth();
     List<Object[]> getExpensesByMonth();
     
-    List<T> getBudgetsForCurrentMonth();
+    List<Category> findByCategoryType(CategoryType type);
+    
+    
+    
     
 
 }

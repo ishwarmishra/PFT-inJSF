@@ -6,7 +6,6 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="primefaces" name="primefaces.css" />
         <title>Expense Tracker</title>
     </h:head>
 
@@ -16,13 +15,29 @@
         </h:form>
         <h1>Personal Finance Tracker</h1>
 
-        <h:form>
-            <p:chart type="line" model="#{expenseIncomeController.lineChartModel}" style=" width:1400px; height:400px;" responsive="true"/>
-            <p:chart type="bar" model="#{expenseIncomeController.barChartModel}" style=" width:1400px; height:400px;" responsive="true"/>
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width: 100%">
 
-        </h:form>
-        <h:form>
-            <p:chart type="pie" model="#{budgetController.pieChartController.pieModel}" style="width:600px; height:300px;" responsive="true" />
-        </h:form>
+            <p:outputPanel>
+                <h2 class="chart-title">Line Chart</h2>
+                <p:chart type="line" model="#{expenseIncomeController.lineChartModel}" />
+            </p:outputPanel>
+
+            <p:outputPanel>
+                <h2 class="chart-title">Bar Chart</h2>
+                <p:chart type="bar" model="#{expenseIncomeController.barChartModel}" />
+            </p:outputPanel>
+
+            <p:outputPanel>
+                <h2 class="chart-title">Pie Chart</h2>
+                <p:chart type="pie" model="#{categoryBudgetController.pieChartModel}" />
+            </p:outputPanel>
+
+            <p:outputPanel>
+                <h2 class="chart-title">Category Budget Analysis</h2>
+                <p:chart type="bar" model="#{categoryBudgetAnalysisController.barChartModel}" />
+            </p:outputPanel>
+
+        </p:panelGrid>
+
     </h:body>
 </html>

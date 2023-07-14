@@ -24,10 +24,6 @@ public class CategoryRepositoryImpl extends GenericAbstractRepository<Category> 
         super(Category.class);
     }
 
-    public List<Category> findByCategoryType(CategoryType type) {
-        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c WHERE c.type = :type", Category.class);
-        query.setParameter("type", type);
-        return query.getResultList();
-    }
+    
 
 }
