@@ -24,15 +24,4 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
         super(Budget.class);
     }
 
-    public List<Budget> findByCategoryAndDateRange(Category category, Date startDate, Date endDate) {
-        TypedQuery<Budget> query = entityManager.createQuery(
-                "SELECT b FROM Budget b WHERE b.category = :category AND b.date BETWEEN :startDate AND :endDate",
-                Budget.class
-        );
-        query.setParameter("category", category);
-        query.setParameter("startDate", startDate);
-        query.setParameter("endDate", endDate);
-        return query.getResultList();
-    }
-
 }

@@ -167,9 +167,14 @@ public class ExpenseIncomeController implements Serializable {
     }
 
     private String getMonthFromDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int monthIndex = calendar.get(Calendar.MONTH);
-        return new DateFormatSymbols().getMonths()[monthIndex];
+    if (date == null) {
+        return ""; // Or any default value you prefer
     }
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    int monthIndex = calendar.get(Calendar.MONTH);
+    return new DateFormatSymbols().getMonths()[monthIndex];
+}
+
 }
