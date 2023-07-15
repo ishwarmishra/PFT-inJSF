@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.controller;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,14 +21,10 @@ public class BudgetController implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
-    
-    @Inject
-    private PieChartController pieChartController;
-    
+
     private Budget budget;
     private List<Budget> budgetList;
     private List<Category> categoryList;
-    
 
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
@@ -45,17 +42,10 @@ public class BudgetController implements Serializable {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
-    public PieChartController getPieChartController() {
-        return pieChartController;
-    }
-
-    public void setPieChartController(PieChartController pieChartController) {
-        this.pieChartController = pieChartController;
-    }
     public Budget getBudget() {
         return budget;
     }
-    
+
     public List<Budget> getBudgetList() {
         return budgetList;
     }
@@ -71,11 +61,10 @@ public class BudgetController implements Serializable {
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
-    
 
     @PostConstruct
     public void init() {
-        budget=new Budget();
+        budget = new Budget();
         findAll();
     }
 
@@ -109,6 +98,5 @@ public class BudgetController implements Serializable {
 
     public void findAll() {
         budgetList = budgetRepositoryImpl.findAll();
-        pieChartController.createPieModel();
     }
 }

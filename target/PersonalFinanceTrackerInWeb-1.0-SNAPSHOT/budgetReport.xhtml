@@ -9,11 +9,14 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15" >
 
-            <p:column headerText="Category" filterBy="#{budget.category.name}" style="width: 45%" sortBy="#{budget.category.name}">
+            <p:column headerText="Category" filterBy="#{budget.category.name}" style="width: 40%" sortBy="#{budget.category.name}">
                 #{budget.category.name}
             </p:column>
-            <p:column headerText="Amount" filterBy=" #{budget.amount}" style="width: 45%" sortBy="#{budget.amount}">
+            <p:column headerText="Amount" filterBy=" #{budget.amount}" style="width: 40%" sortBy="#{budget.amount}">
                 #{budget.amount}
+            </p:column>
+            <p:column headerText="Date" filterBy="#{budget.date}" style="width: 20%" sortBy=" #{budget.date}">
+                #{budget.date}
             </p:column>
 
             <p:column headerText="Action" style="width: 10%">
