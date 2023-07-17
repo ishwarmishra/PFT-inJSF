@@ -3,6 +3,8 @@ package personalfinancetrackerinweb.controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -85,6 +87,8 @@ public class BudgetController implements Serializable {
         }
         budget = new Budget();
         findAll();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Budgeting done successfully!"));
+
     }
 
     public void deleteData(Budget budget) {

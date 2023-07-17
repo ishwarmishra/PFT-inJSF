@@ -42,10 +42,11 @@
                     <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
 
                     <p:commandButton value="Save" 
-                                     action="#{expenseController.saveData()}" styleClass="button-style"  update=":expenseListForm"
+                                     action="#{expenseController.saveData()}" styleClass="button-style"  update=":expenseListForm growl"
                                      oncomplete="PF('expenseDialogVar').hide();"  />
                 </h:panelGrid>
             </h:form>
         </p:dialog>
+        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
     </h:body>
 </html>

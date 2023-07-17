@@ -32,16 +32,18 @@
                     <p:inputText id="name" value="#{categoryController.category.name}" styleClass="input-style" />
 
                     <h:outputLabel for="type" value="Category Type:" styleClass="label-style" />
-                    <h:selectOneMenu value="#{categoryController.category.type}">
+                    <h:selectOneMenu value="#{categoryController.category.type}" >
                         <f:selectItem itemLabel="Income" itemValue="INCOME" />
                         <f:selectItem itemLabel="Expense" itemValue="EXPENSE" />
                     </h:selectOneMenu>
 
                     <p:commandButton value="Save" 
-                                     action="#{categoryController.saveData}" styleClass="button-style"  update=":categoryListForm"
+                                     action="#{categoryController.saveData()}" styleClass="button-style"  update=":categoryListForm growl"
                                      oncomplete="PF('categoryDialogVar').hide();"  />
                 </h:panelGrid>
             </h:form>
         </p:dialog>
+        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+
     </h:body>
 </html>

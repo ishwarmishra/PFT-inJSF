@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.converter;
+
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,19 +24,16 @@ public abstract class GenericConverter implements Converter {
             return null;
         }
     }
-
     java.lang.Integer getKey(String value) {
         java.lang.Integer key;
         key = Integer.valueOf(value);
         return key;
     }
-
     String getStringKey(Object value) {
         StringBuilder sb = new StringBuilder();
         sb.append(value);
         return sb.toString();
     }
-
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
         if ("".equals(object)) {
