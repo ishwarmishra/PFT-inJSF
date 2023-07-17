@@ -26,7 +26,7 @@
                 <p:commandButton icon="fa fa-edit" action="#{incomeController.setIncome(income)}" styleClass="button-style"  update=":incomeForm"
                                  oncomplete="PF('incomeDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" action="#{incomeController.deleteData(income)}" styleClass="button-style"  update="incomeTable"
-                                 />
+                                 onclick="if (!confirm('Are you sure you want to delete this income?')) return false;" />
             </p:column>
         </p:dataTable>
     </h:form>

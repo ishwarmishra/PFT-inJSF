@@ -26,7 +26,7 @@
                 <p:commandButton icon="fa fa-edit" action="#{expenseController.setExpense(expense)}" styleClass="button-style"  update=":expenseForm"
                                  oncomplete="PF('expenseDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" action="#{expenseController.deleteData(expense)}" styleClass="button-style"  update="expenseTable"
-                                 />
+                                 onclick="if (!confirm('Are you sure you want to delete this expense?')) return false;" />
             </p:column>
         </p:dataTable>
     </h:form>

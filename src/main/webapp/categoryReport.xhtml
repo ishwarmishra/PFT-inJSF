@@ -21,7 +21,7 @@
                 <p:commandButton icon="fa fa-edit" action="#{categoryController.setCategory(category)}" styleClass="button-style"  update=":categoryForm"
                                  oncomplete="PF('categoryDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" action="#{categoryController.deleteData(category)}" styleClass="button-style"  update="categoryTable"
-                                 />
+                                 onclick="if (!confirm('Are you sure you want to delete this category?')) return false;" />
             </p:column>
         </p:dataTable>
     </h:form>

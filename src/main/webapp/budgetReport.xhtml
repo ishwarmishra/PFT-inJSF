@@ -23,7 +23,7 @@
                 <p:commandButton icon="fa fa-edit" action="#{budgetController.setBudget(budget)}" styleClass="button-style" update=":budgetForm"
                                  oncomplete="PF('budgetDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" action="#{budgetController.deleteData(budget)}" styleClass="button-style" update="budgetTable"
-                                 />
+                                 onclick="if (!confirm('Are you sure you want to delete this Budgeting for this expense category?')) return false;" />
             </p:column>
         </p:dataTable>
     </h:form>
