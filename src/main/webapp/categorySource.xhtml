@@ -25,14 +25,16 @@
                 <ui:include src="categoryReport.xhtml" />
             </h:form>
         </p:layoutUnit>    
-        <p:dialog id="categoryDialog" widgetVar="categoryDialogVar" header="Add Category" modal="true" resizable="false">
+        <p:dialog id="categoryDialog" widgetVar="categoryDialogVar" header="Add Category" modal="true" resizable="false" width="600" height="500">
             <h:form id="categoryForm">
-                <h:panelGrid columns="2">
+                <h:panelGrid >
                     <h:outputLabel for="name" value="Category Name:" styleClass="label-style" />
-                    <p:inputText id="name" value="#{categoryController.category.name}" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty categoryController.category.name}" />
+                    <p:inputText id="name" value="#{categoryController.category.name}" styleClass="input-style" required="true" />
 
                     <h:outputLabel for="type" value="Category Type:" styleClass="label-style" />
-                    <h:selectOneMenu value="#{categoryController.category.type}" >
+                    <h:outputText value="*" style="color: red;" rendered="#{empty categoryController.category.type}" />
+                    <h:selectOneMenu value="#{categoryController.category.type}" required="true">
                         <f:selectItem itemLabel="Income" itemValue="INCOME" />
                         <f:selectItem itemLabel="Expense" itemValue="EXPENSE" />
                     </h:selectOneMenu>

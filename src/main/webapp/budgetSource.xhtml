@@ -23,24 +23,27 @@
                 <ui:include src="budgetReport.xhtml" />
             </h:form>
         </p:layoutUnit>
-        <p:dialog id="budgetDialog" widgetVar="budgetDialogVar" header="Add Budget Source" modal="true" resizable="false">
+        <p:dialog id="budgetDialog" widgetVar="budgetDialogVar" header="Add Budget Source" modal="true" resizable="false" width="600" height="500">
             <h:form id="budgetForm">
-                <h:panelGrid columns="2">
+                <h:panelGrid >
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{budgetController.budget.category}" styleClass="input-style" converter="categoryConverter">
+                    <h:outputText value="*" style="color: red;" rendered="#{empty budgetController.budget.category}" />
+                    <p:selectOneMenu id="category" value="#{budgetController.budget.category}" styleClass="input-style" required="true"  converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
                         <f:selectItems value="#{budgetController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
-                    <p:inputText id="amount" value="#{budgetController.budget.amount}" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty budgetController.budget.amount}" />
+                    <p:inputText id="amount" value="#{budgetController.budget.amount}" styleClass="input-style" required="true"/>
 
                     <h:outputLabel for="date" value="Date:" styleClass="label-style" />
-                    <p:calendar id="date" value="#{budgetController.budget.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty budgetController.budget.date}"/>
+                    <p:calendar id="date" value="#{budgetController.budget.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" required="true" />
 
                     <p:commandButton value="Save"
                                      action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm growl"
-                                     oncomplete="PF('budgetDialogVar').hide();"  />
+                                     oncomplete="PF('budgetDialogVar').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>

@@ -47,63 +47,49 @@ public class ExpenseIncomeChartController implements Serializable {
     public ExpenseRepositoryImpl getExpenseRepositoryImpl() {
         return expenseRepositoryImpl;
     }
-
     public void setExpenseRepositoryImpl(ExpenseRepositoryImpl expenseRepositoryImpl) {
         this.expenseRepositoryImpl = expenseRepositoryImpl;
     }
-
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
     }
-
     public void setIncomeRepositoryImpl(IncomeRepositoryImpl incomeRepositoryImpl) {
         this.incomeRepositoryImpl = incomeRepositoryImpl;
     }
-
     public List<Expense> getExpenseList() {
         return expenseList;
     }
-
     public void setExpenseList(List<Expense> expenseList) {
         this.expenseList = expenseList;
     }
-
     public List<Income> getIncomeList() {
         return incomeList;
     }
-
     public void setIncomeList(List<Income> incomeList) {
         this.incomeList = incomeList;
     }
-
     public LineChartModel getLineChartModel() {
         return lineChartModel;
     }
-
     public BarChartModel getBarChartModel() {
         return barChartModel;
     }
-
     public String getChartType() {
         return chartType;
     }
-
     public void setChartType(String chartType) {
         this.chartType = chartType;
     }
-
     @PostConstruct
     public void init() {
         expenseList = expenseRepositoryImpl.findAll();
         incomeList = incomeRepositoryImpl.findAll();
         createChartModels();
     }
-
     public void createChartModels() {
         createLineChartModel();
         createBarChartModel();
     }
-
     private void createLineChartModel() {
         lineChartModel = new LineChartModel();
 
@@ -113,7 +99,6 @@ public class ExpenseIncomeChartController implements Serializable {
             createMonthlyLineChartModel();
         }
     }
-
     private void createBarChartModel() {
         barChartModel = new BarChartModel();
 
@@ -123,7 +108,6 @@ public class ExpenseIncomeChartController implements Serializable {
             createMonthlyBarChartModel();
         }
     }
-
     private void createWeeklyLineChartModel() {
         LineChartSeries incomeSeries = new LineChartSeries();
         incomeSeries.setLabel("Income");

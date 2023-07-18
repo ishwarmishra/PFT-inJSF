@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import personalfinancetrackerinweb.model.Category;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2023-07-18T12:49:36")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2023-07-18T17:27:40")
 @StaticMetamodel(Expense.class)
 public class Expense_ extends AbstractEntity_ {
 

@@ -17,39 +17,42 @@
         <p:layoutUnit position="center">
             <h:form id="incomeListForm">
 
-                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreate}" styleClass="button-style"
+                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreate()}" styleClass="button-style"
                                  update=":incomeForm" oncomplete="PF('incomeDialogVar').show();"/>
 
                 <ui:include src="incomeReport.xhtml"/>
             </h:form>
         </p:layoutUnit>
-        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Source" modal="true" resizable="false">
+        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Source" modal="true" resizable="false" width="600" height="500">
             <h:form id="incomeForm">
-                <h:panelGrid columns="2">
+                <h:panelGrid >
                     <h:outputLabel for="name" value="Income Source:" styleClass="label-style"/>
-                    <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style"/>
+                    <h:outputText value="*" style="color: red;" rendered="#{empty incomeController.income.name}" />
+                    <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" required="true" />
 
                     <h:outputLabel for="category" value="Category:" styleClass="label-style"/>
-                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style" converter="categoryConverter">
+                    <h:outputText value="*" style="color: red;" rendered="#{empty incomeController.income.category}" />
+                    <p:selectOneMenu id="category" value="#{incomeController.income.category}" styleClass="input-style" required="true" converter="categoryConverter"   >
                         <f:selectItem itemLabel="Select Category name" itemValue=""/>
                         <f:selectItems value="#{incomeController.categoryList}" var="v" itemLabel="#{v.name}"
                                        itemValue="#{v}"/>
                     </p:selectOneMenu>
 
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style"/>
-                    <p:inputText id="amount" value="#{incomeController.income.amount}" styleClass="input-style"/>
+                    <h:outputText value="*" style="color: red;" rendered="#{empty incomeController.income.amount}" />
+                    <p:inputText id="amount" value="#{incomeController.income.amount}" styleClass="input-style" required="true"/>
 
                     <h:outputLabel for="date" value="Date:" styleClass="label-style"/>
+                    <h:outputText value="*" style="color: red;"  rendered="#{empty incomeController.income.date}"/>
                     <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd"
-                                styleClass="input-style"/>
+                                styleClass="input-style" required="true"/>
 
                     <p:commandButton value="Save"
                                      action="#{incomeController.saveData()}" styleClass="button-style" update=":incomeListForm growl"
-                                     oncomplete="PF('incomeDialogVar').hide(); "/>
+                                     oncomplete="PF('incomeDialogVar').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-
         <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
     </h:body>
 </html>

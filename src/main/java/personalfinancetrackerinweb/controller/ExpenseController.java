@@ -67,6 +67,8 @@ public class ExpenseController implements Serializable {
     @PostConstruct
     public void init() {
         expense = new Expense();
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
+
         findAll();
     }
 

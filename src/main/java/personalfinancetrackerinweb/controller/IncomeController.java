@@ -40,7 +40,7 @@ public class IncomeController implements Serializable {
         return categoryRepositoryImpl;
     }
 
-    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl ){
+    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
@@ -67,6 +67,8 @@ public class IncomeController implements Serializable {
     @PostConstruct
     public void init() {
         income = new Income();
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.INCOME);
+
         findAll();
     }
 
@@ -77,6 +79,8 @@ public class IncomeController implements Serializable {
 
     public void setIncome(Income income) {
         this.income = income;
+
+        System.out.println("");
     }
 
     public void saveData() {
@@ -102,5 +106,5 @@ public class IncomeController implements Serializable {
     public void findAll() {
         incomeList = incomeRepositoryImpl.findAll();
 
-    }     
+    }
 }

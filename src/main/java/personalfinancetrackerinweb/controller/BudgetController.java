@@ -67,6 +67,8 @@ public class BudgetController implements Serializable {
     @PostConstruct
     public void init() {
         budget = new Budget();
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
+
         findAll();
     }
 

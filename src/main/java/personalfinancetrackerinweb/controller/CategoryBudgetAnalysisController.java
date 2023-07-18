@@ -147,7 +147,6 @@ public class CategoryBudgetAnalysisController implements Serializable {
 
         categoryActualMap.put(category, totalActualAmount);
     }
-
     return categoryActualMap;
 }
 }

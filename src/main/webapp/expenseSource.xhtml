@@ -23,27 +23,31 @@
                 <ui:include src="expenseReport.xhtml" />
             </h:form>
         </p:layoutUnit>    
-        <p:dialog id="expenseDialog" widgetVar="expenseDialogVar" header="Add Expense Source" modal="true" resizable="false">
+        <p:dialog id="expenseDialog" widgetVar="expenseDialogVar" header="Add Expense Source" modal="true" resizable="false" width="600" height="500">
             <h:form id="expenseForm">
-                <h:panelGrid columns="2">
+                <h:panelGrid >
                     <h:outputLabel for="name" value="Expense Source:" styleClass="label-style" />
-                    <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty expenseController.expense.name}" />
+                    <p:inputText id="name" value="#{expenseController.expense.name}" styleClass="input-style" required="true" />
 
                     <h:outputLabel for="category" value="Category:" styleClass="label-style" />
-                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style" converter="categoryConverter">
+                    <h:outputText value="*" style="color: red;" rendered="#{empty expenseController.expense.category}" />
+                    <p:selectOneMenu id="category" value="#{expenseController.expense.category}" styleClass="input-style"  required="true" converter="categoryConverter">
                         <f:selectItem itemLabel="Select Category name" itemValue="" />
                         <f:selectItems value="#{expenseController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
                     </p:selectOneMenu>
 
                     <h:outputLabel for="amount" value="Amount:" styleClass="label-style" />
-                    <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty expenseController.expense.amount}" />
+                    <p:inputText id="amount" value="#{expenseController.expense.amount}" styleClass="input-style"  required="true"/>
 
                     <h:outputLabel for="date" value="Date:" styleClass="label-style" />
-                    <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" />
+                    <h:outputText value="*" style="color: red;" rendered="#{empty expenseController.expense.date}" />
+                    <p:calendar id="date" value="#{expenseController.expense.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" required="true"/>
 
                     <p:commandButton value="Save" 
                                      action="#{expenseController.saveData()}" styleClass="button-style"  update=":expenseListForm growl"
-                                     oncomplete="PF('expenseDialogVar').hide();"  />
+                                     oncomplete="PF('expenseDialogVar').hide();"   />
                 </h:panelGrid>
             </h:form>
         </p:dialog>
