@@ -33,27 +33,21 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     }
 
     @Override
-
-    public void delete(int id) {
+    public void delete(long id) {
         T entity = getEntityManager().find(entityClass, id);
         if (entity != null) {
             getEntityManager().remove(entity);
             getEntityManager().flush();
         }
     }
-
     @Override
-
     public T update(T data) {
         return getEntityManager().merge(data);
     }
-
     @Override
-    public T getById(int id) {
+    public T getById(long id) {
         return getEntityManager().find(entityClass, id);
-
     }
-
     @Override
     public List<Object[]> getIncomesByMonth() {
         return getEntityManager()
@@ -67,14 +61,12 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
                 .createQuery("SELECT MONTH(e.date), SUM(e.amount) FROM " + entityClass.getSimpleName() + " e GROUP BY MONTH(e.date)")
                 .getResultList();
     }
-
     @Override
     public List<Category> findByCategoryType(CategoryType type) {
         TypedQuery<Category> query = getEntityManager().createQuery("SELECT c FROM Category c WHERE c.type = :type", Category.class);
         query.setParameter("type", type);
         return query.getResultList();
     }
-
     @Override
     public List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate) {
         TypedQuery<T> query = getEntityManager().createQuery(
@@ -86,5 +78,4 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
         query.setParameter("endDate", endDate);
         return query.getResultList();
     }
-
 }

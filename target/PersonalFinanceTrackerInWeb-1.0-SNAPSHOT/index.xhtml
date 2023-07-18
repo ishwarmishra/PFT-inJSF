@@ -15,16 +15,15 @@
         </h:form>
         <h1>Personal Finance Tracker</h1>
         <h:form>
-                <p:selectOneMenu value="#{expenseIncomeChartController.chartType}" onchange="submit()">
-                    <f:selectItem itemLabel="Select Chart Type" itemValue="" />
-                    <f:selectItem itemLabel="Weekly" itemValue="weekly" />
-                    <f:selectItem itemLabel="Monthly" itemValue="monthly" />
-                    <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}" />
-                </p:selectOneMenu>
-            </h:form> 
+            <p:selectOneMenu value="#{expenseIncomeChartController.chartType}" onchange="submit()">
+                <f:selectItem itemLabel="Select Chart Type" itemValue="" />
+                <f:selectItem itemLabel="Weekly" itemValue="weekly" />
+                <f:selectItem itemLabel="Monthly" itemValue="monthly" />
+                <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}" />
+            </p:selectOneMenu>
+        </h:form> 
         <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width: 100%">
-            
-            
+
             <p:outputPanel id="lineChartPanel" rendered="#{not empty expenseIncomeChartController.lineChartModel}">
                 <h2>Income VS Expense Line chart</h2>
                 <p:chart type="line" model="#{expenseIncomeChartController.lineChartModel}" />

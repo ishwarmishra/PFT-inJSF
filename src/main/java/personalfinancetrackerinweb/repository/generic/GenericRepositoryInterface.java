@@ -7,9 +7,9 @@ import personalfinancetrackerinweb.model.CategoryType;
 
 public interface GenericRepositoryInterface<T> {
     T create(T data);
-    void delete(int id);
+    void delete(long id);
     T update(T data);
-    T getById(int id);
+    T getById(long id);
     List<T> findAll();
     
     List<Object[]> getIncomesByMonth();

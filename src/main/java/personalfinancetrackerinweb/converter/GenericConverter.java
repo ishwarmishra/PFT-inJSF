@@ -24,9 +24,9 @@ public abstract class GenericConverter implements Converter {
             return null;
         }
     }
-    java.lang.Integer getKey(String value) {
-        java.lang.Integer key;
-        key = Integer.valueOf(value);
+    java.lang.Long getKey(String value) {
+        java.lang.Long key;
+        key = Long.valueOf(value);
         return key;
     }
     String getStringKey(Object value) {
@@ -44,7 +44,7 @@ public abstract class GenericConverter implements Converter {
         }
         if (object instanceof AbstractEntity) {
             AbstractEntity o = (AbstractEntity) object;
-            return getStringKey(Integer.valueOf(o.getId()));
+            return getStringKey(Long.valueOf(o.getId()));
         } else {
             throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: converter for " + this.getClass());
         }

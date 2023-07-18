@@ -1,6 +1,6 @@
 package personalfinancetrackerinweb.model;
 
 public interface GenericEntityInterface {
-    int getId();
-    void setId(int id);
+    long getId();
+    void setId(long id);
 }
