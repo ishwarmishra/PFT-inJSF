@@ -1,43 +1,50 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Expense Tracker</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Expense and Income Tracker</title>
+        <h:outputStylesheet library="primefaces" name="primefaces.css" />
     </h:head>
-
     <h:body>
         <h:form class="my-navbar">
-            <ui:include src="topMenu.xhtml" />
+            <ui:include src="topMenu.xhtml"/>
         </h:form>
         <h1>Personal Finance Tracker</h1>
-
+        <h:form>
+                <p:selectOneMenu value="#{expenseIncomeChartController.chartType}" onchange="submit()">
+                    <f:selectItem itemLabel="Select Chart Type" itemValue="" />
+                    <f:selectItem itemLabel="Weekly" itemValue="weekly" />
+                    <f:selectItem itemLabel="Monthly" itemValue="monthly" />
+                    <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}" />
+                </p:selectOneMenu>
+            </h:form> 
         <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width: 100%">
+            
+            
+            <p:outputPanel id="lineChartPanel" rendered="#{not empty expenseIncomeChartController.lineChartModel}">
+                <h2>Income VS Expense Line chart</h2>
+                <p:chart type="line" model="#{expenseIncomeChartController.lineChartModel}" />
+            </p:outputPanel>
 
-            <p:outputPanel>
-                <h2 class="chart-title">Line Chart</h2>
-                <p:chart type="line" model="#{expenseIncomeController.lineChartModel}" />
+            <p:outputPanel id="barChartPanel"  rendered="#{not empty expenseIncomeChartController.barChartModel}">
+                <h2>Income VS Expense Bar chart</h2>
+                <p:chart type="bar" model="#{expenseIncomeChartController.barChartModel}"  />
             </p:outputPanel>
 
             <p:outputPanel>
-                <h2 class="chart-title">Bar Chart</h2>
-                <p:chart type="bar" model="#{expenseIncomeController.barChartModel}" />
-            </p:outputPanel>
-
-            <p:outputPanel>
-                <h2 class="chart-title">Pie Chart</h2>
+                <h2 >Pie Chart</h2>
                 <p:chart type="pie" model="#{categoryBudgetController.pieChartModel}" />
             </p:outputPanel>
 
             <p:outputPanel>
-                <h2 class="chart-title">Category Budget Analysis</h2>
+                <h2 >Category Budget Analysis</h2>
                 <p:chart type="bar" model="#{categoryBudgetAnalysisController.barChartModel}" />
             </p:outputPanel>
-
         </p:panelGrid>
-
+        <h:outputScript library="primefaces" name="primefaces.js" />
     </h:body>
 </html>

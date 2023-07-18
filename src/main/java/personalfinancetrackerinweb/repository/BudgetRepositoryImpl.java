@@ -1,12 +1,9 @@
 package personalfinancetrackerinweb.repository;
-import java.util.Date;
-import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.Budget;
-import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 @Stateless

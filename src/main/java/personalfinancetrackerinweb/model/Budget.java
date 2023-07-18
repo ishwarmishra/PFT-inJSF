@@ -52,6 +52,4 @@ public class Budget extends AbstractEntity implements Serializable, GenericEntit
     public void setDate(Date date) {
         this.date = date;
     }
-
-    
 }

@@ -7,7 +7,6 @@ personalfinancetrackerinweb/model/CategoryType.class
 personalfinancetrackerinweb/model/Category_.class
 personalfinancetrackerinweb/model/GenericEntityInterface.class
 personalfinancetrackerinweb/model/Income.class
-personalfinancetrackerinweb/controller/ExpenseIncomeController.class
 personalfinancetrackerinweb/model/Budget_.class
 personalfinancetrackerinweb/converter/GenericConverter.class
 personalfinancetrackerinweb/controller/BudgetController.class
@@ -15,6 +14,7 @@ personalfinancetrackerinweb/model/Expense_.class
 personalfinancetrackerinweb/repository/CategoryRepositoryImpl.class
 personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.class
 personalfinancetrackerinweb/model/Expense.class
+personalfinancetrackerinweb/controller/ExpenseIncomeChartController.class
 personalfinancetrackerinweb/controller/ExpenseController.class
 personalfinancetrackerinweb/controller/CategoryBudgetController.class
 personalfinancetrackerinweb/model/Budget.class
