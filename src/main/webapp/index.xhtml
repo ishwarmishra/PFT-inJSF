@@ -15,12 +15,11 @@
         </h:form>
         <h1>Personal Finance Tracker</h1>
         <h:form>
-            <p:selectOneMenu value="#{expenseIncomeChartController.chartType}" onchange="submit()">
-                <f:selectItem itemLabel="Select Chart Type" itemValue="" />
+            <p:selectOneRadio value="#{expenseIncomeChartController.chartType}" >
                 <f:selectItem itemLabel="Weekly" itemValue="weekly" />
                 <f:selectItem itemLabel="Monthly" itemValue="monthly" />
-                <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}" />
-            </p:selectOneMenu>
+                <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}"  />
+            </p:selectOneRadio>
         </h:form> 
         <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width: 100%">
 
