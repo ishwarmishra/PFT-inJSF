@@ -39,31 +39,24 @@ public class IncomeController implements Serializable {
     public CategoryRepositoryImpl getCategoryRepositoryImpl() {
         return categoryRepositoryImpl;
     }
-
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
-
     public Income getIncome() {
         return income;
     }
-
     public List<Income> getIncomeList() {
         return incomeList;
     }
-
     public void setIncomeList(List<Income> incomeList) {
         this.incomeList = incomeList;
     }
-
     public List<Category> getCategoryList() {
         return categoryList;
     }
-
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
-
     @PostConstruct
     public void init() {
         income = new Income();
@@ -71,18 +64,14 @@ public class IncomeController implements Serializable {
 
         findAll();
     }
-
     public void beforeCreate() {
         income = new Income();
         categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.INCOME);
     }
-
     public void setIncome(Income income) {
         this.income = income;
 
-        System.out.println("");
     }
-
     public void saveData() {
         if (income.getId() == 0) {
             incomeRepositoryImpl.create(income);
@@ -93,16 +82,13 @@ public class IncomeController implements Serializable {
         findAll();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income saved successfully!"));
     }
-
     public void deleteData(Income income) {
         incomeRepositoryImpl.delete(income.getId());
         findAll();
     }
-
     public void updateData(Income incomeEntity) {
         incomeRepositoryImpl.update(incomeEntity);
     }
-
     public void findAll() {
         incomeList = incomeRepositoryImpl.findAll();
 
