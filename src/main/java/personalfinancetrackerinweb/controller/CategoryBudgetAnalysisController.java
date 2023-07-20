@@ -21,10 +21,10 @@ import org.primefaces.model.chart.ChartSeries;
 import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
-import personalfinancetrackerinweb.model.Expense;
+import personalfinancetrackerinweb.model.Income;
 import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
-import personalfinancetrackerinweb.repository.ExpenseRepositoryImpl;
+import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 
 @Named
 @ViewScoped
@@ -37,7 +37,11 @@ public class CategoryBudgetAnalysisController implements Serializable {
     private CategoryRepositoryImpl categoryRepositoryImpl;
 
     @Inject
-    private ExpenseRepositoryImpl expenseRepositoryImpl;
+    private IncomeRepositoryImpl incomeRepositoryImpl;
+    
+    
+     private List<Budget> budgetsList;
+     private List<Category> categoryList;
 
     private BarChartModel barChartModel;
 
@@ -57,21 +61,39 @@ public class CategoryBudgetAnalysisController implements Serializable {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
-    public ExpenseRepositoryImpl getExpenseRepositoryImpl() {
-        return expenseRepositoryImpl;
+    public IncomeRepositoryImpl getIncomeRepositoryImpl() {
+        return incomeRepositoryImpl;
     }
 
-    public void setExpenseRepositoryImpl(ExpenseRepositoryImpl expenseRepositoryImpl) {
-        this.expenseRepositoryImpl = expenseRepositoryImpl;
+    public void setIncomeRepositoryImpl(IncomeRepositoryImpl incomeRepositoryImpl) {
+        this.incomeRepositoryImpl = incomeRepositoryImpl;
+    }
+
+    public List<Budget> getBudgetsList() {
+        return budgetsList;
+    }
+
+    public void setBudgetsList(List<Budget> budgetsList) {
+        this.budgetsList = budgetsList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     public BarChartModel getBarChartModel() {
         return barChartModel;
     }
-
+    
     @PostConstruct
     public void init() {
-        createBarChartModel();
+     budgetsList=budgetRepositoryImpl.findAll();
+     categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);        
+     createBarChartModel();
     }
 
     private void createBarChartModel() {
@@ -139,9 +161,9 @@ public class CategoryBudgetAnalysisController implements Serializable {
         Date startDateAsDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date endDateAsDate = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<Expense> categoryExpenses = expenseRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate, endDateAsDate);
+        List<Income> categoryExpenses = incomeRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate, endDateAsDate);
 
-        for (Expense expense : categoryExpenses) {
+        for (Income expense : categoryExpenses) {
             totalActualAmount = totalActualAmount.add(expense.getAmount());
         }
 

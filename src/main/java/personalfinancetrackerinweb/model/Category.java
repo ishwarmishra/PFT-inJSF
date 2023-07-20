@@ -13,7 +13,7 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private CategoryType type;
+    public CategoryType type;
     
         public Category() {
     }

@@ -17,8 +17,13 @@ public class CategoryController implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
+    
+    //Make the Category Class Instance
     private Category category;
+    
+    //Keep all the records of the category that are retrieve from the DATABASE
     private List<Category> categoryList;
+    
 
     public CategoryRepositoryImpl getCategoryRepository() {
         return categoryRepositoryImpl;
@@ -31,11 +36,7 @@ public class CategoryController implements Serializable {
     public Category getCategory() {
         return category;
     }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
+    
     public List<Category> getCategoryList() {
         return categoryList;
     }
@@ -46,14 +47,21 @@ public class CategoryController implements Serializable {
 
     @PostConstruct
     public void init() {
+        //creates the new instance of the Category
         category = new Category();
+        
+        //fetches the all categoryList from the DATABASE and populates the categoryList
         findAll();
     }
-
+    //it resets the category instance
     public void beforeCreate() {
         category = new Category();
     }
-
+    //To Update the existing Category
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    //TO save the new Category
     public void saveData() {
         if (category.getId() == 0) {
             categoryRepositoryImpl.create(category);
@@ -70,11 +78,6 @@ public class CategoryController implements Serializable {
         categoryRepositoryImpl.delete(category.getId());
         findAll();
     }
-
-    public void updateData(Category categoryEntity) {
-        categoryRepositoryImpl.update(categoryEntity);
-    }
-
     public void findAll() {
         categoryList = categoryRepositoryImpl.findAll();
     }

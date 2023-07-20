@@ -9,7 +9,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import personalfinancetrackerinweb.model.Category;
-import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.repository.*;
 
 import personalfinancetrackerinweb.model.Income;
@@ -23,9 +22,14 @@ public class IncomeController implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
-
+    
+    //Make the Income class instance
     private Income income;
+    
+    //Use to strore all income  and expense records retrieved from the DATABASE
     private List<Income> incomeList;
+    
+    //Use to store all category records retrieved from the DATABASE
     private List<Category> categoryList;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
@@ -39,39 +43,54 @@ public class IncomeController implements Serializable {
     public CategoryRepositoryImpl getCategoryRepositoryImpl() {
         return categoryRepositoryImpl;
     }
+
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
+    
+    //To get the user Input from the dialog box
     public Income getIncome() {
         return income;
     }
+
     public List<Income> getIncomeList() {
         return incomeList;
     }
+    
     public void setIncomeList(List<Income> incomeList) {
         this.incomeList = incomeList;
     }
+
     public List<Category> getCategoryList() {
         return categoryList;
     }
+
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
+
     @PostConstruct
     public void init() {
+        //create an instance of the Income
         income = new Income();
-        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.INCOME);
-
+        
+        //Use to retrieves all the income and expense categories from the DATABASE and populates the categoryList
+        categoryList = categoryRepositoryImpl.findAll();
+        
+        //To fetch all income and expense records and populates the incomeList
         findAll();
     }
+    //create a new income records,it resets the income instance and fetches the category list again
     public void beforeCreate() {
         income = new Income();
-        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.INCOME);
+        categoryList = categoryRepositoryImpl.findAll();
     }
+    //Used when editing existing records
     public void setIncome(Income income) {
         this.income = income;
 
     }
+    //Used to save the data into databases
     public void saveData() {
         if (income.getId() == 0) {
             incomeRepositoryImpl.create(income);
@@ -80,15 +99,15 @@ public class IncomeController implements Serializable {
         }
         income = new Income();
         findAll();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income saved successfully!"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expenditure saved successfully!"));
     }
+    //Used to delete the data from database
     public void deleteData(Income income) {
         incomeRepositoryImpl.delete(income.getId());
         findAll();
     }
-    public void updateData(Income incomeEntity) {
-        incomeRepositoryImpl.update(incomeEntity);
-    }
+
+    //Used to fetches the All Income and Expense Records from the database
     public void findAll() {
         incomeList = incomeRepositoryImpl.findAll();
 

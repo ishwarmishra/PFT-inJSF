@@ -57,6 +57,7 @@ public class CategoryBudgetController implements Serializable {
 
     @PostConstruct
     public void init() {
+        
         createPieChartModel();
     }
 

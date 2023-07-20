@@ -23,10 +23,10 @@
                 <ui:include src="incomeReport.xhtml"/>
             </h:form>
         </p:layoutUnit>
-        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Source" modal="true" resizable="false" width="600" height="500">
+        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Expense Source" modal="true" resizable="false" width="600" height="500">
             <h:form id="incomeForm">
                 <h:panelGrid >
-                    <h:outputLabel for="name" value="Income Source:" styleClass="label-style"/>
+                    <h:outputLabel for="name" value="Remark:" styleClass="label-style"/>
                     <h:outputText value="*" style="color: red;" rendered="#{empty incomeController.income.name}" />
                     <p:inputText id="name" value="#{incomeController.income.name}" styleClass="input-style" required="true" />
 

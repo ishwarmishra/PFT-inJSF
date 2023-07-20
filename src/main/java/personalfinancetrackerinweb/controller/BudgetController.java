@@ -97,11 +97,7 @@ public class BudgetController implements Serializable {
         budgetRepositoryImpl.delete(budget.getId());
         findAll();
     }
-
-    public void updateData(Budget budgetEntity) {
-        budgetRepositoryImpl.update(budgetEntity);
-    }
-
+   
     public void findAll() {
         budgetList = budgetRepositoryImpl.findAll();
     }

@@ -20,7 +20,6 @@ public class Income extends AbstractEntity implements Serializable, GenericEntit
     private Date date;
     
     
-    
     @ManyToOne
     @JoinColumn(name = "category_id",referencedColumnName = "id")
     
