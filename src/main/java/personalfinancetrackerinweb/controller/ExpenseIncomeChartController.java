@@ -7,7 +7,6 @@ import java.util.Date;
 
 import java.util.List;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -169,17 +168,16 @@ public class ExpenseIncomeChartController implements Serializable {
                 }
             }
         }
-
         for (Integer week : incomeAmountsMap.keySet()) {
             BigDecimal amount = incomeAmountsMap.get(week);
-            String label = "Week"+ week;
+            String label = "Week" + week;
 
             incomeSeries.set(label, amount);
         }
 
         for (Integer week : expenseAmountsMap.keySet()) {
             BigDecimal amount = expenseAmountsMap.get(week);
-            String label = "Week"+ week;
+            String label = "Week" + week;
 
             expenseSeries.set(label, amount);
         }
@@ -235,9 +233,15 @@ public class ExpenseIncomeChartController implements Serializable {
 
     private void createWeeklyBarChartModel() {
 
+        if (barChartModel == null) {
+            barChartModel = new BarChartModel();
+        } else {
+            barChartModel.clear();
+        }
+        incomeAmountsMap = new HashMap<>();
+        expenseAmountsMap = new HashMap<>();
         ChartSeries incomeSeries = new ChartSeries();
         incomeSeries.setLabel("Income");
-
         ChartSeries expenseSeries = new ChartSeries();
         expenseSeries.setLabel("Expense");
 
@@ -262,21 +266,16 @@ public class ExpenseIncomeChartController implements Serializable {
                 }
             }
         }
-
         for (Integer week : incomeAmountsMap.keySet()) {
             BigDecimal amount = incomeAmountsMap.get(week);
             String label = "Week"+week;
-
             incomeSeries.set(label, amount);
         }
-
         for (Integer week : expenseAmountsMap.keySet()) {
             BigDecimal amount = expenseAmountsMap.get(week);
             String label = "Week"+ week;
-
             expenseSeries.set(label, amount);
         }
-
         barChartModel.addSeries(incomeSeries);
         barChartModel.addSeries(expenseSeries);
         barChartModel.setTitle("Income vs Expense Report (Weekly)");
@@ -288,9 +287,7 @@ public class ExpenseIncomeChartController implements Serializable {
         Axis yAxis = barChartModel.getAxis(AxisType.Y);
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
-
     }
-
     private void createMonthlyBarChartModel() {
         ChartSeries incomeSeries = new ChartSeries();
         incomeSeries.setLabel("Income");
@@ -324,7 +321,6 @@ public class ExpenseIncomeChartController implements Serializable {
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
     }
-
     private String getMonthFromDate(Date date) {
         if (date == null) {
             return "";
