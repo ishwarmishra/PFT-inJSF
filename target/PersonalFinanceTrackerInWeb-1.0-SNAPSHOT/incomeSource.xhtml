@@ -18,13 +18,16 @@
         <p:layoutUnit position="center">
             <h:form id="incomeListForm">
 
-                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreate()}" styleClass="button-style"
-                                 update=":incomeForm" oncomplete="PF('incomeDialogVar').show();"/>
+                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreateIncome()}" styleClass="button-style"
+                                 update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();"/>
+                
+                <p:commandButton icon="fa fa-plus" action="#{incomeController.beforeCreateExpense()}" styleClass="button-style"
+                                 update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();"/>
 
                 <ui:include src="incomeReport.xhtml"/>
             </h:form>
-        </p:layoutUnit>
-        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add Income Expense Source" modal="true" resizable="false" width="600" height="500">
+         </p:layoutUnit>
+        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header="Add #{incomeController.ct}" modal="true" resizable="false" width="600" height="500">
             <h:form id="incomeForm">
                 <h:panelGrid >
                     <h:outputLabel for="name" value="Remark:" styleClass="label-style"/>
