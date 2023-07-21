@@ -6,14 +6,20 @@
     <h:form>
 
         <p:dataTable id="categoryTable" value="#{categoryController.categoryList}" var="category"
+                     rowIndexVar="rowIndex"
+
                      paginator="true" paginatorPosition="bottom" rows="5"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15">
 
-            <p:column headerText="Category Name" filterBy=" #{category.name}" style="width: 45%" sortBy="#{category.name}">
+            <p:column headerText="S.N" >
+                #{rowIndex + 1} 
+            </p:column>
+
+            <p:column headerText="Category Name" filterBy=" #{category.name}" style="width: 40%" sortBy="#{category.name}">
                 #{category.name}
             </p:column>
-            <p:column headerText="Category Type" filterBy=" #{category.type}" style="width: 45%" sortBy="#{category.type}">
+            <p:column headerText="Category Type" filterBy=" #{category.type}" style="width: 40%" sortBy="#{category.type}">
                 #{category.type}
             </p:column>
 
@@ -21,7 +27,8 @@
                 <p:commandButton icon="fa fa-edit" action="#{categoryController.setCategory(category)}" styleClass="button-style"  update=":categoryForm"
                                  oncomplete="PF('categoryDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" action="#{categoryController.deleteData(category)}" styleClass="button-style"  update="categoryTable"
-                                 onclick="if (!confirm('Are you sure you want to delete this category?')) return false;" />
+                                 onclick="if (!confirm('Are you sure you want to delete this category?'))
+                                             return false;" />
             </p:column>
         </p:dataTable>
     </h:form>

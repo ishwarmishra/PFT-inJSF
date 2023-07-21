@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -238,12 +240,17 @@ public class ExpenseIncomeChartController implements Serializable {
         } else {
             barChartModel.clear();
         }
+       //Initialize HashMap object to store the total income amount and total expense amount
         incomeAmountsMap = new HashMap<>();
         expenseAmountsMap = new HashMap<>();
+        
         ChartSeries incomeSeries = new ChartSeries();
         incomeSeries.setLabel("Income");
         ChartSeries expenseSeries = new ChartSeries();
         expenseSeries.setLabel("Expense");
+
+       // Create a set to store all unique weeks from both income and expense data
+        Set<Integer> allWeeks = new HashSet<>();
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
@@ -255,6 +262,8 @@ public class ExpenseIncomeChartController implements Serializable {
                     BigDecimal amount = incomeAmountsMap.getOrDefault(week, BigDecimal.ZERO);
                     amount = amount.add(income.getAmount());
                     incomeAmountsMap.put(week, amount);
+
+                    allWeeks.add(week); // Add the week to the set
                 } else {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(income.getDate());
@@ -263,19 +272,22 @@ public class ExpenseIncomeChartController implements Serializable {
                     BigDecimal amount = expenseAmountsMap.getOrDefault(week, BigDecimal.ZERO);
                     amount = amount.add(income.getAmount());
                     expenseAmountsMap.put(week, amount);
+
+                    allWeeks.add(week); // Add the week to the set
                 }
             }
         }
-        for (Integer week : incomeAmountsMap.keySet()) {
-            BigDecimal amount = incomeAmountsMap.get(week);
-            String label = "Week"+week;
-            incomeSeries.set(label, amount);
+
+        // Loop through all weeks in the set and make sure both income and expense maps have an entry for each week
+        for (Integer week : allWeeks) {
+            BigDecimal incomeAmount = incomeAmountsMap.getOrDefault(week, BigDecimal.ZERO);
+            BigDecimal expenseAmount = expenseAmountsMap.getOrDefault(week, BigDecimal.ZERO);
+
+            String label = "Week" + week;
+            incomeSeries.set(label, incomeAmount);
+            expenseSeries.set(label, expenseAmount);
         }
-        for (Integer week : expenseAmountsMap.keySet()) {
-            BigDecimal amount = expenseAmountsMap.get(week);
-            String label = "Week"+ week;
-            expenseSeries.set(label, amount);
-        }
+
         barChartModel.addSeries(incomeSeries);
         barChartModel.addSeries(expenseSeries);
         barChartModel.setTitle("Income vs Expense Report (Weekly)");
@@ -287,7 +299,9 @@ public class ExpenseIncomeChartController implements Serializable {
         Axis yAxis = barChartModel.getAxis(AxisType.Y);
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
+
     }
+
     private void createMonthlyBarChartModel() {
         ChartSeries incomeSeries = new ChartSeries();
         incomeSeries.setLabel("Income");
@@ -321,6 +335,7 @@ public class ExpenseIncomeChartController implements Serializable {
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
     }
+
     private String getMonthFromDate(Date date) {
         if (date == null) {
             return "";

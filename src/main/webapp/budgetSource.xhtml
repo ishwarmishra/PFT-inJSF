@@ -14,7 +14,7 @@
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml" />
         </h:form>
-
+        <h3>Budgeting Report</h3>
         <p:layoutUnit position="center">
             <h:form id="budgetListForm">
 
@@ -40,7 +40,8 @@
                     <h:outputLabel for="date" value="Date:" styleClass="label-style" />
                     <h:outputText value="*" style="color: red;" rendered="#{empty budgetController.budget.date}"/>
                     <p:calendar id="date" value="#{budgetController.budget.date}" showOn="button" pattern="yyyy-MM-dd" styleClass="input-style" required="true" />
-
+                    
+                    
                     <p:commandButton value="Save"
                                      action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm growl"
                                      oncomplete="PF('budgetDialogVar').hide();" />
