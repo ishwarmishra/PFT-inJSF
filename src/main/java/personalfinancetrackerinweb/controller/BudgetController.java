@@ -103,6 +103,10 @@ public class BudgetController implements Serializable {
     public void findAll() {
         budgetList = budgetRepositoryImpl.findAll();
     }
+    public String getMonthFromBudgetDate(Date date) {
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+        return monthFormat.format(date);
+    }
     
     
 }
