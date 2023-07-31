@@ -2,6 +2,7 @@ package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,6 +44,8 @@ public class IncomeController implements Serializable {
     private CategoryType ct = CategoryType.INCOME;
 
     private List<Budget> budgetList;
+    
+    private  Date currentDate;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -125,6 +128,14 @@ public class IncomeController implements Serializable {
         this.budgetList = budgetList;
     }
 
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+    
     @PostConstruct
     public void init() {
         income = new Income();
@@ -132,6 +143,7 @@ public class IncomeController implements Serializable {
         budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
         findAll();
+        currentDate=new Date();
     }
 
     //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
@@ -162,33 +174,46 @@ public class IncomeController implements Serializable {
         if (income.getId() == 0) {
             if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
 
-                Date currentDate = new Date();
-                BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, currentDate, currentDate);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currentDate);
+                calendar.set(Calendar.DAY_OF_MONTH, 1); // Set the day of the month to the first day
+                Date fromDate = calendar.getTime();
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set the day of the month to the last day
+                Date toDate = calendar.getTime();
+                
+                
+                
+                BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
 
                 if (income.getAmount().compareTo(budgetAmount) > 0) {
                     FacesContext.getCurrentInstance().addMessage(
-                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budgetttt!"));
+                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budgeted Amount very Clearly!"));
                     return;
                 }
 
-                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, currentDate, currentDate);
-
+                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
                     FacesContext.getCurrentInstance().addMessage(
                             null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budget!"));
                     return;
-                } else   {
+                } else if (income.getId() == 0) {
                     incomeRepositoryImpl.create(income);
+                    income = new Income();
+                    findAll();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expense added successfully!"));
+
                 }
-                
-            }
-            else {
+
+            } else {
                 incomeRepositoryImpl.create(income);
+                income = new Income();
+                findAll();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income added successfully!"));
+
             }
+
         }
     }
 
