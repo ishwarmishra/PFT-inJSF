@@ -30,6 +30,8 @@ import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 @ViewScoped
 public class CategoryBudgetAnalysisController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Inject
     private BudgetRepositoryImpl budgetRepositoryImpl;
 
@@ -38,62 +40,28 @@ public class CategoryBudgetAnalysisController implements Serializable {
 
     @Inject
     private IncomeRepositoryImpl incomeRepositoryImpl;
-    
-    
-     private List<Budget> budgetsList;
-     private List<Category> categoryList;
 
+    private List<Budget> budgetsList;
+    private List<Category> categoryList;
     private BarChartModel barChartModel;
-
-    public BudgetRepositoryImpl getBudgetRepositoryImpl() {
-        return budgetRepositoryImpl;
-    }
-
-    public void setBudgetRepositoryImpl(BudgetRepositoryImpl budgetRepositoryImpl) {
-        this.budgetRepositoryImpl = budgetRepositoryImpl;
-    }
-
-    public CategoryRepositoryImpl getCategoryRepositoryImpl() {
-        return categoryRepositoryImpl;
-    }
-
-    public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
-        this.categoryRepositoryImpl = categoryRepositoryImpl;
-    }
-
-    public IncomeRepositoryImpl getIncomeRepositoryImpl() {
-        return incomeRepositoryImpl;
-    }
-
-    public void setIncomeRepositoryImpl(IncomeRepositoryImpl incomeRepositoryImpl) {
-        this.incomeRepositoryImpl = incomeRepositoryImpl;
-    }
 
     public List<Budget> getBudgetsList() {
         return budgetsList;
-    }
-
-    public void setBudgetsList(List<Budget> budgetsList) {
-        this.budgetsList = budgetsList;
     }
 
     public List<Category> getCategoryList() {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
-    }
-
     public BarChartModel getBarChartModel() {
         return barChartModel;
     }
-    
+
     @PostConstruct
     public void init() {
-     budgetsList=budgetRepositoryImpl.findAll();
-     categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);        
-     createBarChartModel();
+        budgetsList = budgetRepositoryImpl.findAll();
+        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
+        createBarChartModel();
     }
 
     private void createBarChartModel() {
@@ -131,7 +99,8 @@ public class CategoryBudgetAnalysisController implements Serializable {
         barChartModel.setShowPointLabels(true);
     }
 
-    private Map<Category, BigDecimal> calculateCategoryBudgets(List<Category> expenseCategories, LocalDate startDate, LocalDate endDate) {
+    private Map<Category, BigDecimal> calculateCategoryBudgets(List<Category> expenseCategories, LocalDate startDate,
+            LocalDate endDate) {
         Map<Category, BigDecimal> categoryBudgetMap = new HashMap<>();
 
         for (Category category : expenseCategories) {
@@ -140,35 +109,35 @@ public class CategoryBudgetAnalysisController implements Serializable {
             Date startDateAsDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date endDateAsDate = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-            List<Budget> categoryBudgets = budgetRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate, endDateAsDate);
+            List<Budget> categoryBudgets = budgetRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate,
+                    endDateAsDate);
 
             for (Budget budget : categoryBudgets) {
                 totalBudgetAmount = totalBudgetAmount.add(budget.getAmount());
             }
-
             categoryBudgetMap.put(category, totalBudgetAmount);
         }
-
         return categoryBudgetMap;
     }
 
-    private Map<Category, BigDecimal> calculateCategoryActuals(List<Category> expenseCategories, LocalDate startDate, LocalDate endDate) {
-    Map<Category, BigDecimal> categoryActualMap = new HashMap<>();
+    private Map<Category, BigDecimal> calculateCategoryActuals(List<Category> expenseCategories, LocalDate startDate,
+            LocalDate endDate) {
+        Map<Category, BigDecimal> categoryActualMap = new HashMap<>();
 
-    for (Category category : expenseCategories) {
-        BigDecimal totalActualAmount = BigDecimal.ZERO;
+        for (Category category : expenseCategories) {
+            BigDecimal totalActualAmount = BigDecimal.ZERO;
 
-        Date startDateAsDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date endDateAsDate = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date startDateAsDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date endDateAsDate = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        List<Income> categoryExpenses = incomeRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate, endDateAsDate);
+            List<Income> categoryExpenses = incomeRepositoryImpl.findByCategoryAndDateRange(category, startDateAsDate,
+                    endDateAsDate);
 
-        for (Income expense : categoryExpenses) {
-            totalActualAmount = totalActualAmount.add(expense.getAmount());
+            for (Income expense : categoryExpenses) {
+                totalActualAmount = totalActualAmount.add(expense.getAmount());
+            }
+            categoryActualMap.put(category, totalActualAmount);
         }
-
-        categoryActualMap.put(category, totalActualAmount);
+        return categoryActualMap;
     }
-    return categoryActualMap;
-}
 }

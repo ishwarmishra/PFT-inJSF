@@ -12,11 +12,7 @@
     <h:body>
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml"/>
-        </h:form>
-        
-        
-
-
+        </h:form>        
         <h:form>
             <p:selectOneRadio value="#{expenseIncomeChartController.chartType}" >
                 <f:selectItem itemLabel="Weekly" itemValue="weekly" />
@@ -40,11 +36,7 @@
                 <h2 >Pie Chart</h2>
                 <p:chart type="pie" model="#{categoryBudgetController.pieChartModel}" />
             </p:outputPanel>
-
-            <p:outputPanel>
-                <h2 >Category Budget Analysis</h2>
-                <p:chart type="bar" model="#{categoryBudgetAnalysisController.barChartModel}" />
-            </p:outputPanel>
+            
         </p:panelGrid>
         <h:outputScript library="primefaces" name="primefaces.js" />
     </h:body>

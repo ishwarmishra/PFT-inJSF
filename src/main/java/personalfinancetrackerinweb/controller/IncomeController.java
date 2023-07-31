@@ -1,6 +1,8 @@
 package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -8,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.repository.*;
@@ -24,16 +27,22 @@ public class IncomeController implements Serializable {
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
 
-    //Make the Income class instance
+    @Inject
+    private BudgetRepositoryImpl budgetRepositoryImpl;
+
     private Income income;
 
-    //Use to strore all income  and expense records retrieved from the DATABASE
+    private Budget budget;
+
+    private Category category;
+
     private List<Income> incomeList;
 
-    //Use to store all category records retrieved from the DATABASE
     private List<Category> categoryList;
 
     private CategoryType ct = CategoryType.INCOME;
+
+    private List<Budget> budgetList;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -51,15 +60,37 @@ public class IncomeController implements Serializable {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
 
-    //To get the user Input from the dialog box
+    public BudgetRepositoryImpl getBudgetRepositoryImpl() {
+        return budgetRepositoryImpl;
+    }
+
+    public void setBudgetRepositoryImpl(BudgetRepositoryImpl budgetRepositoryImpl) {
+        this.budgetRepositoryImpl = budgetRepositoryImpl;
+    }
+
     public Income getIncome() {
         return income;
     }
 
-    //Used when editing existing records
     public void setIncome(Income income) {
         this.income = income;
 
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public List<Income> getIncomeList() {
@@ -86,19 +117,24 @@ public class IncomeController implements Serializable {
         this.ct = ct;
     }
 
+    public List<Budget> getBudgetList() {
+        return budgetList;
+    }
+
+    public void setBudgetList(List<Budget> budgetList) {
+        this.budgetList = budgetList;
+    }
+
     @PostConstruct
     public void init() {
-        //create an instance of the Income
         income = new Income();
-
-        //Use to retrieves all the income and expense categories from the DATABASE and populates the categoryList
+        budget = new Budget();
+        budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
-
-        //To fetch all income and expense records and populates the incomeList
         findAll();
     }
 
-    //create a new income records,it resets the income instance and fetches the category list again
+    //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
     public void beforeCreateIncome() {
         this.ct = CategoryType.INCOME;
         loadCategory();
@@ -109,40 +145,76 @@ public class IncomeController implements Serializable {
         loadCategory();
     }
 
-    
     public void beforeEditExpense(Income income) {
-        this.income=income;
-        ct=income.getCategory().getType();
-        loadCategory();
-        
+        this.income = income;                 //currently selected income or expense item
+        ct = income.getCategory().getType();  //fetch the correct categorylist for the income aor expense
+        loadCategory();                       //It retrieve the correct category list for the income and expense from previuos fetched categorylist
+
     }
 
-    
-
-    //Used to save the data into databases
     public void saveData() {
-        if (income.getId() == 0) {
-            incomeRepositoryImpl.create(income);
-        } else {
-            incomeRepositoryImpl.update(income);
+        if (income == null || income.getCategory() == null) {
+            FacesContext.getCurrentInstance().addMessage(
+                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Income or category is null!"));
+            return;
         }
-        income = new Income();
-        findAll();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expenditure saved successfully!"));
+
+        if (income.getId() == 0) {
+            if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
+
+                Date currentDate = new Date();
+                BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, currentDate, currentDate);
+
+                if (income.getAmount().compareTo(budgetAmount) > 0) {
+                    FacesContext.getCurrentInstance().addMessage(
+                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budgetttt!"));
+                    return;
+                }
+
+                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, currentDate, currentDate);
+
+                BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
+
+                if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
+                    FacesContext.getCurrentInstance().addMessage(
+                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budget!"));
+                    return;
+                } else   {
+                    incomeRepositoryImpl.create(income);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expense added successfully!"));
+                }
+                
+            }
+            else {
+                incomeRepositoryImpl.create(income);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income added successfully!"));
+            }
+        }
     }
 
     public void deleteData(Income income) {
-        incomeRepositoryImpl.delete(income.getId());
-        findAll();
+        incomeRepositoryImpl.delete(income.getId());//In AbstractGeneric Method
+        findAll();//After deletion new records of the income or expense is populates to 'incomeList'
     }
 
-    //Used to fetches the All Income and Expense Records from the database
     public void findAll() {
         incomeList = incomeRepositoryImpl.findAll();
-
     }
 
     public void loadCategory() {
         categoryList = categoryRepositoryImpl.findByCategoryType(ct);
+    }
+
+    public String getHeader() {
+        if (income.getId() == 0 && ct.equals(CategoryType.INCOME)) {
+            return "Add Income";
+
+        } else if (income.getId() == 0 && ct.equals(CategoryType.EXPENSE)) {
+            return "Add Expense";
+        } else if (income.getId() != 0 && ct.equals(CategoryType.INCOME)) {
+            return "Update Income";
+        } else {
+            return "Update Expense";
+        }
     }
 }

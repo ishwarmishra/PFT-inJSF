@@ -335,7 +335,6 @@ public class ExpenseIncomeChartController implements Serializable {
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
     }
-
     private String getMonthFromDate(Date date) {
         if (date == null) {
             return "";

@@ -57,10 +57,10 @@ public class CategoryBudgetController implements Serializable {
 
     @PostConstruct
     public void init() {
-        
         createPieChartModel();
+        
+        
     }
-
     private void createPieChartModel() {
         pieChartModel = new PieChartModel();
 
@@ -75,7 +75,6 @@ public class CategoryBudgetController implements Serializable {
             BigDecimal budgetAmount = categoryBudgetMap.getOrDefault(category, BigDecimal.ZERO);
             pieChartModel.set(category.getName(), budgetAmount);
         }
-
         pieChartModel.setTitle("Expense Categories vs Budget");
         pieChartModel.setLegendPosition("e");
         pieChartModel.setShowDataLabels(true);
@@ -95,10 +94,8 @@ public class CategoryBudgetController implements Serializable {
             for (Budget budget : categoryBudgets) {
                 totalBudgetAmount = totalBudgetAmount.add(budget.getAmount());
             }
-
             categoryBudgetMap.put(category, totalBudgetAmount);
         }
-
         return categoryBudgetMap;
     }
 }

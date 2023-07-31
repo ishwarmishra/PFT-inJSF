@@ -32,7 +32,7 @@ public class CategoryController implements Serializable {
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
-
+    //To get the User input from the Dialog box
     public Category getCategory() {
         return category;
     }
@@ -47,13 +47,10 @@ public class CategoryController implements Serializable {
 
     @PostConstruct
     public void init() {
-        //creates the new instance of the Category
-        category = new Category();
-        
-        //fetches the all categoryList from the DATABASE and populates the categoryList
+        category = new Category();       
         findAll();
     }
-    //it resets the category instance
+    //It resets the category instance
     public void beforeCreate() {
         category = new Category();
     }
@@ -61,7 +58,7 @@ public class CategoryController implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
-    //TO save the new Category
+    //To save the new Category
     public void saveData() {
         if (category.getId() == 0) {
             categoryRepositoryImpl.create(category);
@@ -80,5 +77,12 @@ public class CategoryController implements Serializable {
     }
     public void findAll() {
         categoryList = categoryRepositoryImpl.findAll();
+    }
+     public String getHeader() {
+        if (category.getId() == 0 ) 
+            return "Add Category";
+        else
+            return "Update Category";
+        
     }
 }

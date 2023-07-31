@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.model;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,10 +11,10 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "income_entity")
-public class Income extends AbstractEntity implements Serializable, GenericEntityInterface {
+public class Income extends AbstractEntity implements Serializable{
 
    private String name;
-   private BigDecimal amount;
+   public BigDecimal amount;
    
 
     @Temporal(javax.persistence.TemporalType.DATE)

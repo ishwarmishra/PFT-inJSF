@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.model;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,15 +19,20 @@ public class Budget extends AbstractEntity implements Serializable, GenericEntit
     private BigDecimal amount;
     
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
-
+    private Date fromDate;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private  Date toDate;
+    
+    
     public Budget() {
     }
 
-    public Budget(Category category, BigDecimal amount,Date date) {
+    public Budget(Category category, BigDecimal amount,Date fromDate,Date toDate) {
         this.category = category;
         this.amount = amount;
-       this.date=date;
+        this.fromDate=fromDate;
+        this.toDate=toDate;
     }
 
     public Category getCategory() {
@@ -45,11 +51,19 @@ public class Budget extends AbstractEntity implements Serializable, GenericEntit
         this.amount = amount;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getFromDate() {
+        return fromDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+    
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 }

@@ -1,8 +1,6 @@
 package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -99,14 +97,17 @@ public class BudgetController implements Serializable {
         budgetRepositoryImpl.delete(budget.getId());
         findAll();
     }
-   
+
     public void findAll() {
         budgetList = budgetRepositoryImpl.findAll();
     }
-    public String getMonthFromBudgetDate(Date date) {
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
-        return monthFormat.format(date);
+
+    public String getHeader() {
+        if (budget.getId() == 0) {
+            return "Add Budget";
+        } else {
+            return "Update Budget";
+        }
     }
-    
-    
+
 }

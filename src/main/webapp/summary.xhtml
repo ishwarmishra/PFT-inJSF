@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Finance Summary</title>
+</h:head>
+
+<h:body>
+    <h1>Finance Summary</h1>
+
+    <h:panelGrid columns="2">
+        <h:outputText value="Total Income:"/>
+        <h:outputText value="#{financeSummaryController.summaryData['INCOME']}"/>
+
+        <h:outputText value="Total Expense:"/>
+        <h:outputText value="#{financeSummaryController.summaryData['EXPENSE']}"/>
+    </h:panelGrid>
+</h:body>
+
+</html>
