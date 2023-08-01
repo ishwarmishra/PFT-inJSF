@@ -28,19 +28,6 @@ public class IncomeRepositoryImpl extends GenericAbstractRepository<Income> {
         return entityManager.find(Income.class, id);
     }
 
-//   public BigDecimal findBudgetOfCategoryBetweenDate(Income incomeCategory, Date fromDate, Date toDate) {
-//      
-//    try{
-//    Query query = entityManager.createQuery("SELECT SUM(s.amount) FROM Income s WHERE s.category=:category group by s.category",BigDecimal.class);          
-//    query.setParameter("category", incomeCategory.getCategory());
-//    BigDecimal result=(BigDecimal) query.getSingleResult();
-//    return result;
-//    }
-//    catch(Exception e){
-//        System.out.println(e.getMessage());    }
-//    return  new BigDecimal ("0");
-//  }
-//}
     public BigDecimal findBudgetOfCategoryBetweenDate(Income incomeCategory, Date fromDate, Date toDate) {
 
         try {
