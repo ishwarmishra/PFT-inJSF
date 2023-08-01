@@ -156,15 +156,15 @@ public class IncomeController implements Serializable {
         this.ct = CategoryType.EXPENSE;
         loadCategory();
     }
-
+    
     public void beforeEditExpense(Income income) {
         this.income = income;                 //currently selected income or expense item
-        ct = income.getCategory().getType();  //fetch the correct categorylist for the income aor expense
+        ct = income.getCategory().getType();  //fetch the correct categorylist for the income or expense
         loadCategory();                       //It retrieve the correct category list for the income and expense from previuos fetched categorylist
-
     }
-
+    
     public void saveData() {
+        
         if (income == null || income.getCategory() == null) {
             FacesContext.getCurrentInstance().addMessage(
                     null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Income or category is null!"));
@@ -213,10 +213,57 @@ public class IncomeController implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income added successfully!"));
 
             }
+    }
+        
+        //For Updation of the Data
+        else{
+            if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currentDate);
+                calendar.set(Calendar.DAY_OF_MONTH, 1); // Set the day of the month to the first day
+                Date fromDate = calendar.getTime();
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set the day of the month to the last day
+                Date toDate = calendar.getTime();
+                
+                
+                
+                BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
+
+                if (income.getAmount().compareTo(budgetAmount) > 0) {
+                    FacesContext.getCurrentInstance().addMessage(
+                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Updating this expense exceeds the budgeted Amount very Clearly!"));
+                    return;
+                }
+
+                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
+                BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
+
+                if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
+                    FacesContext.getCurrentInstance().addMessage(
+                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Updatig this expense exceeds the budget!"));
+                    return;
+                } else{
+                    incomeRepositoryImpl.update(income);
+                    income = new Income();
+                    findAll();
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expense Updated successfully!"));
+
+                }
+            }
+            else {
+                incomeRepositoryImpl.update(income);
+                income = new Income();
+                findAll();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income updated successfully!"));
+
+            }
 
         }
+        
+            
     }
-
+        
     public void deleteData(Income income) {
         incomeRepositoryImpl.delete(income.getId());//In AbstractGeneric Method
         findAll();//After deletion new records of the income or expense is populates to 'incomeList'

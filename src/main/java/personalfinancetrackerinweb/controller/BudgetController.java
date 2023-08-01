@@ -79,6 +79,7 @@ public class BudgetController implements Serializable {
 
     public void setBudget(Budget budget) {
         this.budget = budget;
+
     }
 
     public void saveData() {

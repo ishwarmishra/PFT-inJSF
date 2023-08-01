@@ -58,6 +58,7 @@ public class CategoryController implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
     //To save the new Category
     public void saveData() {
         if (category.getId() == 0) {
