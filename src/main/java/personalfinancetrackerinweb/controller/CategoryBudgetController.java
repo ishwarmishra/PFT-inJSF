@@ -1,12 +1,9 @@
-//For the Pie chart Model of the Categories
 package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
+import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -43,8 +40,6 @@ public class CategoryBudgetController implements Serializable {
 
     private Budget budget;
 
-    private Date currentDate;
-
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
     }
@@ -69,7 +64,7 @@ public class CategoryBudgetController implements Serializable {
         this.incomeRepositoryImpl = incomeRepositoryImpl;
     }
 
-        public List<Category> getCategoryList() {
+    public List<Category> getCategoryList() {
         return categoryList;
     }
 
@@ -92,45 +87,52 @@ public class CategoryBudgetController implements Serializable {
     public void setBudget(Budget budget) {
         this.budget = budget;
     }
-
-    public Date getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
-    }
-    
     public PieChartModel getPieChartModel() {
         return pieChartModel;
     }
+    //For TYPED QUERY STORED IN THE BudgetRepositoryImpl
+    private List<Object[]> stockBudget;
 
+    public List<Object[]> getStockBudget() {
+        stockBudget = budgetRepositoryImpl.budgetCategoryAmount();
+        return stockBudget;
+    }
 
+    public void setStockBudget(List<Object[]> stockBudget) {
+        this.stockBudget = stockBudget;
+    }
 
     @PostConstruct
     public void init() {
         categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
-        currentDate = new Date();
+        stockBudget = budgetRepositoryImpl.budgetCategoryAmount();
         createPieChartModel();
     }
 
     private void createPieChartModel() {
+
         pieChartModel = new PieChartModel();
 
-        List<Category> expenseCategories = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
+        // Get the total budget amount for all expense categories
+        BigDecimal totalExpenseBudget = BigDecimal.ZERO;
+        for (Object[] budgetData : stockBudget) {
+            totalExpenseBudget = totalExpenseBudget.add((BigDecimal) budgetData[0]);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.set(Calendar.DAY_OF_MONTH, 1); 
-        Date fromDate = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set the day of the month to the last day
-        Date toDate = calendar.getTime();
-        Map<Category, BigDecimal> budgetAmountMap = budgetRepositoryImpl.budgetAmountList();
-        for (Category category : expenseCategories) {
-            BigDecimal budgetAmount = budgetAmountMap.getOrDefault(category, BigDecimal.ZERO);
-            pieChartModel.set(category.getName(), budgetAmount);
         }
-        pieChartModel.setTitle("Expense Categories vs Budget");
+        // Add data to the pie chart model
+        for (Object[] budgetData : stockBudget) {
+
+            BigDecimal amount = (BigDecimal) budgetData[0];
+            Category category = (Category) budgetData[1];
+           
+            // Calculate the percentage of the category amount compared to the total expense budget
+            BigDecimal percentage = amount
+                    .divide(totalExpenseBudget, 2, RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(100));
+            pieChartModel.set(category.getName(), percentage);
+        }
+
+        pieChartModel.setTitle("Expense Category Budget Distribution");
         pieChartModel.setLegendPosition("e");
         pieChartModel.setShowDataLabels(true);
     }

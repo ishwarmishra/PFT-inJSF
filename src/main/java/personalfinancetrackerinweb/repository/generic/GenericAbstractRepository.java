@@ -69,5 +69,6 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     query.setParameter("startDate", startDate);
     query.setParameter("endDate", endDate);
     return query.getResultList();
-}
+
+    }
 }

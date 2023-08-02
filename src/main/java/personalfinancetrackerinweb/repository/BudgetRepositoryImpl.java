@@ -2,15 +2,13 @@ package personalfinancetrackerinweb.repository;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.Budget;
-import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.Income;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
@@ -41,41 +39,23 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
     catch(Exception e){
     }
    return  new BigDecimal("0");
+   
     }
- 
-  public Map<Category, BigDecimal> budgetAmountList() {
+    
+    public List<Object[]> budgetCategoryAmount() {
+    List<Object[]> result = null;
     try {
-        Query query = entityManager.createQuery("SELECT b FROM Budget b", Budget.class);
-        List<Budget> resultList = query.getResultList();
-
-        Map<Category, BigDecimal> budgetAmountMap = new HashMap<>();
-        for (Budget budget : resultList) {
-            budgetAmountMap.put(budget.getCategory(), budget.getAmount());
-        }
-        return budgetAmountMap;
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT b.amount, b.category FROM Budget b", Object[].class);
+        result = query.getResultList();
     } catch (Exception e) {
-        e.printStackTrace(); // For demonstration purposes, you can print the stack trace
-        return new HashMap<>(); // Return an empty map or handle the exception case as required
+        e.printStackTrace();
+        
     }
- }
+    return result;
+   }
+    
+  
 }
 
 
 
-// public List<Object[]> budgetCategoryAmount(){
-//        TypedQuery<Object[]> query=entityManager.createQuery("SELECT b.amount, b.category FROM Budget b",Object[].class);
-//        List<Object[]> result=query.getResultList();
-//        return result;        
-//    }
-
-
-//private List<Object[]> stockBudget;
-//
-//    public List<Object[]> getStockBudget() {
-//        stockBudget = budgetRepositoryImpl.budgetCategoryAmount();
-//        return stockBudget;
-//    }
-//
-//    public void setStockBudget(List<Object[]> stockBudget) {
-//        this.stockBudget = stockBudget;
-//    }
