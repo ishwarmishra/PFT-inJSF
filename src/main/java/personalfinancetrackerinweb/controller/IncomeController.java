@@ -45,7 +45,7 @@ public class IncomeController implements Serializable {
 
     private List<Budget> budgetList;
     
-    private  Date currentDate;
+   private  Date currentDate;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -143,7 +143,7 @@ public class IncomeController implements Serializable {
         budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
         findAll();
-        currentDate=new Date();
+       // currentDate=new Date();
     }
 
     //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
@@ -176,9 +176,9 @@ public class IncomeController implements Serializable {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);
-                calendar.set(Calendar.DAY_OF_MONTH, 1); // Set the day of the month to the first day
+                calendar.set(Calendar.DAY_OF_MONTH, 1); 
                 Date fromDate = calendar.getTime();
-                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set the day of the month to the last day
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); 
                 Date toDate = calendar.getTime();
                 
                 

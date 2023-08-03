@@ -120,8 +120,8 @@ public class CategoryBudgetController implements Serializable {
 
         }
         // Add data to the pie chart model
-        for (Object[] budgetData : stockBudget) {
 
+        for (Object[] budgetData : stockBudget) {
             BigDecimal amount = (BigDecimal) budgetData[0];
             Category category = (Category) budgetData[1];
            

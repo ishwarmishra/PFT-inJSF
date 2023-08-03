@@ -26,7 +26,8 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
     public BudgetRepositoryImpl() {
         super(Budget.class);
     }
-
+    
+    //Calculate the amount of the each expense category inside the Budget Model within date range
     public BigDecimal getTotalBudgetAmount(Income income, Date fromDate, Date toDate) {
     try{
         Query query = entityManager.createQuery("Select b from Budget b where  b.category=:category AND b.toDate >=:toDate", Budget.class);
@@ -35,26 +36,38 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
         Budget results = (Budget) query.getSingleResult();
         BigDecimal result = results.getAmount();
         return result;
-    }
+       }
     catch(Exception e){
-    }
-   return  new BigDecimal("0");
+     }
+     return  new BigDecimal("0");
    
     }
-    
+    //Calculate the list of the category,amount inside budget model
     public List<Object[]> budgetCategoryAmount() {
     List<Object[]> result = null;
     try {
         TypedQuery<Object[]> query = entityManager.createQuery("SELECT b.amount, b.category FROM Budget b", Object[].class);
         result = query.getResultList();
     } catch (Exception e) {
-        e.printStackTrace();
-        
+        e.printStackTrace();        
     }
     return result;
    }
     
-  
+    
+    //Calculate the list of category,amount with in a date range inside the Budget Model
+    public List<Object[]> calculateCategoryBudgets(Date fromDate,Date toDate){
+      List<Object[]> result = null;
+    try {
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT  b.amount,b.category FROM Budget b WHERE b.fromDate >=:fromDate AND b.toDate<=:toDate",Object[].class);
+        query.setParameter("fromDate", fromDate);
+        query.setParameter("toDate", toDate);
+        result = query.getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+     }
+    return result;
+    }
 }
 
 

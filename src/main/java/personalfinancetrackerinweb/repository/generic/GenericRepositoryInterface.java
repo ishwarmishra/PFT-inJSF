@@ -1,6 +1,5 @@
 package personalfinancetrackerinweb.repository.generic;
 
-import java.util.Date;
 import java.util.List;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
@@ -13,7 +12,7 @@ public interface GenericRepositoryInterface<T> {
     List<T> findAll();
    
     List<Category> findByCategoryType(CategoryType type);
-    List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate);
+    //List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate);
     
     
 }

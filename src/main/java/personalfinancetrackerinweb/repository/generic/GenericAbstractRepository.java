@@ -58,17 +58,17 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
         query.setParameter("type", type);
         return query.getResultList();
     }
-   //This for the Pie chart model of the expense category
-    @Override
-    public List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate) {
-    TypedQuery<T> query = getEntityManager().createQuery(
-            "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.category = :category AND e.fromDate BETWEEN :startDate AND :endDate",
-            entityClass
-    );
-    query.setParameter("category", category);
-    query.setParameter("startDate", startDate);
-    query.setParameter("endDate", endDate);
-    return query.getResultList();
-
-    }
+   //For bar chart model of the Actual versus Budgeted Expense Category
+//    @Override
+//    public List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate) {
+//    TypedQuery<T> query = getEntityManager().createQuery(
+//            "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.category = :category AND e.fromDate BETWEEN :startDate AND :endDate",
+//            entityClass
+//    );
+//    query.setParameter("category", category);
+//    query.setParameter("startDate", startDate);
+//    query.setParameter("endDate", endDate);
+//    return query.getResultList();
+//
+//    }
 }

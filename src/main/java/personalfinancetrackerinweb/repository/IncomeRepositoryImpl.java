@@ -2,6 +2,7 @@ package personalfinancetrackerinweb.repository;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,7 @@ public class IncomeRepositoryImpl extends GenericAbstractRepository<Income> {
         return entityManager.find(Income.class, id);
     }
 
+    //Calculate the amount of the each category inside the Income Model within date range
     public BigDecimal findBudgetOfCategoryBetweenDate(Income incomeCategory, Date fromDate, Date toDate) {
 
         try {
@@ -43,4 +45,19 @@ public class IncomeRepositoryImpl extends GenericAbstractRepository<Income> {
         }
         return new BigDecimal("0");
     }
+
+    //Calculate the name,amount of the expense category with in a date range inside the Income Model
+    public List<Object[]> calculateActualExpense(Date fromDate, Date toDate) {
+       List<Object[]> result = null;
+       try {
+        Query query = entityManager.createQuery("SELECT i.amount, i.category  FROM Income i WHERE i.date BETWEEN :fromDate AND :toDate ",Object[].class );       
+        query.setParameter("fromDate", fromDate);
+        query.setParameter("toDate", toDate);
+        result = query.getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return result;
+   }
+
 }
