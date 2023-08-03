@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +18,7 @@ import personalfinancetrackerinweb.model.Income;
 
 @Named
 @ViewScoped
-public class IncomeController implements Serializable {
+public class IncomeController extends AbstractMessageController implements Serializable {
 
     @Inject
     private IncomeRepositoryImpl incomeRepositoryImpl;
@@ -143,7 +141,7 @@ public class IncomeController implements Serializable {
         budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
         findAll();
-       // currentDate=new Date();
+       currentDate=new Date();
     }
 
     //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
@@ -166,8 +164,7 @@ public class IncomeController implements Serializable {
     public void saveData() {
         
         if (income == null || income.getCategory() == null) {
-            FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Income or category is null!"));
+            super.infoMessage("Income or category is null!");            
             return;
         }
 
@@ -182,12 +179,10 @@ public class IncomeController implements Serializable {
                 Date toDate = calendar.getTime();
                 
                 
-                
                 BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
 
                 if (income.getAmount().compareTo(budgetAmount) > 0) {
-                    FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budgeted Amount very Clearly!"));
+                    super.infoMessage("Adding this expense exceeds the budgeted Amount very Clearly!");
                     return;
                 }
 
@@ -195,14 +190,13 @@ public class IncomeController implements Serializable {
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
-                    FacesContext.getCurrentInstance().addMessage(
-                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Adding this expense exceeds the budget!"));
+                    super.infoMessage("Adding this expense exceeds the budget!");
                     return;
                 } else if (income.getId() == 0) {
                     incomeRepositoryImpl.create(income);
                     income = new Income();
                     findAll();
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expense added successfully!"));
+                    super.infoMessage("Expense Source Added Successfull!Thankyou ");
 
                 }
 
@@ -210,8 +204,7 @@ public class IncomeController implements Serializable {
                 incomeRepositoryImpl.create(income);
                 income = new Income();
                 findAll();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income added successfully!"));
-
+               super.infoMessage("Income Source Added Successfull!Thankyou ");
             }
     }
         
@@ -231,8 +224,7 @@ public class IncomeController implements Serializable {
                 BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
 
                 if (income.getAmount().compareTo(budgetAmount) > 0) {
-                    FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Updating this expense exceeds the budgeted Amount very Clearly!"));
+                    super.infoMessage("Updating this expense exceeds the budgeted Amount very Clearly!");
                     return;
                 }
 
@@ -240,33 +232,29 @@ public class IncomeController implements Serializable {
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
-                    FacesContext.getCurrentInstance().addMessage(
-                            null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Updatig this expense exceeds the budget!"));
+                    super.infoMessage("Updatig this expense exceeds the budget!");
                     return;
                 } else{
                     incomeRepositoryImpl.update(income);
                     income = new Income();
                     findAll();
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Expense Updated successfully!"));
-
+                    super.infoMessage( "Expense Updated successfully!");
                 }
             }
             else {
                 incomeRepositoryImpl.update(income);
                 income = new Income();
                 findAll();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Income updated successfully!"));
-
+                super.infoMessage( "Income updated successfully!");
             }
 
         }
-        
-            
     }
         
     public void deleteData(Income income) {
         incomeRepositoryImpl.delete(income.getId());//In AbstractGeneric Method
-        findAll();//After deletion new records of the income or expense is populates to 'incomeList'
+        findAll();//After deletion new records of the income or expense is populates to 'incomeList'  
+
     }
 
     public void findAll() {

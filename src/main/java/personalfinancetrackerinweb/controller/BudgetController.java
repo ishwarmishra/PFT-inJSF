@@ -3,8 +3,6 @@ package personalfinancetrackerinweb.controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +14,7 @@ import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Named
 @ViewScoped
-public class BudgetController implements Serializable {
+public class BudgetController extends AbstractMessageController implements Serializable {
 
     @Inject
     private BudgetRepositoryImpl budgetRepositoryImpl;
@@ -85,15 +83,17 @@ public class BudgetController implements Serializable {
     public void saveData() {
         if (budget.getId() == 0) {
             budgetRepositoryImpl.create(budget);
+            super.infoMessage( "Budgeting done successfully!");
+
         } else {
             budgetRepositoryImpl.update(budget);
+            super.infoMessage( "Budgeting update successfully!");
+
         }
         budget = new Budget();
         findAll();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Budgeting done successfully!"));
 
     }
-
     public void deleteData(Budget budget) {
         budgetRepositoryImpl.delete(budget.getId());
         findAll();

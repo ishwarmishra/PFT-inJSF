@@ -13,7 +13,7 @@ import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Named
 @ViewScoped
-public class CategoryController implements Serializable {
+public class CategoryController extends AbstractMessageController implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
@@ -63,12 +63,15 @@ public class CategoryController implements Serializable {
     public void saveData() {
         if (category.getId() == 0) {
             categoryRepositoryImpl.create(category);
+            super.infoMessage( "Category Added successfully!");
+
         } else {
             categoryRepositoryImpl.update(category);
+            super.infoMessage( "Category Updated successfully!");
+
         }
         category = new Category();
         findAll();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Category saved successfully!"));
 
     }
 

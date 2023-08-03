@@ -112,6 +112,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
     @PostConstruct
     public void init() {
+        
         incomeList = incomeRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
         createChartModels();

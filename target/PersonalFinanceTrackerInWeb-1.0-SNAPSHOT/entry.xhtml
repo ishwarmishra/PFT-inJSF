@@ -54,11 +54,10 @@
                     <p:commandButton value="Save"
                                      action="#{incomeController.saveData()}" styleClass="button-style" update=":incomeListForm growl"
                                      oncomplete="PF('incomeDialogVar').hide();" />
-                    
-                    
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+
     </h:body>
 </html>
