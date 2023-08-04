@@ -42,8 +42,8 @@ public class IncomeController extends AbstractMessageController implements Seria
     private CategoryType ct = CategoryType.INCOME;
 
     private List<Budget> budgetList;
-    
-   private  Date currentDate;
+
+    private Date currentDate;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -133,7 +133,7 @@ public class IncomeController extends AbstractMessageController implements Seria
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
     }
-    
+
     @PostConstruct
     public void init() {
         income = new Income();
@@ -141,9 +141,17 @@ public class IncomeController extends AbstractMessageController implements Seria
         budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
         findAll();
-       currentDate=new Date();
+        currentDate = new Date();
     }
 
+    public String getCategoryStyle(Income item){
+        if(item.getCategory().type==CategoryType.EXPENSE){
+            return "RED";
+        }
+        else{
+            return "GREEN";
+        }
+    }
     //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
     public void beforeCreateIncome() {
         this.ct = CategoryType.INCOME;
@@ -154,35 +162,34 @@ public class IncomeController extends AbstractMessageController implements Seria
         this.ct = CategoryType.EXPENSE;
         loadCategory();
     }
-    
+
     public void beforeEditExpense(Income income) {
         this.income = income;                 //currently selected income or expense item
         ct = income.getCategory().getType();  //fetch the correct categorylist for the income or expense
         loadCategory();                       //It retrieve the correct category list for the income and expense from previuos fetched categorylist
     }
-    
+
     public void saveData() {
-        
-        if (income == null || income.getCategory() == null) {
-            super.infoMessage("Income or category is null!");            
-            return;
-        }
+
+//        if (income == null || income.getCategory() == null) {
+//            super.infoMessage("Income or category is null!");
+//            return;
+//        }
 
         if (income.getId() == 0) {
             if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);
-                calendar.set(Calendar.DAY_OF_MONTH, 1); 
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
                 Date fromDate = calendar.getTime();
-                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); 
+                calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
                 Date toDate = calendar.getTime();
-                
-                
+
                 BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
 
                 if (income.getAmount().compareTo(budgetAmount) > 0) {
-                    super.infoMessage("Adding this expense exceeds the budgeted Amount very Clearly!");
+                    super.warningMessage("Adding this expense exceeds the budgeted Amount very Clearly!");
                     return;
                 }
 
@@ -190,26 +197,23 @@ public class IncomeController extends AbstractMessageController implements Seria
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
-                    super.infoMessage("Adding this expense exceeds the budget!");
+                    super.warningMessage("Adding this expense exceeds the budget!");
                     return;
                 } else if (income.getId() == 0) {
                     incomeRepositoryImpl.create(income);
                     income = new Income();
                     findAll();
                     super.infoMessage("Expense Source Added Successfull!Thankyou ");
-
                 }
 
             } else {
                 incomeRepositoryImpl.create(income);
                 income = new Income();
                 findAll();
-               super.infoMessage("Income Source Added Successfull!Thankyou ");
+                super.infoMessage("Income Source Added Successfull!Thankyou ");
             }
-    }
-        
-        //For Updation of the Data
-        else{
+        } //For Updation of the Income and EXpense Data
+        else {
             if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
 
                 Calendar calendar = Calendar.getInstance();
@@ -218,13 +222,13 @@ public class IncomeController extends AbstractMessageController implements Seria
                 Date fromDate = calendar.getTime();
                 calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set the day of the month to the last day
                 Date toDate = calendar.getTime();
-                
-                
-                
+
                 BigDecimal budgetAmount = budgetRepositoryImpl.getTotalBudgetAmount(income, fromDate, toDate);
 
                 if (income.getAmount().compareTo(budgetAmount) > 0) {
-                    super.infoMessage("Updating this expense exceeds the budgeted Amount very Clearly!");
+                    super.warningMessage("Updating this expense exceeds the budgeted Amount very Clearly!");
+                    income = new Income();
+                    findAll();
                     return;
                 }
 
@@ -232,29 +236,33 @@ public class IncomeController extends AbstractMessageController implements Seria
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
-                    super.infoMessage("Updatig this expense exceeds the budget!");
+                    super.warningMessage("Updatig this expense exceeds the budget!");
+                    income = new Income();
+                    findAll();
                     return;
-                } else{
+                } else {
                     incomeRepositoryImpl.update(income);
                     income = new Income();
                     findAll();
-                    super.infoMessage( "Expense Updated successfully!");
+                    super.infoMessage("Expense Updated successfully!");
                 }
-            }
-            else {
+            } else {
                 incomeRepositoryImpl.update(income);
                 income = new Income();
                 findAll();
-                super.infoMessage( "Income updated successfully!");
+                super.infoMessage("Income updated successfully!");
             }
 
         }
     }
-        
+
     public void deleteData(Income income) {
         incomeRepositoryImpl.delete(income.getId());//In AbstractGeneric Method
+        income = new Income();
         findAll();//After deletion new records of the income or expense is populates to 'incomeList'  
-
+        super.warningMessage("Data deleted successfully!");
+        return;
+        
     }
 
     public void findAll() {

@@ -12,7 +12,6 @@ public interface GenericRepositoryInterface<T> {
     List<T> findAll();
    
     List<Category> findByCategoryType(CategoryType type);
-    //List<T> findByCategoryAndDateRange(Category category, Date startDate, Date endDate);
     
     
 }

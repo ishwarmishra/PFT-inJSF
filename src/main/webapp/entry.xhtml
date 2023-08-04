@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <h:outputStylesheet library="primefaces" name="primefaces.css"/>
         <title>Income</title>
-       
+
     </h:head>
     <h:body>
         <h:form class="my-navbar">
@@ -52,12 +52,12 @@
 
 
                     <p:commandButton value="Save"
-                                     action="#{incomeController.saveData()}" styleClass="button-style" update=":incomeListForm growl"
+                                     action="#{incomeController.saveData()}" styleClass="button-style" update= ":incomeListForm growl "
                                      oncomplete="PF('incomeDialogVar').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-                <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
 
     </h:body>
 </html>

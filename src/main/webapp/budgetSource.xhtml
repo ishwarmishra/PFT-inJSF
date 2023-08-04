@@ -15,14 +15,18 @@
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml" />
         </h:form>
-        <h3>Budgeting</h3>
-        <p:toolbar>
+        <p:toolbar style="width :80% ; margin:0 auto">
+            <f:facet name="left">
+                <p:outputLabel>
+                    Budgeting Expense Category
+                </p:outputLabel>                
+            </f:facet>
             <f:facet name="right">
                 <p:commandButton icon="fa fa-plus" title="Add Budget" action="#{budgetController.beforeCreate()}" styleClass="button-style" update=":budgetForm budgetDialog"
                                  oncomplete="PF('budgetDialogVar').show();" />
             </f:facet>
         </p:toolbar>
-        <p:layoutUnit position="center">
+        <p:layoutUnit position="center" style="width :80% ; margin:0 auto">
             <h:form id="budgetListForm">
                 <ui:include src="budgetReport.xhtml"/>
             </h:form>
@@ -45,9 +49,7 @@
                         
                         <h:outputLabel  id="tolbl" for="toDate" value="To Date: " />
                         <p:calendar id="toDate" value="#{budgetController.budget.toDate}" showOn="button" pattern="yyyy-MM-dd"  required="true"/>
-                        
-                        
-                            
+                                                                            
                         <p:commandButton value="Save"
                                         action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm growl"
                                         oncomplete="PF('budgetDialogVar').hide();" />                         

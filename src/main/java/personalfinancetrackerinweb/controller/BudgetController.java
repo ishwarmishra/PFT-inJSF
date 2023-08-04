@@ -96,13 +96,14 @@ public class BudgetController extends AbstractMessageController implements Seria
     }
     public void deleteData(Budget budget) {
         budgetRepositoryImpl.delete(budget.getId());
+        super.warningMessage( "Budgeting Delete successfully!");
         findAll();
     }
 
     public void findAll() {
         budgetList = budgetRepositoryImpl.findAll();
     }
-
+    
     public String getHeader() {
         if (budget.getId() == 0) {
             return "Add Budget";

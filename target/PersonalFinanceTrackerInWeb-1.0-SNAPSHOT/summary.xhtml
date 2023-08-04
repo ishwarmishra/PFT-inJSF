@@ -1,26 +1,49 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <title>Finance Summary</title>
-</h:head>
-
-<h:body>
-    <h1>Finance Summary</h1>
-
-    <h:panelGrid columns="2">
-        <h:outputText value="Total Income:"/>
-        <h:outputText value="#{financeSummaryController.summaryData['INCOME']}"/>
-
-        <h:outputText value="Total Expense:"/>
-        <h:outputText value="#{financeSummaryController.summaryData['EXPENSE']}"/>
-    </h:panelGrid>
-</h:body>
-
+        <title>Finance Summary</title>
+        <link rel="stylesheet" type="text/css" href="primefaces.css" /> <!-- Add the path to your PrimeFaces 6.0 CSS file -->
+        <style>
+            /* Add your custom CSS styling here */
+            .summary-container {
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .summary-label {
+                font-weight: bold;
+            }
+            
+            .summary-value {
+                margin-left: 10px;
+            }
+        </style>
+    </h:head>
+    
+    <h:body>
+        <h:form class="my-navbar">
+            <ui:include src="topMenu.xhtml"/>
+        </h:form>
+        <h:form>
+            <div class="summary-container">
+                <h2>Finance Summary</h2>
+                <p:panelGrid columns="2" columnClasses="summary-label, summary-value">
+                    <p:outputLabel value="Total Income:" for="income"/>
+                    <h:outputText id="income" value="#{financeSummaryController.summaryData['INCOME']}"/>
+                    
+                    <p:outputLabel value="Total Expense:" for="expense"/>
+                    <h:outputText id="expense" value="#{financeSummaryController.summaryData['EXPENSE']}"/>
+                </p:panelGrid>
+            </div>
+        </h:form>
+    </h:body>
 </html>

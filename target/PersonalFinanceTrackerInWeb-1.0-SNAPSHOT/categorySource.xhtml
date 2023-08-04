@@ -12,16 +12,20 @@
     </h:head>
     <h:body>      
         <h:form class="my-navbar">
-            <ui:include src="topMenu.xhtml" />
+            <ui:include src="topMenu.xhtml"/>
         </h:form> 
-        <h3>Category</h3>
-        <p:toolbar>
+        <p:toolbar style="width :60% ; margin:0 auto">
+            <f:facet name="left">
+                <p:outputLabel>
+                    Category
+                </p:outputLabel>                
+            </f:facet>
             <f:facet name="right">
                 <p:commandButton   icon="fa fa-plus" title="Add Category"   action="#{categoryController.beforeCreate()}"   update=":categoryForm categoryDialog"
                                    oncomplete="PF('categoryDialogVar').show();"  />
             </f:facet>
         </p:toolbar>
-        <p:layoutUnit position="center">
+        <p:layoutUnit position="center" style="width :60% ; margin: 0 auto">
             <h:form id="categoryListForm">
                 <ui:include src="categoryReport.xhtml" />
             </h:form>

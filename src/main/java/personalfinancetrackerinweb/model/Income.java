@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 public class Income extends AbstractEntity implements Serializable{
 
    private String name;
-   public BigDecimal amount;
+   private BigDecimal amount;
    
 
     @Temporal(javax.persistence.TemporalType.DATE)

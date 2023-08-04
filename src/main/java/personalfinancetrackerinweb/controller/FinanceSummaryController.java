@@ -73,7 +73,6 @@ public class FinanceSummaryController implements Serializable {
                 totalExpense = totalExpense.add(amount);
             }
         }
-
         summaryData.put("INCOME", totalIncome);
         summaryData.put("EXPENSE", totalExpense);
     }

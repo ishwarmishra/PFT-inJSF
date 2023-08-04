@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">    <h:head>
+        <title>Login-Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p:growl id="growl_msg" showDetail="true"  />
+        <h:form id="loginForm">
+            <center>
+                <div style="margin-top: 15%; border: 2px solid #ccc; padding: 10px; width: 400px;
+                     padding: 14px;">                   
+                    <h3><p:outputLabel value="Login" /></h3>                   
+                    <h:panelGrid columns="2" cellpadding="10">                        
+                        <p:outputLabel for="username" value="Username:" />
+                        <p:inputText id="username" value="#{loginController.username}" required="true" >
+                            <p:ajax update="@this" process="@this" />
+                        </p:inputText>                        <p:outputLabel for="password" value="Password:" />
+                        <p:password id="password" value="#{loginController.password}" required="true" >
+                            <p:ajax update="@this" process="@this" />
+                        </p:password>                        
+                        
+                    </h:panelGrid>
+                </div>
+            </center>        
+        </h:form>
+    </h:body>
+</html>
