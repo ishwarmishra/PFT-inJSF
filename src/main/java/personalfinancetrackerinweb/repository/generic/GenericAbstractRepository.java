@@ -42,7 +42,9 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
 
     @Override
     public T update(T data) {
-        return getEntityManager().merge(data);
+         getEntityManager().merge(data);
+         getEntityManager().flush();
+         return data;
        
     }
 

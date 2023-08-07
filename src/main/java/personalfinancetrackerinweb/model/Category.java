@@ -38,6 +38,8 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
     public void setType(CategoryType type) {
         this.type = type;
     }
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

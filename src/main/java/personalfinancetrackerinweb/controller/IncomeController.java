@@ -170,6 +170,10 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public void saveData() {
+        if (income == null || income.getCategory() == null) {
+           super.infoMessage("Income or category is null!");
+            return;
+        }
 
         if (income.getId() == 0) {
             if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
