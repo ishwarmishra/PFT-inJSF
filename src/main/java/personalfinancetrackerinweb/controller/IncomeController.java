@@ -171,11 +171,6 @@ public class IncomeController extends AbstractMessageController implements Seria
 
     public void saveData() {
 
-//        if (income == null || income.getCategory() == null) {
-//            super.infoMessage("Income or category is null!");
-//            return;
-//        }
-
         if (income.getId() == 0) {
             if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
 
@@ -233,9 +228,14 @@ public class IncomeController extends AbstractMessageController implements Seria
                 }
 
                 BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
-                BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
-
-                if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
+                BigDecimal orgValue = (incomeRepositoryImpl.getById(income.getId()).getAmount());
+                
+                BigDecimal totalExpenseAmount = expenseAmount.subtract(orgValue);
+                
+                BigDecimal realExpenseAMount = totalExpenseAmount.add(income.getAmount());
+                
+                        
+                if (realExpenseAMount.compareTo(budgetAmount) > 0) {
                     super.warningMessage("Updatig this expense exceeds the budget!");
                     income = new Income();
                     findAll();
