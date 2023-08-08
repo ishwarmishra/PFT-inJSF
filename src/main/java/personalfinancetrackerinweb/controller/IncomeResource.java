@@ -2,7 +2,6 @@ package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,11 +16,7 @@ import javax.ws.rs.core.Response;
 import personalfinancetrackerinweb.model.Income;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 
-/**
- *
- * @author ishwar
- */
-@ApplicationScoped
+
 @Path("/entry")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,40 +26,46 @@ public class IncomeResource implements Serializable {
     private IncomeRepositoryImpl incomeRepositoryImpl;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Income> getAllIncomes() {
-        return incomeRepositoryImpl.findAll();
+    public Response getAllIncomes() {
+        List<Income> incomes = incomeRepositoryImpl.findAll();
+        ResponseModel responseModel = new ResponseModel(200, "Success", incomes);
+        return Response.status(200).entity(responseModel).build();
     }
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Income getIncomeById(@PathParam("id") long id) {
-        return incomeRepositoryImpl.getById(id);
+    public Response getIncomeById(@PathParam("id") long id) {
+        Income income = incomeRepositoryImpl.getById(id);
+        if (income != null) {
+            ResponseModel responseModel = new ResponseModel(200, "Success", income);
+            return Response.status(200).entity(responseModel).build();
+        } else {
+            ResponseModel responseModel = new ResponseModel(404, "Income not found", null);
+            return Response.status(404).entity(responseModel).build();
+        }
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response createIncome(Income income) {
         incomeRepositoryImpl.create(income);
-        return Response.ok().build();
+        ResponseModel responseModel = new ResponseModel(201, "Data Saved successfully!", income);
+        return Response.status(201).entity(responseModel).build();
     }
 
     @PUT
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateIncome(@PathParam("id") long id, Income income) {
+        income.setId(id); // Assuming your Income object has an "id" field
         incomeRepositoryImpl.update(income);
-        return Response.ok().build();
-
+        ResponseModel responseModel = new ResponseModel(200, "Data Updated Successfully!", income);
+        return Response.status(200).entity(responseModel).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public void deleteIncome(@PathParam("id") long id) {
+    public Response deleteIncome(@PathParam("id") long id) {
         incomeRepositoryImpl.delete(id);
-
+        ResponseModel responseModel = new ResponseModel(202, "Data Deleted Successfully!", null);
+        return Response.status(202).entity(responseModel).build();
     }
 }

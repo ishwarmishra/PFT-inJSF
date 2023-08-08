@@ -15,7 +15,7 @@
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml" />
         </h:form>
-        <p:toolbar style="width :80% ; margin:0 auto">
+        <p:toolbar style="width :100% ; margin:0 auto">
             <f:facet name="left">
                 <p:outputLabel>
                     Budgeting Expense Category
@@ -26,7 +26,7 @@
                                  oncomplete="PF('budgetDialogVar').show();" />
             </f:facet>
         </p:toolbar>
-        <p:layoutUnit position="center" style="width :80% ; margin:0 auto">
+        <p:layoutUnit position="center" style="width :100% ; margin:0 auto">
             <h:form id="budgetListForm">
                 <ui:include src="budgetReport.xhtml"/>
             </h:form>

@@ -23,7 +23,7 @@
                 <p:outputLabel> #{category.type}</p:outputLabel> 
             </p:column>
 
-            <p:column headerText="Action" style="width: 10%">
+            <p:column headerText="Action" style="width: 5%">
                 <p:commandButton icon="fa fa-edit" title="Edit" action="#{categoryController.setCategory(category)}" styleClass="button-style"  update=":categoryForm categoryDialog"
                                  oncomplete="PF('categoryDialogVar').show();"  />
                 <p:commandButton icon="fa fa-trash" title="Delete" action="#{categoryController.deleteData(category)}" styleClass="button-style"  update="categoryTable categoryDialog"

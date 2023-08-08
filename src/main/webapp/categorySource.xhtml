@@ -14,7 +14,7 @@
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml"/>
         </h:form> 
-        <p:toolbar style="width :60% ; margin:0 auto">
+        <p:toolbar style="width :100% ; margin:0 auto">
             <f:facet name="left">
                 <p:outputLabel>
                     Category
@@ -25,7 +25,7 @@
                                    oncomplete="PF('categoryDialogVar').show();"  />
             </f:facet>
         </p:toolbar>
-        <p:layoutUnit position="center" style="width :60% ; margin: 0 auto">
+        <p:layoutUnit position="center" style="width :100% ; margin: 0 auto">
             <h:form id="categoryListForm">
                 <ui:include src="categoryReport.xhtml" />
             </h:form>

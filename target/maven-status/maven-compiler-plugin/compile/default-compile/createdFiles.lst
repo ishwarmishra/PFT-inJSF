@@ -12,6 +12,7 @@ personalfinancetrackerinweb/model/Budget_.class
 personalfinancetrackerinweb/converter/GenericConverter.class
 personalfinancetrackerinweb/controller/BudgetController.class
 personalfinancetrackerinweb/model/Login_.class
+personalfinancetrackerinweb/controller/ResponseModel.class
 personalfinancetrackerinweb/repository/CategoryRepositoryImpl.class
 personalfinancetrackerinweb/repository/LoginRepositoryImpl.class
 personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.class
