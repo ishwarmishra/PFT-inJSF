@@ -1,36 +1,50 @@
 package personalfinancetrackerinweb.controller;
 
+import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
+import personalfinancetrackerinweb.model.User;
+import personalfinancetrackerinweb.repository.UserRepository;
 
 
 @Named
 @ViewScoped
-public class LoginController extends  AbstractMessageController {
-    
-    private String username;
-    private String password;
+public class LoginController extends AbstractMessageController implements Serializable {
 
-    public String getUsername() {
-        return username;
+    @Inject
+    private UserRepository userRepository;
+    
+    private User user;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-    public String getPassword() {
-        return password;
+    
+    @PostConstruct
+    public void init(){
+        user = new User();
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    
+    
+    public String login() {
+        try {
+            User loggedInUser = userRepository.findByUsername(user);
+            if (loggedInUser != null && loggedInUser.getPassword().equals(user.getPassword())) {
+                return "index.xhtml?faces-redirect=true"; 
+            }
+        } catch (NoResultException e) {
+            // User not found
+        }
+        super.warningMessage("Login Failed!");
+        return null;
     }
-        
-}  
     
-    
-    
-            
-    
-    
+   
+}

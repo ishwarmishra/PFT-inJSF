@@ -21,8 +21,9 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>faces/login.xhtml</welcome-file>
     </welcome-file-list>
+    
     <!-- Needed for Awesome Font/Icons -->
     <mime-mapping>
         <extension>eot</extension>
@@ -64,4 +65,5 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>omega</param-value>    
     </context-param>
+ 
 </web-app>
