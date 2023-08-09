@@ -1,4 +1,5 @@
 package personalfinancetrackerinweb.model;
+
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -11,11 +12,11 @@ import javax.persistence.Table;
 public class Category extends AbstractEntity implements GenericEntityInterface, Serializable {
 
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    public CategoryType type;
     
-        public Category() {
+    @Enumerated(EnumType.STRING)
+    private CategoryType type;
+    
+    public Category() {
     }
 
     public Category(String name, CategoryType type) {
@@ -39,7 +40,6 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         this.type = type;
     }
     
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -51,6 +51,5 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         Category otherCategory = (Category) obj;
         return Objects.equals(this.getId(), otherCategory.getId());
     }
-    
     
 }

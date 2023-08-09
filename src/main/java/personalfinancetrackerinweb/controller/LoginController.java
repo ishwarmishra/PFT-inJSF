@@ -40,7 +40,7 @@ public class LoginController extends AbstractMessageController implements Serial
                 return "index.xhtml?faces-redirect=true"; 
             }
         } catch (NoResultException e) {
-            // User not found
+
         }
         super.warningMessage("Login Failed!");
         return null;

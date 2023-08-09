@@ -145,7 +145,7 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public String getCategoryStyle(Income item){
-        if(item.getCategory().type==CategoryType.EXPENSE){
+        if(item.getCategory().getType()==CategoryType.EXPENSE){
             return "RED";
         }
         else{

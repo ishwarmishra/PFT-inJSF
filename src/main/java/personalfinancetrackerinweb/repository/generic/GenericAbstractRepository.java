@@ -26,7 +26,6 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
 
     @Override
     public T create(T data) {
-
         getEntityManager().persist(data);
         return data;
     }

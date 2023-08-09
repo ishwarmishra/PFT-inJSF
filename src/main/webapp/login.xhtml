@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">  
 
     <h:head>
-        <title>Login-Page</title>
+        <title>Login Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:form id="loginForm">
-        <p:panel header="Login">
-            <p:messages />
-            <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{loginController.user.username}" required="true" />
-        
-            <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{loginController.user.password}" required="true" />
-        
-            <p:commandButton value="Login" action="#{loginController.login()}" update="loginForm" />
-        </p:panel>
-    </h:form>
+        <h:form id="loginForm" styleClass="login-form">
+            <p:growl id="messages" showDetail="true" />
+            <p:panelGrid columns="2" styleClass="login-panel">
+                <h:outputLabel for="username" value="Username:" />
+                <p:inputText id="username" value="#{loginController.user.username}" required="true" />
+
+                <h:outputLabel for="password" value="Password:" />
+                <p:password id="password" value="#{loginController.user.password}" required="true" />
+
+                <p:commandButton value="Login" action="#{loginController.login()}" update="messages" styleClass="login-button" />
+            </p:panelGrid>
+        </h:form>
     </h:body>
 </html>

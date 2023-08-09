@@ -49,10 +49,12 @@ public class ExpenseIncomeChartController implements Serializable {
     private BarChartModel barChartModel;
 
     private String chartType;
+    
 
     // Initialize the maps to store income and expense amounts for each week
     private Map<Integer, BigDecimal> incomeAmountsMap = new HashMap<>();
     private Map<Integer, BigDecimal> expenseAmountsMap = new HashMap<>();
+    
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -110,6 +112,7 @@ public class ExpenseIncomeChartController implements Serializable {
         this.chartType = chartType;
     }
 
+  
     @PostConstruct
     public void init() {
         
@@ -207,7 +210,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().type == INCOME) {
+                if (income.getCategory().getType() == INCOME) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = income.getAmount();
                     incomeSeries.set(month, amount);
@@ -312,7 +315,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().type == INCOME) {
+                if (income.getCategory().getType() == INCOME) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = income.getAmount();
                     incomeSeries.set(month, amount);
