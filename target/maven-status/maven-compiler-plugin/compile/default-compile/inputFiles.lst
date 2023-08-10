@@ -6,8 +6,10 @@
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/GenericEntityInterface.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/converter/GenericConverter.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/Category.java
+/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/LogOutController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/api/RestResponse.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/CategoryType.java
+/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/api/GenericResource.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/AbstractMessageController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/BudgetRepositoryImpl.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/CategoryBudgetAnalysisController.java
@@ -17,7 +19,6 @@
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/CategoryRepositoryImpl.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/api/IncomeRestApi.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/User.java
-/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/DashboardBean.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/LoginController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/FinanceSummaryController.java

@@ -145,7 +145,7 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public String getCategoryStyle(Income item){
-        if(item.getCategory().getType()==CategoryType.EXPENSE){
+        if(item.getCategory().getCategoryType()==CategoryType.EXPENSE){
             return "RED";
         }
         else{
@@ -165,7 +165,7 @@ public class IncomeController extends AbstractMessageController implements Seria
 
     public void beforeEditExpense(Income income) {
         this.income = income;                 //currently selected income or expense item
-        ct = income.getCategory().getType();  //fetch the correct categorylist for the income or expense
+        ct = income.getCategory().getCategoryType();  //fetch the correct categorylist for the income or expense
         loadCategory();                       //It retrieve the correct category list for the income and expense from previuos fetched categorylist
     }
 
@@ -176,7 +176,7 @@ public class IncomeController extends AbstractMessageController implements Seria
         }
 
         if (income.getId() == 0) {
-            if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
+            if (income.getCategory().getCategoryType().equals(CategoryType.EXPENSE)) {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);
@@ -213,7 +213,7 @@ public class IncomeController extends AbstractMessageController implements Seria
             }
         } //For Updation of the Income and EXpense Data
         else {
-            if (income.getCategory().getType().equals(CategoryType.EXPENSE)) {
+            if (income.getCategory().getCategoryType().equals(CategoryType.EXPENSE)) {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);

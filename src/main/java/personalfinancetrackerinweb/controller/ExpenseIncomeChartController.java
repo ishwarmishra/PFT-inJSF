@@ -155,7 +155,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().getType() == CategoryType.INCOME) {
+                if (income.getCategory().getCategoryType()== CategoryType.INCOME) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(income.getDate());
                     int week = calendar.get(Calendar.WEEK_OF_YEAR);
@@ -210,7 +210,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().getType() == INCOME) {
+                if (income.getCategory().getCategoryType()== INCOME) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = income.getAmount();
                     incomeSeries.set(month, amount);
@@ -258,7 +258,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().getType() == CategoryType.INCOME) {
+                if (income.getCategory().getCategoryType()== CategoryType.INCOME) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(income.getDate());
                     int week = calendar.get(Calendar.WEEK_OF_YEAR);
@@ -315,7 +315,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
         for (Category category : categoryList) {
             for (Income income : incomeList) {
-                if (income.getCategory().getType() == INCOME) {
+                if (income.getCategory().getCategoryType()== INCOME) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = income.getAmount();
                     incomeSeries.set(month, amount);

@@ -64,7 +64,7 @@ public class FinanceSummaryController implements Serializable {
         BigDecimal totalExpense = BigDecimal.ZERO;
 
         for (Income income : incomeList) {
-            CategoryType categoryType = income.getCategory().getType();
+            CategoryType categoryType = income.getCategory().getCategoryType();
             BigDecimal amount = income.getAmount();
 
             if (CategoryType.INCOME.equals(categoryType)) {

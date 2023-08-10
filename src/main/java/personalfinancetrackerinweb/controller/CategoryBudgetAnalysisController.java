@@ -175,7 +175,7 @@ public class CategoryBudgetAnalysisController implements Serializable {
         for (Object[] budgetActualData : stockBudgetActual) {
             BigDecimal actualAmount = (BigDecimal) budgetActualData[0];
             Category actualCategory = (Category) budgetActualData[1];
-            if (actualCategory.getType() == CategoryType.EXPENSE) {
+            if (actualCategory.getCategoryType()== CategoryType.EXPENSE) {
                 actualSeries.set(actualCategory.getName(), actualAmount);
             }
         }

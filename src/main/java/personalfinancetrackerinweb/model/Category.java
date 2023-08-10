@@ -14,14 +14,14 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
     private String name;
     
     @Enumerated(EnumType.STRING)
-    private CategoryType type;
+    private CategoryType categoryType;
     
     public Category() {
     }
 
     public Category(String name, CategoryType type) {
         this.name = name;
-        this.type = type;
+        this.categoryType = type;
     }
 
     public String getName() {
@@ -32,13 +32,15 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         this.name = name;
     }
 
-    public CategoryType getType() {
-        return type;
+    public CategoryType getCategoryType() {
+        return categoryType;
     }
 
-    public void setType(CategoryType type) {
-        this.type = type;
+    public void setCategoryType(CategoryType categoryType) {
+        this.categoryType = categoryType;
     }
+
+    
     
     @Override
     public boolean equals(Object obj) {

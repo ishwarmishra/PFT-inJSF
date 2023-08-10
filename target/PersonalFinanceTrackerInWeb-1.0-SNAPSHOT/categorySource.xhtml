@@ -39,7 +39,7 @@
                     <p:inputText id="name" value="#{categoryController.category.name}"  required="true" />
 
                     <p:outputLabel id="typelbl" for="type" value="Category Type:"  />                   
-                    <h:selectOneMenu id="type" value="#{categoryController.category.type}"  required="true">
+                    <h:selectOneMenu id="type" value="#{categoryController.category.categoryType}"  required="true">
                         <f:selectItem itemLabel="Income" itemValue="INCOME" />
                         <f:selectItem itemLabel="Expense" itemValue="EXPENSE" />
                     </h:selectOneMenu>

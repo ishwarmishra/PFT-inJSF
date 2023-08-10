@@ -18,6 +18,7 @@ import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 
 
 @Path("/entry")
+
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class IncomeRestApi implements Serializable {
@@ -56,6 +57,7 @@ public class IncomeRestApi implements Serializable {
     @Path("/{id}")
     public Response updateIncome(@PathParam("id") long id, Income income) {
         incomeRepositoryImpl.update(income);
+        
         RestResponse responseModel = new RestResponse("true",200, "Data Updated Successfully!", income);
         return Response.status(200).entity(responseModel).build();
     }

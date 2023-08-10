@@ -54,7 +54,7 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
 
     @Override
     public List<Category> findByCategoryType(CategoryType type) {
-        TypedQuery<Category> query = getEntityManager().createQuery("SELECT c FROM Category c WHERE c.type = :type", Category.class);
+        TypedQuery<Category> query = getEntityManager().createQuery("SELECT c FROM Category c WHERE c.categoryType = :type", Category.class);
         query.setParameter("type", type);
         return query.getResultList();
     }   
