@@ -16,6 +16,7 @@ personalfinancetrackerinweb/converter/GenericConverter.class
 personalfinancetrackerinweb/api/JaxRsActivator.class
 personalfinancetrackerinweb/controller/BudgetController.class
 personalfinancetrackerinweb/repository/CategoryRepositoryImpl.class
+personalfinancetrackerinweb/controller/LoginCheckListener.class
 personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.class
 personalfinancetrackerinweb/controller/ExpenseIncomeChartController.class
 personalfinancetrackerinweb/controller/LogOutController.class
@@ -31,5 +32,6 @@ personalfinancetrackerinweb/api/IncomeRestApi.class
 personalfinancetrackerinweb/model/User.class
 personalfinancetrackerinweb/controller/AbstractMessageController.class
 personalfinancetrackerinweb/controller/IncomeController.class
+personalfinancetrackerinweb/controller/UserBean.class
 personalfinancetrackerinweb/model/Income_.class
 personalfinancetrackerinweb/controller/FinanceSummaryController.class

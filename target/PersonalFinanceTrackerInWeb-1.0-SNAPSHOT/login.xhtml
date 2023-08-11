@@ -17,7 +17,7 @@
                 <h:outputLabel for="password" value="Password:" />
                 <p:password id="password" value="#{loginController.user.password}" required="true" />
 
-                <p:commandButton value="Login" action="#{loginController.login()}" update="messages" styleClass="login-button" />
+                <p:commandButton value="Login" action="#{loginController.clientLogin()}" update="messages" styleClass="login-button" />
             </p:panelGrid>
         </h:form>
     </h:body>
