@@ -33,6 +33,7 @@
         </p:layoutUnit>
         <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header=" #{incomeController.getHeader()}"  modal="true" resizable="false" width="500" height="400">
             <h:form id="incomeForm" >
+                
                 <h:panelGrid columns="2">
                     <h:outputLabel  id="datelbl" for="date" value="Date:" />
                     <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" required="true"/>
@@ -47,13 +48,16 @@
                                        itemValue="#{v}"/>
                     </p:selectOneMenu>
 
-                    <h:outputLabel id="namelbl" for="name" value="Remark:" />
-                    <p:inputText id="name" value="#{incomeController.income.name}"  required="true" />
+                    <h:outputLabel id="namelbl"  for="name" value="Remark:" />
+                    <p:inputText id="name"  value="#{incomeController.income.name}"  required="true" />
 
 
                     <p:commandButton value="Save"
-                                     action="#{incomeController.saveData()}" styleClass="button-style" update= ":incomeListForm growl "
-                                     oncomplete="PF('incomeDialogVar').hide();" />
+                                     action="#{incomeController.saveData()}" 
+                                     styleClass="button-style" 
+                                     update= ":incomeListForm growl "
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                     PF('incomeDialogVar').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>

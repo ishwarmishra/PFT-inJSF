@@ -45,8 +45,11 @@
                     </h:selectOneMenu>
 
                     <p:commandButton value="Save" 
-                                     action="#{categoryController.saveData()}" styleClass="button-style"  update=":categoryListForm growl"
-                                     oncomplete="PF('categoryDialogVar').hide();" />
+                                     action="#{categoryController.saveData()}" 
+                                     styleClass="button-style" 
+                                     update=":categoryListForm growl"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                     PF('categoryDialogVar').hide();" />
 
                 </h:panelGrid>
             </h:form>

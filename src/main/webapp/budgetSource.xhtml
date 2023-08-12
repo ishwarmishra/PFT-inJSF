@@ -33,9 +33,10 @@
         </p:layoutUnit>
         <p:dialog id="budgetDialog" widgetVar="budgetDialogVar" header=" #{budgetController.getHeader()}"  modal="true" resizable="false" width="500" height="400">
             <h:form id="budgetForm">
-                    <h:panelGrid>
+                <h:panelGrid columns="2">
+                    
                         <h:outputLabel id="categorylbl" for="category" value="Category:"/>
-                        <p:selectOneMenu id="category" value="#{budgetController.budget.category}"  required="true" converter="categoryConverter">
+                        <p:selectOneMenu id="category" value="#{budgetController.budget.category}" converter="categoryConverter"  required="true" >
                             <f:selectItem itemLabel="Select Category name"  itemValue= "" />
                             <f:selectItems value="#{budgetController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
                         </p:selectOneMenu>
@@ -51,8 +52,11 @@
                         <p:calendar id="toDate" value="#{budgetController.budget.toDate}" showOn="button" pattern="yyyy-MM-dd"  required="true"/>
                                                                             
                         <p:commandButton value="Save"
-                                        action="#{budgetController.saveData()}" styleClass="button-style" update=":budgetListForm growl"
-                                        oncomplete="PF('budgetDialogVar').hide();" />                         
+                                        action="#{budgetController.saveData()}" 
+                                        styleClass="button-style"
+                                        update=":budgetListForm growl"
+                                        oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                        PF('budgetDialogVar').hide();" />                         
                     </h:panelGrid>
              </h:form>
            </p:dialog>

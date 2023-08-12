@@ -23,17 +23,17 @@ public class UserRepository extends  GenericAbstractRepository<User>{
     public UserRepository (){
     super(User.class);
     }
-
-    public User findByUsername(User user) {
-        try{
-        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username=:username",User.class);
+    public User findByUsernameAndPassword(User user) {
+    try {
+        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
         query.setParameter("username", user.getUsername());
-        User result= (User) query.getSingleResult();
+        query.setParameter("password", user.getPassword()); 
+        User result = (User) query.getSingleResult();
         return result;
-        
-        }catch(NoResultException e){
-           return null;
-        }
+    } catch (NoResultException e) {
+        return null;
     }
+}
+
 }
 

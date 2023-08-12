@@ -27,10 +27,18 @@
                 <p:outputLabel>  #{budget.toDate}</p:outputLabel>
             </p:column> 
             <p:column headerText="Action" style="width: 5%">
-                <p:commandButton icon="fa fa-edit" title="Edit" action="#{budgetController.setBudget(budget)}" styleClass="button-style" update=":budgetForm budgetDialog"
+                <p:commandButton icon="fa fa-edit" 
+                                 title="Edit" 
+                                 action="#{budgetController.setBudget(budget)}" 
+                                 styleClass="button-style" 
+                                 update=":budgetForm budgetDialog"
                                  oncomplete="PF('budgetDialogVar').show();"  />
 
-                <p:commandButton icon="fa fa-trash" title="Delete" action="#{budgetController.deleteData(budget)}" styleClass="button-style" update="budgetTable budgetDialog growl"
+                <p:commandButton icon="fa fa-trash" 
+                                 title="Delete" 
+                                 action="#{budgetController.deleteData(budget)}" 
+                                 styleClass="button-style"
+                                 update="budgetTable budgetDialog growl"
                                  onclick="if (!confirm('Are you sure you want to delete this Budgeting for this expense category?'))
                                              return false;" />
             </p:column>

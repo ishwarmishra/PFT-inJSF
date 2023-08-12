@@ -34,12 +34,20 @@
         </p:column>
 
         <p:column headerText="Action" width="5%">
-            <p:commandButton icon="fa fa-edit" title="Edit" action="#{incomeController.beforeEditExpense(income)}" styleClass="button-style"  update=":incomeForm incomeDialog"
+            <p:commandButton icon="fa fa-edit"
+                             title="Edit"
+                             action="#{incomeController.beforeEditExpense(income)}" 
+                             styleClass="button-style"
+                             update=":incomeForm incomeDialog"
                              oncomplete="PF('incomeDialogVar').show();"  >
                 <f:setPropertyActionListener target="#{incomeController.income}" value="#{income}"/>
             </p:commandButton>
 
-            <p:commandButton icon="fa fa-trash" title="Delete" action="#{incomeController.deleteData(income)}" styleClass="button-style"  update=" incomeTable  incomeDialog  growl"
+            <p:commandButton icon="fa fa-trash" 
+                             title="Delete" 
+                             action="#{incomeController.deleteData(income)}"
+                             styleClass="button-style" 
+                             update=" incomeTable  incomeDialog  growl"
                              onclick="if (!confirm('Are you sure you want to delete this income?'))
                                          return false;" />
         </p:column>

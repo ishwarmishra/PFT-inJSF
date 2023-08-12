@@ -8,17 +8,50 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:form id="loginForm" styleClass="login-form">
+        <h:form id="loginForm" >
             <p:growl id="messages" showDetail="true" />
-            <p:panelGrid columns="2" styleClass="login-panel">
+            <p:panelGrid columns="2" >
                 <h:outputLabel for="username" value="Username:" />
                 <p:inputText id="username" value="#{loginController.user.username}" required="true" />
 
                 <h:outputLabel for="password" value="Password:" />
                 <p:password id="password" value="#{loginController.user.password}" required="true" />
 
-                <p:commandButton value="Login" action="#{loginController.clientLogin()}" update="messages" styleClass="login-button" />
+                <p:commandButton value="Login" 
+                                 action="#{loginController.userLogin()}" 
+                                 update="messages"
+                                  styleClass="button-style"/>                                     
+                <p:commandButton value="Sign Up" 
+                                 styleClass="button-style"
+                                 oncomplete="PF('signupDialog').show()"
+                                 />
             </p:panelGrid>
+       
         </h:form>
+        
+        <p:dialog id="signupDialog" header="SignUp Form" widgetVar="signupDialog" modal="true" resizable="false">
+            <h:form id="signupForm">
+                <p:panelGrid columns="2">
+                    <h:outputLabel for="signupUsername" value="Username:" />
+                    <p:inputText id="signupUsername" value="#{signupController.user.username}" required="true" />
+                    
+                    <h:outputLabel for="signupPassword" value="Password:" />
+                    <p:password id="signupPassword" value="#{signupController.user.password}" required="true" />
+                    
+                    <h:outputLabel for="signupRole" value="Role:" />
+                    <p:inputText id="signupRole" value="#{signupController.user.roles}" required="true" />
+                    
+                    <p:commandButton value="Submit" 
+                                     action="#{signupController.saveData()}" 
+                                     update="messages"
+                                     styleClass="button-style" 
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                     PF('signupDialog').hide();"/>
+                    
+                </p:panelGrid>
+                <p:growl id="messages" showDetail="true" />
+
+            </h:form>
+        </p:dialog>
     </h:body>
 </html>

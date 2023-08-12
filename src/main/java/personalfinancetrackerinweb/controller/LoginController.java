@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import org.mindrot.jbcrypt.BCrypt;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.UserRepository;
 
@@ -23,6 +24,7 @@ public class LoginController extends AbstractMessageController implements Serial
     private UserBean userBean;
     
     private User user;
+    
 
     public User getUser() {
     return user;
@@ -31,27 +33,28 @@ public class LoginController extends AbstractMessageController implements Serial
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     @PostConstruct
     public void init(){
         user = new User();
     }
     
-    public String clientLogin() {       
-        User loggedInUser = userRepository.findByUsername(user);
-        if (loggedInUser != null) {           
-            if (loggedInUser.getPassword().equals(user.getPassword())) {              
-            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance() .getExternalContext().getRequest();               
-            httpServletRequest.getSession().setAttribute("loggedInClient", loggedInUser); 
+    public String userLogin() {       
+        User loggedInUser = userRepository.findByUsernameAndPassword(user);
+        if (loggedInUser != null) { 
             
-            userBean.setUser(loggedInUser);             
+        if (loggedInUser.getPassword().equals(user.getPassword())) {               
+                HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+                        .getExternalContext().getRequest();               
+                       httpServletRequest.getSession().setAttribute("loggedInClient", user);               
+                       userBean.setUser(user);               
             try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-                } catch (IOException e)
-                {                  
+                  FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                 } catch (IOException e) {   
                     e.printStackTrace();
-                }          
-        }
+                }
+               }
+
         else 
         {              
             errorMessage("Invalid Credentials. Try Again!");
@@ -62,6 +65,9 @@ public class LoginController extends AbstractMessageController implements Serial
         }
         return null;
     }
+   
 }
     
-    
+// if (loggedInUser.getPassword().equals(user.getPassword()))   
+  
+//if (BCrypt.checkpw(password, user.getPassword())) 
