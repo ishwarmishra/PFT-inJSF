@@ -6,52 +6,75 @@
     <h:head>
         <title>Login Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            .login-page {
+                width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .login-form {
+                border: 2px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .login-form h2 {
+                text-align: center;
+                color: #337ab7;
+            }
+
+            .login-form input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .login-form button {
+                width: 100%;
+                margin-top: 10px;
+                color: #fff;
+                background-color: #337ab7;
+                border-radius: 10px;
+            }
+        </style>
     </h:head>
     <h:body>
-        <h:form id="loginForm" >
-            <p:growl id="messages" showDetail="true" />
-            <p:panelGrid columns="2" >
-                <h:outputLabel for="username" value="Username:" />
-                <p:inputText id="username" value="#{loginController.user.username}" required="true" />
-
-                <h:outputLabel for="password" value="Password:" />
-                <p:password id="password" value="#{loginController.user.password}" required="true" />
-
-                <p:commandButton value="Login" 
+        <section class="login-page">
+            <h:form id="loginForm" >
+                <p:growl id="messages" showDetail="true" />
+                <section id="loginPanel" class="login-form">
+                    <h2>Login</h2>
+                    <p:inputText id="username" value="#{loginController.user.username}" required="true" placeholder="Username"/>
+                    <p:password id="password" value="#{loginController.user.password}" required="true" placeholder="Password"/>
+                    <p:commandButton value="Login" 
                                  action="#{loginController.userLogin()}" 
                                  update="messages"
-                                  styleClass="button-style"/>                                     
-                <p:commandButton value="Sign Up" 
+                                 styleClass="button-style"/>                                     
+                    <p:commandButton value="Sign Up" 
                                  styleClass="button-style"
                                  oncomplete="PF('signupDialog').show()"
                                  />
-            </p:panelGrid>
-       
-        </h:form>
-        
-        <p:dialog id="signupDialog" header="SignUp Form" widgetVar="signupDialog" modal="true" resizable="false">
-            <h:form id="signupForm">
-                <p:panelGrid columns="2">
-                    <h:outputLabel for="signupUsername" value="Username:" />
-                    <p:inputText id="signupUsername" value="#{signupController.user.username}" required="true" />
-                    
-                    <h:outputLabel for="signupPassword" value="Password:" />
-                    <p:password id="signupPassword" value="#{signupController.user.password}" required="true" />
-                    
-                    <h:outputLabel for="signupRole" value="Role:" />
-                    <p:inputText id="signupRole" value="#{signupController.user.roles}" required="true" />
-                    
-                    <p:commandButton value="Submit" 
+                </section>
+            </h:form>
+
+            <p:dialog id="signupDialog" header="SignUp Form" widgetVar="signupDialog" modal="true" resizable="false"  width="500" height="400">
+                <h:form id="signupForm">
+                    <section id="signupPanel" class="login-form">
+                        <h2>Sign Up</h2>
+                        <p:inputText id="signupUsername" value="#{signupController.user.username}" required="true" placeholder="Username"/>
+                        <p:password id="signupPassword" value="#{signupController.user.password}" required="true" placeholder="Password"/>
+                        <p:inputText id="signupRole" value="#{signupController.user.roles}" required="true" placeholder="Roles"/>
+                        <p:commandButton value="Submit" 
                                      action="#{signupController.saveData()}" 
                                      update="messages"
                                      styleClass="button-style" 
                                      oncomplete="if (args &amp;&amp; !args.validationFailed)
                                      PF('signupDialog').hide();"/>
-                    
-                </p:panelGrid>
-                <p:growl id="messages" showDetail="true" />
-
-            </h:form>
-        </p:dialog>
+                    </section>
+                    <p:growl id="messages" showDetail="true" />
+                </h:form>
+            </p:dialog>
+        </section>
     </h:body>
 </html>
