@@ -16,7 +16,10 @@ import personalfinancetrackerinweb.repository.UserRepository;
 @Named
 @ViewScoped
 public class LoginController extends AbstractMessageController implements Serializable {
-
+   
+    private String username;
+    private String password;
+    
     @Inject
     private UserRepository userRepository;
     
@@ -29,10 +32,25 @@ public class LoginController extends AbstractMessageController implements Serial
     public User getUser() {
     return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
+    public String getUsername() {
+        return username;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
 
     @PostConstruct
     public void init(){
@@ -40,10 +58,10 @@ public class LoginController extends AbstractMessageController implements Serial
     }
     
     public String userLogin() {       
-        User loggedInUser = userRepository.findByUsernameAndPassword(user);
+        User loggedInUser = userRepository.findByUsername(username);
         if (loggedInUser != null) { 
             
-        if (loggedInUser.getPassword().equals(user.getPassword())) {               
+       if (BCrypt.checkpw(password, loggedInUser.getPassword()))  {               
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
                         .getExternalContext().getRequest();               
                        httpServletRequest.getSession().setAttribute("loggedInClient", user);               

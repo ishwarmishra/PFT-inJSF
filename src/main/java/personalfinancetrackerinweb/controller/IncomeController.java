@@ -29,6 +29,7 @@ public class IncomeController extends AbstractMessageController implements Seria
     @Inject
     private BudgetRepositoryImpl budgetRepositoryImpl;
 
+
     private Income income;
 
     private Budget budget;
@@ -136,7 +137,7 @@ public class IncomeController extends AbstractMessageController implements Seria
 
     @PostConstruct
     public void init() {
-        income = new Income();
+        income = new Income(); // Initialize the income object
         budget = new Budget();
         budgetList = budgetRepositoryImpl.findAll();
         categoryList = categoryRepositoryImpl.findAll();
@@ -144,14 +145,14 @@ public class IncomeController extends AbstractMessageController implements Seria
         currentDate = new Date();
     }
 
-    public String getCategoryStyle(Income item){
-        if(item.getCategory().getCategoryType()==CategoryType.EXPENSE){
+    public String getCategoryStyle(Income item) {
+        if (item.getCategory().getCategoryType() == CategoryType.EXPENSE) {
             return "RED";
-        }
-        else{
+        } else {
             return "GREEN";
         }
     }
+
     //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
     public void beforeCreateIncome() {
         this.ct = CategoryType.INCOME;
@@ -170,11 +171,12 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public void saveData() {
+
         if (income == null || income.getCategory() == null) {
            super.infoMessage("Income or category is null!");
             return;
         }
-
+        
         if (income.getId() == 0) {
             if (income.getCategory().getCategoryType().equals(CategoryType.EXPENSE)) {
 
@@ -233,12 +235,11 @@ public class IncomeController extends AbstractMessageController implements Seria
 
                 BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
                 BigDecimal orgValue = (incomeRepositoryImpl.getById(income.getId()).getAmount());
-                
+
                 BigDecimal totalExpenseAmount = expenseAmount.subtract(orgValue);
-                
+
                 BigDecimal realExpenseAMount = totalExpenseAmount.add(income.getAmount());
-                
-                        
+
                 if (realExpenseAMount.compareTo(budgetAmount) > 0) {
                     super.warningMessage("Updatig this expense exceeds the budget!");
                     income = new Income();
@@ -266,7 +267,7 @@ public class IncomeController extends AbstractMessageController implements Seria
         findAll();//After deletion new records of the income or expense is populates to 'incomeList'  
         super.warningMessage("Data deleted successfully!");
         return;
-        
+
     }
 
     public void findAll() {

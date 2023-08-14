@@ -14,7 +14,7 @@
             }
 
             .login-form {
-                border: 2px solid #ccc;
+                border: 1px solid #ccc;
                 padding: 20px;
                 border-radius: 10px;
             }
@@ -45,8 +45,8 @@
                 <p:growl id="messages" showDetail="true" />
                 <section id="loginPanel" class="login-form">
                     <h2>Login</h2>
-                    <p:inputText id="username" value="#{loginController.user.username}" required="true" placeholder="Username"/>
-                    <p:password id="password" value="#{loginController.user.password}" required="true" placeholder="Password"/>
+                    <p:inputText id="username" value="#{loginController.username}" required="true" placeholder="Username"/>
+                    <p:password id="password" value="#{loginController.password}" required="true" placeholder="Password"/>
                     <p:commandButton value="Login" 
                                  action="#{loginController.userLogin()}" 
                                  update="messages"

@@ -1,10 +1,10 @@
 package personalfinancetrackerinweb.repository;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
@@ -23,17 +23,12 @@ public class UserRepository extends  GenericAbstractRepository<User>{
     public UserRepository (){
     super(User.class);
     }
-    public User findByUsernameAndPassword(User user) {
-    try {
-        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
-        query.setParameter("username", user.getUsername());
-        query.setParameter("password", user.getPassword()); 
-        User result = (User) query.getSingleResult();
-        return result;
-    } catch (NoResultException e) {
-        return null;
+    public User findByUsername(String username) {
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT u FROM User u WHERE u.username = :username", User.class
+        ).setParameter("username", username);       
+        List<User> userList = query.getResultList();
+        return userList.isEmpty() ? null : userList.get(0);
     }
-}
-
 }
 

@@ -3,6 +3,7 @@ package personalfinancetrackerinweb.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Table(name = "user_entity")
@@ -29,8 +30,8 @@ public class User extends AbstractEntity implements Serializable {
     }
 
     public void setPassword(String password) {
-      this.password=password;
-      // this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+     // this.password=password;
+       this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
         
 

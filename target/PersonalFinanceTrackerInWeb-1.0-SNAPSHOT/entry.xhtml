@@ -33,10 +33,10 @@
         </p:layoutUnit>
         <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header=" #{incomeController.getHeader()}"  modal="true" resizable="false" width="500" height="400">
             <h:form id="incomeForm" >
-                
+
                 <h:panelGrid columns="2">
                     <h:outputLabel  id="datelbl" for="date" value="Date:" />
-                    <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" required="true"/>
+                    <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" required="true" />
 
                     <h:outputLabel id="amountlbl" for="amount" value="Amount:" />
                     <p:inputText id="amount" value="#{incomeController.income.amount}" required="true"/>
