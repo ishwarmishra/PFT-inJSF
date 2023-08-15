@@ -30,7 +30,6 @@ public class User extends AbstractEntity implements Serializable {
     }
 
     public void setPassword(String password) {
-     // this.password=password;
        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
         
@@ -42,6 +41,4 @@ public class User extends AbstractEntity implements Serializable {
     public void setRoles(String roles) {
         this.roles = roles;
     }
-    
-    
 }

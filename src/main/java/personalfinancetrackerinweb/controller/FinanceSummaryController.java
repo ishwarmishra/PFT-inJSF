@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
@@ -27,6 +30,10 @@ public class FinanceSummaryController implements Serializable {
     private CategoryRepositoryImpl categoryRepositoryImpl;
 
     private Map<String, BigDecimal> summaryData;
+    
+    private User user;
+    
+    private List<Income> incomeList;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -48,16 +55,44 @@ public class FinanceSummaryController implements Serializable {
         return summaryData;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public void setIncomeList(List<Income> incomeList) {
+        this.incomeList = incomeList;
+    }
+    
+   
     @PostConstruct
     public void init() {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        
+        incomeList = incomeRepositoryImpl.findByUser(incomeUser.getId());
+
         calculateSummaryData();
+    
     }
 
     private void calculateSummaryData() {
         summaryData = new HashMap<>();
 
         // Get all income records from the database
-        List<Income> incomeList = incomeRepositoryImpl.findAll();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        incomeList = incomeRepositoryImpl.findByUser(incomeUser.getId());
 
         // Calculate total income and total expense
         BigDecimal totalIncome = BigDecimal.ZERO;
@@ -77,5 +112,4 @@ public class FinanceSummaryController implements Serializable {
         summaryData.put("EXPENSE", totalExpense);
     }
 
-    
 }

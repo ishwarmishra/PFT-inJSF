@@ -19,6 +19,7 @@
                 <f:selectItem itemLabel="Monthly" itemValue="monthly" />
                 <p:ajax update="lineChartPanel barChartPanel" listener="#{expenseIncomeChartController.createChartModels}"  />
             </p:selectOneRadio>
+            <p:outputLabel value="Welcome #{userBean.user.username}" />
         </h:form> 
         <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width: 100%">
 

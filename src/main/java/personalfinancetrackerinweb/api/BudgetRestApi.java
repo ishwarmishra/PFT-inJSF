@@ -27,7 +27,7 @@ public class BudgetRestApi implements Serializable {
 
     @GET
     public Response getAllBudgets() {
-        List<Budget> budgets = budgetRepositoryImpl.findAll();
+        List<Budget> budgets = budgetRepositoryImpl.findByUser(1);
         RestResponse responseModel = new RestResponse("true",200, "Success", budgets);
         return Response.status(200).entity(responseModel).build();
     }

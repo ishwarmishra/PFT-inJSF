@@ -13,9 +13,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -29,8 +31,10 @@ import personalfinancetrackerinweb.model.CategoryType;
 import static personalfinancetrackerinweb.model.CategoryType.INCOME;
 
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
+import personalfinancetrackerinweb.repository.UserRepository;
 
 @Named
 @ViewScoped
@@ -41,6 +45,13 @@ public class ExpenseIncomeChartController implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
+    
+    @Inject
+    private UserRepository userRepository;
+    
+    private User user;
+    
+    private Income income;
 
     private List<Income> incomeList;
     private List<Category> categoryList;
@@ -50,8 +61,7 @@ public class ExpenseIncomeChartController implements Serializable {
 
     private String chartType;
     
-
-    // Initialize the maps to store income and expense amounts for each week
+   
     private Map<Integer, BigDecimal> incomeAmountsMap = new HashMap<>();
     private Map<Integer, BigDecimal> expenseAmountsMap = new HashMap<>();
     
@@ -71,6 +81,23 @@ public class ExpenseIncomeChartController implements Serializable {
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 
     public List<Income> getIncomeList() {
         return incomeList;
@@ -112,13 +139,26 @@ public class ExpenseIncomeChartController implements Serializable {
         this.chartType = chartType;
     }
 
+    public Income getIncome() {
+        return income;
+    }
+
+    public void setIncome(Income income) {
+        this.income = income;
+    }
+    
   
     @PostConstruct
     public void init() {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+       .getExternalContext().getRequest();
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        income =new Income();
         
-        incomeList = incomeRepositoryImpl.findAll();
-        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
-        createChartModels();
+       categoryList = categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.EXPENSE);
+       incomeList=incomeRepositoryImpl.findByUser(incomeUser.getId());
+       
+       createChartModels();
     }
 
     public void createChartModels() {
@@ -244,6 +284,7 @@ public class ExpenseIncomeChartController implements Serializable {
         } else {
             barChartModel.clear();
         }
+        
        //Initialize HashMap object to store the total income amount and total expense amount
         incomeAmountsMap = new HashMap<>();
         expenseAmountsMap = new HashMap<>();
@@ -348,4 +389,5 @@ public class ExpenseIncomeChartController implements Serializable {
         int monthIndex = calendar.get(Calendar.MONTH);
         return new DateFormatSymbols().getMonths()[monthIndex];
     }
+   
 }

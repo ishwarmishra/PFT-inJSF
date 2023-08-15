@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -18,6 +20,7 @@ import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
@@ -47,6 +50,8 @@ public class CategoryBudgetAnalysisController implements Serializable {
     private Date toDate;
 
     private Income income;
+     
+    private User user;
 
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
@@ -120,15 +125,29 @@ public class CategoryBudgetAnalysisController implements Serializable {
         this.income = income;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     @PostConstruct
     public void init() {
-        budgetsList = budgetRepositoryImpl.findAll();
-        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
+        
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        
+        budgetsList = budgetRepositoryImpl.findByUser(incomeUser.getId());
+        categoryList = categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.EXPENSE);
         fromDate = getDefaultFromDate();
         toDate = getDefaultToDate();
 
-        stockBudget = budgetRepositoryImpl.calculateCategoryBudgets(fromDate, toDate);
-        stockBudgetActual = incomeRepositoryImpl.calculateActualExpense(fromDate, toDate);
+        stockBudget = budgetRepositoryImpl.calculateCategoryBudgets(incomeUser, fromDate, toDate);
+        stockBudgetActual = incomeRepositoryImpl.calculateActualExpense(incomeUser, fromDate, toDate);
 
         createBarChartModel();
     }
@@ -136,7 +155,7 @@ public class CategoryBudgetAnalysisController implements Serializable {
     private List<Object[]> stockBudget;
 
     public List<Object[]> getStockBudget() {
-        stockBudget = budgetRepositoryImpl.calculateCategoryBudgets(fromDate, toDate);
+        stockBudget = budgetRepositoryImpl.calculateCategoryBudgets(user, fromDate, toDate);
         return stockBudget;
     }
 
@@ -148,7 +167,7 @@ public class CategoryBudgetAnalysisController implements Serializable {
     private List<Object[]> stockBudgetActual;
 
     public List<Object[]> getStockBudgetActual() {
-        stockBudgetActual = incomeRepositoryImpl.calculateActualExpense(fromDate, toDate);
+        stockBudgetActual = incomeRepositoryImpl.calculateActualExpense(user, fromDate, toDate);
         return stockBudgetActual;
     }
 

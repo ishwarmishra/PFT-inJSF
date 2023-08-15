@@ -6,15 +6,18 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.chart.PieChartModel;
 import personalfinancetrackerinweb.model.Budget;
 
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
@@ -39,6 +42,8 @@ public class CategoryBudgetController implements Serializable {
     private List<Budget> budgetList;
 
     private Budget budget;
+    
+    private User user;
 
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
@@ -94,7 +99,7 @@ public class CategoryBudgetController implements Serializable {
     private List<Object[]> stockBudget;
 
     public List<Object[]> getStockBudget() {
-        stockBudget = budgetRepositoryImpl.budgetCategoryAmount();
+        stockBudget = budgetRepositoryImpl.budgetCategoryAmount(user);
         return stockBudget;
     }
 
@@ -102,10 +107,24 @@ public class CategoryBudgetController implements Serializable {
         this.stockBudget = stockBudget;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+
     @PostConstruct
     public void init() {
-        categoryList = categoryRepositoryImpl.findByCategoryType(CategoryType.EXPENSE);
-        stockBudget = budgetRepositoryImpl.budgetCategoryAmount();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+       .getExternalContext().getRequest();
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        
+        
+        categoryList = categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.EXPENSE);
+        stockBudget = budgetRepositoryImpl.budgetCategoryAmount(incomeUser);
         createPieChartModel();
     }
 

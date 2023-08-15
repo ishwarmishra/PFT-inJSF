@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
 
 @Stateless
@@ -43,10 +44,11 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
    
     }
     //Calculate the list of the category,amount inside budget model
-    public List<Object[]> budgetCategoryAmount() {
+    public List<Object[]> budgetCategoryAmount(User user) {
     List<Object[]> result = null;
     try {
-        TypedQuery<Object[]> query = entityManager.createQuery("SELECT b.amount, b.category FROM Budget b", Object[].class);
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT b.amount, b.category FROM Budget b WHERE b.user = :user", Object[].class);
+        query.setParameter("user",user);
         result = query.getResultList();
     } catch (Exception e) {
         e.printStackTrace();        
@@ -56,12 +58,13 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
     
     
     //Calculate the list of category,amount with in a date range inside the Budget Model
-    public List<Object[]> calculateCategoryBudgets(Date fromDate,Date toDate){
+    public List<Object[]> calculateCategoryBudgets(User user,Date fromDate,Date toDate){
       List<Object[]> result = null;
     try {
-        TypedQuery<Object[]> query = entityManager.createQuery("SELECT  b.amount,b.category FROM Budget b WHERE b.fromDate >=:fromDate AND b.toDate<=:toDate",Object[].class);
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT  b.amount ,b.category FROM Budget b WHERE b.fromDate   >= :fromDate AND b.toDate <= :toDate AND b.user = :user",Object[].class);
         query.setParameter("fromDate", fromDate);
         query.setParameter("toDate", toDate);
+        query.setParameter("user", user);
         result = query.getResultList();
     } catch (Exception e) {
         e.printStackTrace();

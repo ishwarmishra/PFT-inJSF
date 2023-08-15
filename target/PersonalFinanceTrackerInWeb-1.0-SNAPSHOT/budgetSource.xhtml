@@ -37,8 +37,8 @@
                     
                         <h:outputLabel id="categorylbl" for="category" value="Category:"/>
                         <p:selectOneMenu id="category" value="#{budgetController.budget.category}" converter="categoryConverter"  required="true" >
-                            <f:selectItem itemLabel="Select Category name"  itemValue= "" />
-                            <f:selectItems value="#{budgetController.categoryList}" var="v" itemLabel="#{v.name}" itemValue="#{v}" />
+                            <f:selectItem itemLabel="Select Category name"/>
+                            <f:selectItems value="#{budgetController.categoryList}" var="item" itemLabel="#{item.name}" itemValue="#{item}"/> 
                         </p:selectOneMenu>
 
                         <h:outputLabel id="amountlbl" for="amount" value="Amount:"  />

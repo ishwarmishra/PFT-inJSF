@@ -64,8 +64,8 @@ public class LoginController extends AbstractMessageController implements Serial
        if (BCrypt.checkpw(password, loggedInUser.getPassword()))  {               
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
                         .getExternalContext().getRequest();               
-                       httpServletRequest.getSession().setAttribute("loggedInClient", user);               
-                       userBean.setUser(user);               
+                       httpServletRequest.getSession().setAttribute("loggedInClient", loggedInUser);               
+                       userBean.setUser(loggedInUser);               
             try {
                   FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                  } catch (IOException e) {   
@@ -86,6 +86,3 @@ public class LoginController extends AbstractMessageController implements Serial
    
 }
     
-// if (loggedInUser.getPassword().equals(user.getPassword()))   
-  
-//if (BCrypt.checkpw(password, user.getPassword())) 

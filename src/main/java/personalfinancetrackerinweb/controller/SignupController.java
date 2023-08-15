@@ -48,7 +48,6 @@ public class SignupController extends AbstractMessageController implements Seria
     @PostConstruct
     public void init(){
         user = new User();
-        userList=userRepository.findAll();
     }
     public void beforeCreate() {
         user = new User();
@@ -81,7 +80,7 @@ public class SignupController extends AbstractMessageController implements Seria
     } 
     
     public void findAll() {
-        userList = userRepository.findAll();
+        userList = userRepository.findByUser(1);
     }
 
 }

@@ -28,7 +28,7 @@ public class CategoryRestApi implements Serializable {
 
     @GET
     public Response getAllCategories() {
-        List<Category> category = categoryRepositoryImpl.findAll();
+        List<Category> category = categoryRepositoryImpl.findByUser(1);
         RestResponse responseModel = new RestResponse("true", 200, "Success", category);
         return Response.status(200).entity(responseModel).build();
     }

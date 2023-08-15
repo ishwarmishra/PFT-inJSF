@@ -28,7 +28,7 @@ public class IncomeRestApi implements Serializable {
 
     @GET
     public Response getAllIncomes() {
-        List<Income> incomes = incomeRepositoryImpl.findAll();
+        List<Income> incomes = incomeRepositoryImpl.findByUser(1);
         RestResponse responseModel = new RestResponse("true",200, "Success", incomes);
         return Response.status(200).entity(responseModel).build();
     }

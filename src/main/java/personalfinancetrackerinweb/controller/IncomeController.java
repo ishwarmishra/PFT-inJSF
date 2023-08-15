@@ -6,15 +6,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import personalfinancetrackerinweb.model.Budget;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.repository.*;
 
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 
 @Named
 @ViewScoped
@@ -45,6 +48,8 @@ public class IncomeController extends AbstractMessageController implements Seria
     private List<Budget> budgetList;
 
     private Date currentDate;
+    
+    private User user;
 
     public IncomeRepositoryImpl getIncomeRepositoryImpl() {
         return incomeRepositoryImpl;
@@ -135,12 +140,24 @@ public class IncomeController extends AbstractMessageController implements Seria
         this.currentDate = currentDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @PostConstruct
     public void init() {
-        income = new Income(); // Initialize the income object
         budget = new Budget();
-        budgetList = budgetRepositoryImpl.findAll();
-        categoryList = categoryRepositoryImpl.findAll();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        
+        income = new Income(); 
+        categoryList=categoryRepositoryImpl.findByCategoryType(incomeUser, ct);
+        System.out.println("");
         findAll();
         currentDate = new Date();
     }
@@ -153,24 +170,39 @@ public class IncomeController extends AbstractMessageController implements Seria
         }
     }
 
-    //To add the new income records,set ct (category Type) based on the type of record and load appropriate category list from the database
     public void beforeCreateIncome() {
-        this.ct = CategoryType.INCOME;
-        loadCategory();
+        
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        categoryList=categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.INCOME);
+
     }
 
     public void beforeCreateExpense() {
-        this.ct = CategoryType.EXPENSE;
-        loadCategory();
+        
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User expenseUser1 = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        categoryList=categoryRepositoryImpl.findByCategoryType(expenseUser1, CategoryType.EXPENSE);
+
     }
 
     public void beforeEditExpense(Income income) {
-        this.income = income;                 //currently selected income or expense item
-        ct = income.getCategory().getCategoryType();  //fetch the correct categorylist for the income or expense
-        loadCategory();                       //It retrieve the correct category list for the income and expense from previuos fetched categorylist
+                
+        this.income = income; 
+        ct = income.getCategory().getCategoryType();  
+        loadCategory();                       
     }
 
     public void saveData() {
+        
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        income.setUser(incomeUser);
+        
 
         if (income == null || income.getCategory() == null) {
            super.infoMessage("Income or category is null!");
@@ -194,7 +226,7 @@ public class IncomeController extends AbstractMessageController implements Seria
                     return;
                 }
 
-                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
+                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(user, income, fromDate, toDate);
                 BigDecimal totalExpenseAmount = expenseAmount.add(income.getAmount());
 
                 if (totalExpenseAmount.compareTo(budgetAmount) > 0) {
@@ -233,7 +265,7 @@ public class IncomeController extends AbstractMessageController implements Seria
                     return;
                 }
 
-                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(income, fromDate, toDate);
+                BigDecimal expenseAmount = incomeRepositoryImpl.findBudgetOfCategoryBetweenDate(user, income, fromDate, toDate);
                 BigDecimal orgValue = (incomeRepositoryImpl.getById(income.getId()).getAmount());
 
                 BigDecimal totalExpenseAmount = expenseAmount.subtract(orgValue);
@@ -271,11 +303,18 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public void findAll() {
-        incomeList = incomeRepositoryImpl.findAll();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        incomeList = incomeRepositoryImpl.findByUser(incomeUser.getId());
     }
 
     public void loadCategory() {
-        categoryList = categoryRepositoryImpl.findByCategoryType(ct);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User expenseUser1 = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        categoryList=categoryRepositoryImpl.findByCategoryType(expenseUser1, ct);
     }
 
     public String getHeader() {

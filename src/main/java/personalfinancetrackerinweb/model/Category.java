@@ -5,17 +5,25 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "category")
 public class Category extends AbstractEntity implements GenericEntityInterface, Serializable {
 
     private String name;
-    
+        
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     
+    @ManyToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @NotNull
+    private User user;
+     
     public Category() {
     }
 
@@ -40,6 +48,13 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         this.categoryType = categoryType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
     
     @Override

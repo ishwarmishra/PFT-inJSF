@@ -18,11 +18,11 @@
         <h3>Entry </h3>
         <p:toolbar>
             <f:facet name="left">
-                <p:commandButton  icon="fa fa-plus" title="Add Income" action="#{incomeController.beforeCreateIncome()}" 
+                <p:commandButton  value="Add Income" action="#{incomeController.beforeCreateIncome()}" 
                                   update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();"  />
             </f:facet>
             <f:facet name="right">
-                <p:commandButton  icon="fa fa-plus" title="Add Expense" action="#{incomeController.beforeCreateExpense()}" 
+                <p:commandButton  value="Add Expense" action="#{incomeController.beforeCreateExpense()}" 
                                   update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();" />
             </f:facet>
         </p:toolbar>
@@ -44,7 +44,9 @@
                     <h:outputLabel id="categorylbl" for="category" value="Category:" />
                     <p:selectOneMenu id="category" value="#{incomeController.income.category}"  required="true" converter="categoryConverter"   >
                         <f:selectItem itemLabel="Select Category name" itemValue=""/>
-                        <f:selectItems value="#{incomeController.categoryList}" var="v" itemLabel="#{v.name}"
+                        <f:selectItems value="#{incomeController.categoryList}" 
+                                       var="v"
+                                       itemLabel="#{v.name}"
                                        itemValue="#{v}"/>
                     </p:selectOneMenu>
 

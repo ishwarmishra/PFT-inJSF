@@ -2,10 +2,7 @@ package personalfinancetrackerinweb.repository.generic;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.AbstractEntity;
-import personalfinancetrackerinweb.model.Category;
-import personalfinancetrackerinweb.model.CategoryType;
 
 public abstract class GenericAbstractRepository<T extends AbstractEntity> implements GenericRepositoryInterface<T> {
 
@@ -17,13 +14,14 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
         this.entityClass = entityClass;
     }
 
-    @Override
-    public List<T> findAll() {
-        return (List<T>) getEntityManager()
-                .createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
+   @Override
+    public List<T> findByUser(long userId) {
+        EntityManager entityManager = getEntityManager(); // Obtain the EntityManager here
+        return entityManager.createQuery(
+                "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.user.id = :userId", entityClass)
+                .setParameter("userId", userId)
                 .getResultList();
     }
-
     @Override
     public T create(T data) {
         getEntityManager().persist(data);
@@ -51,11 +49,5 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
     public T getById(long id) {
         return getEntityManager().find(entityClass, id);
     }
-
-    @Override
-    public List<Category> findByCategoryType(CategoryType type) {
-        TypedQuery<Category> query = getEntityManager().createQuery("SELECT c FROM Category c WHERE c.categoryType = :type", Category.class);
-        query.setParameter("type", type);
-        return query.getResultList();
-    }   
+    
 }

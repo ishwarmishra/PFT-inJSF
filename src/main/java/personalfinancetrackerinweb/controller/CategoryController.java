@@ -3,10 +3,13 @@ package personalfinancetrackerinweb.controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import personalfinancetrackerinweb.model.Category;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Named
@@ -16,7 +19,6 @@ public class CategoryController extends AbstractMessageController implements Ser
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
     
-    //Make the Category Class Instance
     private Category category;
     
     //Keep all the records of the category that are retrieve from the DATABASE
@@ -45,40 +47,46 @@ public class CategoryController extends AbstractMessageController implements Ser
 
     @PostConstruct
     public void init() {
+        
         category = new Category();       
         findAll();
     }
-    //It resets the category instance
     public void beforeCreate() {
         category = new Category();
     }
-    //To Update the existing Category
     public void setCategory(Category category) {
         this.category = category;
     }
     
-    //To save the new Category
     public void saveData() {
-        if (category.getId() == 0) {
-            categoryRepositoryImpl.create(category);
-            super.infoMessage( "Category Added successfully!");
+    HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+    .getExternalContext().getRequest();
 
-        } else {
-            categoryRepositoryImpl.update(category);
-            super.infoMessage( "Category Updated successfully!");
+    User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+    category.setUser(user);
 
-        }
-        category = new Category();
-        findAll();
-
+    if (category.getId() == 0) {
+        categoryRepositoryImpl.create(category);
+        super.infoMessage("Category Added successfully!");
+    } else {
+        categoryRepositoryImpl.update(category);
+        super.infoMessage( "Category Updated successfully!");
     }
+    category = new Category();
+    findAll();
+}
+
 
     public void deleteData(Category category) {
         categoryRepositoryImpl.delete(category.getId());
         findAll();
     }
     public void findAll() {
-        categoryList = categoryRepositoryImpl.findAll();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();   
+         
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");  
+        categoryList = categoryRepositoryImpl.findByUser(user.getId());
     }
      public String getHeader() {
         if (category.getId() == 0 ) 
@@ -88,3 +96,4 @@ public class CategoryController extends AbstractMessageController implements Ser
         
     }
 }
+
