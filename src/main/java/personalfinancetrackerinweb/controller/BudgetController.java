@@ -91,6 +91,13 @@ public class BudgetController extends AbstractMessageController implements Seria
 
     public void beforeCreate() {
         budget = new Budget();
+         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+
+        User managedUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        budget.setUser(managedUser);
+
+        
     }
 
     public void setBudget(Budget budget) {

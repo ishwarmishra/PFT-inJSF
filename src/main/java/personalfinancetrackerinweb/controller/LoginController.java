@@ -8,9 +8,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import org.mindrot.jbcrypt.BCrypt;
 import personalfinancetrackerinweb.model.User;
-import personalfinancetrackerinweb.repository.UserRepository;
+import personalfinancetrackerinweb.services.LoginService;
 
 
 @Named
@@ -21,7 +20,7 @@ public class LoginController extends AbstractMessageController implements Serial
     private String password;
     
     @Inject
-    private UserRepository userRepository;
+    private LoginService loginService;
     
     @Inject
     private UserBean userBean;
@@ -51,37 +50,33 @@ public class LoginController extends AbstractMessageController implements Serial
         this.password = password;
     }
     
-
     @PostConstruct
     public void init(){
         user = new User();
     }
     
-    public String userLogin() {       
-        User loggedInUser = userRepository.findByUsername(username);
+    public void userLogin() { 
+        
+        User loggedInUser = loginService.userLogin(username,password);
+        
         if (loggedInUser != null) { 
             
-       if (BCrypt.checkpw(password, loggedInUser.getPassword()))  {               
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
                         .getExternalContext().getRequest();               
                        httpServletRequest.getSession().setAttribute("loggedInClient", loggedInUser);               
                        userBean.setUser(loggedInUser);               
             try {
                   FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-                 } catch (IOException e) {   
+                } 
+            catch (IOException e) {   
                     e.printStackTrace();
                 }
-               }
-
+               
+        }
         else 
         {              
             errorMessage("Invalid Credentials. Try Again!");
-            }
-        } else 
-        {
-            errorMessage("Invalid Credentials. Try Again!");
         }
-        return null;
     }
    
 }

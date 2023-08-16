@@ -18,12 +18,16 @@
         <h3>Entry </h3>
         <p:toolbar>
             <f:facet name="left">
-                <p:commandButton  value="Add Income" action="#{incomeController.beforeCreateIncome()}" 
-                                  update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();"  />
+                <p:commandButton  value="Add Income"
+                                  action="#{incomeController.beforeCreateIncome()}" 
+                                  update=":incomeForm incomeDialog"
+                                  oncomplete="PF('incomeDialogVar').show();"  />
             </f:facet>
             <f:facet name="right">
-                <p:commandButton  value="Add Expense" action="#{incomeController.beforeCreateExpense()}" 
-                                  update=":incomeForm incomeDialog" oncomplete="PF('incomeDialogVar').show();" />
+                <p:commandButton  value="Add Expense"
+                                  action="#{incomeController.beforeCreateExpense()}" 
+                                  update=":incomeForm incomeDialog" 
+                                  oncomplete="PF('incomeDialogVar').show();" />
             </f:facet>
         </p:toolbar>
         <p:layoutUnit position="center">

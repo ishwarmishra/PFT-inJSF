@@ -3,6 +3,7 @@ personalfinancetrackerinweb/api/RestResponse.class
 personalfinancetrackerinweb/controller/CategoryController.class
 personalfinancetrackerinweb/converter/CategoryConverter.class
 personalfinancetrackerinweb/controller/CategoryBudgetAnalysisController.class
+personalfinancetrackerinweb/api/LoginRequest.class
 personalfinancetrackerinweb/model/Category.class
 personalfinancetrackerinweb/model/CategoryType.class
 personalfinancetrackerinweb/repository/UserRepository.class
@@ -12,6 +13,7 @@ personalfinancetrackerinweb/model/GenericEntityInterface.class
 personalfinancetrackerinweb/model/Income.class
 personalfinancetrackerinweb/api/BudgetRestApi.class
 personalfinancetrackerinweb/model/Budget_.class
+personalfinancetrackerinweb/services/LoginService.class
 personalfinancetrackerinweb/converter/GenericConverter.class
 personalfinancetrackerinweb/api/JaxRsActivator.class
 personalfinancetrackerinweb/controller/BudgetController.class
@@ -21,7 +23,7 @@ personalfinancetrackerinweb/controller/SignupController.class
 personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.class
 personalfinancetrackerinweb/controller/ExpenseIncomeChartController.class
 personalfinancetrackerinweb/controller/LogOutController.class
-personalfinancetrackerinweb/controller/ValidationUtils.class
+personalfinancetrackerinweb/api/JwtUtils.class
 personalfinancetrackerinweb/controller/CategoryBudgetController.class
 personalfinancetrackerinweb/model/Budget.class
 personalfinancetrackerinweb/model/AbstractEntity.class
@@ -29,7 +31,9 @@ personalfinancetrackerinweb/repository/IncomeRepositoryImpl.class
 personalfinancetrackerinweb/controller/LoginController.class
 personalfinancetrackerinweb/repository/BudgetRepositoryImpl.class
 personalfinancetrackerinweb/api/CategoryRestApi.class
+personalfinancetrackerinweb/api/JwtTokenFilter.class
 personalfinancetrackerinweb/model/AbstractEntity_.class
+personalfinancetrackerinweb/api/LoginApi.class
 personalfinancetrackerinweb/api/IncomeRestApi.class
 personalfinancetrackerinweb/model/User.class
 personalfinancetrackerinweb/controller/AbstractMessageController.class

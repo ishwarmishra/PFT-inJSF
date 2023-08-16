@@ -18,12 +18,10 @@ public class CategoryController extends AbstractMessageController implements Ser
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
-    
+
     private Category category;
-    
-    //Keep all the records of the category that are retrieve from the DATABASE
+
     private List<Category> categoryList;
-    
 
     public CategoryRepositoryImpl getCategoryRepository() {
         return categoryRepositoryImpl;
@@ -32,11 +30,11 @@ public class CategoryController extends AbstractMessageController implements Ser
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
     }
-    //To get the User input from the Dialog box
+
     public Category getCategory() {
         return category;
     }
-    
+
     public List<Category> getCategoryList() {
         return categoryList;
     }
@@ -47,53 +45,64 @@ public class CategoryController extends AbstractMessageController implements Ser
 
     @PostConstruct
     public void init() {
-        
-        category = new Category();       
+        category = new Category();
+
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        category.setUser(user);
         findAll();
     }
+
     public void beforeCreate() {
+        
         category = new Category();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        category.setUser(user);
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public void saveData() {
-    HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-    .getExternalContext().getRequest();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+        .getExternalContext().getRequest();
 
-    User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
-    category.setUser(user);
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        category.setUser(user);
 
-    if (category.getId() == 0) {
-        categoryRepositoryImpl.create(category);
-        super.infoMessage("Category Added successfully!");
-    } else {
-        categoryRepositoryImpl.update(category);
-        super.infoMessage( "Category Updated successfully!");
+        if (category.getId() == 0) {
+            categoryRepositoryImpl.create(category);
+            super.infoMessage("Category Added successfully!");
+        } else {
+            categoryRepositoryImpl.update(category);
+            super.infoMessage("Category Updated successfully!");
+        }
+        category = new Category();
+        findAll();
     }
-    category = new Category();
-    findAll();
-}
-
 
     public void deleteData(Category category) {
         categoryRepositoryImpl.delete(category.getId());
         findAll();
     }
+
     public void findAll() {
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-        .getExternalContext().getRequest();   
-         
-        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");  
+        .getExternalContext().getRequest();
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         categoryList = categoryRepositoryImpl.findByUser(user.getId());
     }
-     public String getHeader() {
-        if (category.getId() == 0 ) 
+
+    public String getHeader() {
+        if (category.getId() == 0) {
             return "Add Category";
-        else
+        } else {
             return "Update Category";
-        
+        }
+
     }
 }
-

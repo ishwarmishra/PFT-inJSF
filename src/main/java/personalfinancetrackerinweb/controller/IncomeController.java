@@ -171,25 +171,26 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public void beforeCreateIncome() {
-        
+        income=new Income();
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
         .getExternalContext().getRequest();
+       
         User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         categoryList=categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.INCOME);
 
     }
 
     public void beforeCreateExpense() {
-        
+        income=new Income();
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
         .getExternalContext().getRequest();
+       
         User expenseUser1 = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         categoryList=categoryRepositoryImpl.findByCategoryType(expenseUser1, CategoryType.EXPENSE);
 
     }
 
     public void beforeEditExpense(Income income) {
-                
         this.income = income; 
         ct = income.getCategory().getCategoryType();  
         loadCategory();                       
@@ -329,4 +330,5 @@ public class IncomeController extends AbstractMessageController implements Seria
             return "Update Expense";
         }
     }
+    
 }
