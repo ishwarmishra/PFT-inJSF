@@ -27,6 +27,7 @@
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/User.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/LoginController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/repository/generic/GenericAbstractRepository.java
+/home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/api/BaseRestApi.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/controller/FinanceSummaryController.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/api/BudgetRestApi.java
 /home/ishwar/NetBeansProjects/PersonalFinanceTrackerInWeb/src/main/java/personalfinancetrackerinweb/model/Income.java

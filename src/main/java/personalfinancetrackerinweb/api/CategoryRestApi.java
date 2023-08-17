@@ -22,65 +22,81 @@ import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CategoryRestApi implements Serializable {
+public class CategoryRestApi extends BaseRestApi implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
-    
-    private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
     @GET
     public Response getAllCategories() {
-        List<Category> category = categoryRepositoryImpl.findByUser(1);
-        RestResponse responseModel = new RestResponse("true", 200, "Success", category);
-        return Response.status(200).entity(responseModel).build();
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            List<Category> category = categoryRepositoryImpl.findByUser(loggedInUser.getId());
+            RestResponse responseModel = new RestResponse("true", 200, "Success", category);
+            return Response.status(200).entity(responseModel).build();
+        } else {
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response getCategoryById(@PathParam("id") long id) {
-        Category category = categoryRepositoryImpl.getById(id);
-        if (category != null) {
-            RestResponse responseModel = new RestResponse("true", 200, "Success", category);
-            return Response.status(200).entity(responseModel).build();
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            Category category = categoryRepositoryImpl.getById(id);
+            if (category != null) {
+                RestResponse responseModel = new RestResponse("true", 200, "Success", category);
+                return Response.status(200).entity(responseModel).build();
+            } else {
+                RestResponse responseModel = new RestResponse("false", 404, "Category not found", null);
+                return Response.status(404).entity(responseModel).build();
+            }
         } else {
-            RestResponse responseModel = new RestResponse("false", 404, "Category not found", null);
-            return Response.status(404).entity(responseModel).build();
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
         }
     }
 
     @POST
     public Response createCategory(Category category) {
-
-        categoryRepositoryImpl.create(category);
-
-        RestResponse responseModel = new RestResponse("true", 201, "Data Saved successfully!", category);
-        return Response.status(201).entity(responseModel).build();
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            categoryRepositoryImpl.create(category);
+            RestResponse responseModel = new RestResponse("true", 201, "Data Saved successfully!", category);
+            return Response.status(201).entity(responseModel).build();
+        } else {
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @PUT
     @Path("/{id}")
     public Response updateCategory(@PathParam("id") long id, Category category) throws JsonProcessingException {
-        categoryRepositoryImpl.update(category);
-
-
-        RestResponse responseModel = new RestResponse("true", 200, "Data Updated Successfully!", category);
-        return Response.status(200).entity(responseModel).build();
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            categoryRepositoryImpl.update(category);
+            RestResponse responseModel = new RestResponse("true", 200, "Data Updated Successfully!", category);
+            return Response.status(200).entity(responseModel).build();
+        } else {
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteCategory(@PathParam("id") long id) {
-        categoryRepositoryImpl.delete(id);
-        RestResponse responseModel = new RestResponse("true", 202, "Data Deleted Successfully!", null);
-        return Response.status(202).entity(responseModel).build();
+        User loggedInUser = getLoggedInUser();
+        if (loggedInUser != null) {
+            categoryRepositoryImpl.delete(id);
+            RestResponse responseModel = new RestResponse("true", 202, "Data Deleted Successfully!", null);
+            return Response.status(202).entity(responseModel).build();
+        } else {
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 }

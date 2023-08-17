@@ -175,7 +175,7 @@ public class IncomeController extends AbstractMessageController implements Seria
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
         .getExternalContext().getRequest();
        
-        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");        
         categoryList=categoryRepositoryImpl.findByCategoryType(incomeUser,CategoryType.INCOME);
 
     }
@@ -319,9 +319,9 @@ public class IncomeController extends AbstractMessageController implements Seria
     }
 
     public String getHeader() {
+        
         if (income.getId() == 0 && ct.equals(CategoryType.INCOME)) {
             return "Add Income";
-
         } else if (income.getId() == 0 && ct.equals(CategoryType.EXPENSE)) {
             return "Add Expense";
         } else if (income.getId() != 0 && ct.equals(CategoryType.INCOME)) {

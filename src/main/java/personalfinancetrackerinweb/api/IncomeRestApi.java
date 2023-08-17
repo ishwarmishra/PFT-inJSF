@@ -22,30 +22,29 @@ import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class IncomeRestApi implements Serializable {
+public class IncomeRestApi extends BaseRestApi implements Serializable {
 
     @Inject
     private IncomeRepositoryImpl incomeRepositoryImpl;
-    
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
+        
     @GET
     public Response getAllIncomes() {
-        List<Income> incomes = incomeRepositoryImpl.findByUser(1);
+        User loggedInUser= getLoggedInUser();
+        if(loggedInUser!=null){
+        List<Income> incomes = incomeRepositoryImpl.findByUser(loggedInUser.getId());
         RestResponse responseModel = new RestResponse("true",200, "Success", incomes);
         return Response.status(200).entity(responseModel).build();
+    }else{
+            RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response getIncomeById(@PathParam("id") long id) {
+        User loggedInUser= getLoggedInUser();
+        if(loggedInUser!=null){
         Income income = incomeRepositoryImpl.getById(id);
         if (income != null) {
             RestResponse responseModel = new RestResponse("true",200, "Success", income);
@@ -54,30 +53,51 @@ public class IncomeRestApi implements Serializable {
             RestResponse responseModel = new RestResponse("false",404, "Income not found", null);
             return Response.status(404).entity(responseModel).build();
         }
+        }else{
+                RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
+        
     }
 
     @POST
     public Response createIncome(Income income) {
+        User loggedInUser=getLoggedInUser();
+        if(loggedInUser!=null){
         incomeRepositoryImpl.create(income);
         RestResponse responseModel = new RestResponse("true",201, "Data Saved successfully!", income);
         return Response.status(201).entity(responseModel).build();
+    }else{
+        RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @PUT
     @Path("/{id}")
     public Response updateIncome(@PathParam("id") long id, Income income) {
+        User loggedInUser=getLoggedInUser();
+        if(loggedInUser!=null){
         incomeRepositoryImpl.update(income);
-        
         RestResponse responseModel = new RestResponse("true",200, "Data Updated Successfully!", income);
         return Response.status(200).entity(responseModel).build();
+    }else{
+        RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 
     @DELETE
     @Path("/{id}")
-    
     public Response deleteIncome(@PathParam("id") long id) {
+        User loggedInUser=getLoggedInUser();
+        if(loggedInUser!=null){
         incomeRepositoryImpl.delete(id);
         RestResponse responseModel = new RestResponse("true",202, "Data Deleted Successfully!", null);
         return Response.status(202).entity(responseModel).build();
+    }else{
+        RestResponse responseModel = new RestResponse("false", 401, "Unauthorized", null);
+            return Response.status(401).entity(responseModel).build();
+        }
     }
 }
