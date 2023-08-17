@@ -7,6 +7,7 @@ public interface GenericRepositoryInterface<T> {
     void delete(long id);
     T update(T data);
     T getById(long id);
+    
     List<T> findByUser(long id);
        
 }

@@ -14,17 +14,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import personalfinancetrackerinweb.model.Budget;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
 
 
 @Path("/budgetSource")
+
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BudgetRestApi implements Serializable {
 
     @Inject
     private BudgetRepositoryImpl budgetRepositoryImpl;
+    
+    private User user;
 
+    public User getUser() {
+        return user;
+    }
+    
     @GET
     public Response getAllBudgets() {
         List<Budget> budgets = budgetRepositoryImpl.findByUser(1);

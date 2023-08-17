@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import personalfinancetrackerinweb.model.Income;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.IncomeRepositoryImpl;
 
 
@@ -25,7 +26,16 @@ public class IncomeRestApi implements Serializable {
 
     @Inject
     private IncomeRepositoryImpl incomeRepositoryImpl;
+    
+    private User user;
 
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     @GET
     public Response getAllIncomes() {
         List<Income> incomes = incomeRepositoryImpl.findByUser(1);

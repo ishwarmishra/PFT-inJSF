@@ -8,9 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -28,7 +26,6 @@ import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.BarChartModel;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
-import static personalfinancetrackerinweb.model.CategoryType.INCOME;
 
 import personalfinancetrackerinweb.model.Income;
 import personalfinancetrackerinweb.model.User;
@@ -53,23 +50,13 @@ public class ExpenseIncomeChartController implements Serializable {
 
     private Income income;
 
-    private List<Income> incomeList;
-
-    private List<Category> categoryList;
-    private List<Category> incmList;
-
-    public List<Category> getIncmList() {
-        return incmList;
-    }
-
-    public void setIncmList(List<Category> incmList) {
-        this.incmList = incmList;
-    }
+    private List<Income> incomeExpenseList;
+    private List<Category> expenseList;
+    private List<Category> incomeList;
+    private String chartType;
 
     private LineChartModel lineChartModel;
     private BarChartModel barChartModel;
-
-    private String chartType;
 
     private Map<Integer, BigDecimal> incomeAmountsMap = new HashMap<>();
     private Map<Integer, BigDecimal> expenseAmountsMap = new HashMap<>();
@@ -106,20 +93,44 @@ public class ExpenseIncomeChartController implements Serializable {
         this.user = user;
     }
 
-    public List<Income> getIncomeList() {
+    public Income getIncome() {
+        return income;
+    }
+
+    public void setIncome(Income income) {
+        this.income = income;
+    }
+
+    public List<Income> getIncomeExpenseList() {
+        return incomeExpenseList;
+    }
+
+    public void setIncomeExpenseList(List<Income> incomeExpenseList) {
+        this.incomeExpenseList = incomeExpenseList;
+    }
+
+    public List<Category> getExpenseList() {
+        return expenseList;
+    }
+
+    public void setExpenseList(List<Category> expenseList) {
+        this.expenseList = expenseList;
+    }
+
+    public List<Category> getIncomeList() {
         return incomeList;
     }
 
-    public void setIncomeList(List<Income> incomeList) {
+    public void setIncomeList(List<Category> incomeList) {
         this.incomeList = incomeList;
     }
 
-    public List<Category> getCategoryList() {
-        return categoryList;
+    public String getChartType() {
+        return chartType;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+    public void setChartType(String chartType) {
+        this.chartType = chartType;
     }
 
     public LineChartModel getLineChartModel() {
@@ -138,44 +149,41 @@ public class ExpenseIncomeChartController implements Serializable {
         this.barChartModel = barChartModel;
     }
 
-    public String getChartType() {
-        return chartType;
+    public Map<Integer, BigDecimal> getIncomeAmountsMap() {
+        return incomeAmountsMap;
     }
 
-    public void setChartType(String chartType) {
-        this.chartType = chartType;
+    public void setIncomeAmountsMap(Map<Integer, BigDecimal> incomeAmountsMap) {
+        this.incomeAmountsMap = incomeAmountsMap;
     }
 
-    public Income getIncome() {
-        return income;
+    public Map<Integer, BigDecimal> getExpenseAmountsMap() {
+        return expenseAmountsMap;
     }
 
-    public void setIncome(Income income) {
-        this.income = income;
+    public void setExpenseAmountsMap(Map<Integer, BigDecimal> expenseAmountsMap) {
+        this.expenseAmountsMap = expenseAmountsMap;
     }
 
+    
     @PostConstruct
     public void init() {
         income = new Income();
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
+        .getExternalContext().getRequest();
         User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
        
 
-        categoryList = categoryRepositoryImpl.findByCategoryType(incomeUser, CategoryType.EXPENSE);
-        incmList = categoryRepositoryImpl.findByCategoryType(incomeUser, INCOME);
+        expenseList = categoryRepositoryImpl.findByCategoryType(incomeUser, CategoryType.EXPENSE);
+        incomeList = categoryRepositoryImpl.findByCategoryType(incomeUser, CategoryType.INCOME);
         
-        incomeList = incomeRepositoryImpl.findByUser(incomeUser.getId());
-                
-
+        incomeExpenseList = incomeRepositoryImpl.findByUser(incomeUser.getId());
         createChartModels();
     }
-
     public void createChartModels() {
         createLineChartModel();
         createBarChartModel();
     }
-
     private void createLineChartModel() {
         lineChartModel = new LineChartModel();
 
@@ -185,17 +193,14 @@ public class ExpenseIncomeChartController implements Serializable {
             createMonthlyLineChartModel();
         }
     }
-
     private void createBarChartModel() {
         barChartModel = new BarChartModel();
-
         if (chartType != null && chartType.equals("weekly")) {
             createWeeklyBarChartModel();
         } else {
             createMonthlyBarChartModel();
         }
     }
-
     private void createWeeklyLineChartModel() {
         LineChartSeries incomeSeries = new LineChartSeries();
         incomeSeries.setLabel("Income");
@@ -206,8 +211,8 @@ public class ExpenseIncomeChartController implements Serializable {
         Map<Integer, BigDecimal> incomeWeeklyAmounts = new HashMap<>();
         Map<Integer, BigDecimal> expenseWeeklyAmounts = new HashMap<>();
 
-        for (Category incomeCategory : incmList) {
-            for (Income income : incomeList) {
+        for (Category incomeCategory : incomeList) {
+            for (Income income : incomeExpenseList) {
                 if (income.getCategory().equals(incomeCategory)) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(income.getDate());
@@ -220,8 +225,8 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        for (Category expenseCategory : categoryList) {
-            for (Income expense : incomeList) {
+        for (Category expenseCategory : expenseList) {
+            for (Income expense : incomeExpenseList) {
                 if (expense.getCategory().equals(expenseCategory)) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(expense.getDate());
@@ -234,7 +239,6 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        // Populate the chart series with calculated amounts
         for (Integer week : incomeWeeklyAmounts.keySet()) {
             incomeSeries.set("Week " + week, incomeWeeklyAmounts.get(week));
         }
@@ -242,7 +246,6 @@ public class ExpenseIncomeChartController implements Serializable {
         for (Integer week : expenseWeeklyAmounts.keySet()) {
             expenseSeries.set("Week " + week, expenseWeeklyAmounts.get(week));
         }
-
         lineChartModel.addSeries(incomeSeries);
         lineChartModel.addSeries(expenseSeries);
 
@@ -256,7 +259,6 @@ public class ExpenseIncomeChartController implements Serializable {
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
     }
-
     private void createMonthlyLineChartModel() {
         LineChartSeries incomeSeries = new LineChartSeries();
         incomeSeries.setLabel("Income");
@@ -267,8 +269,8 @@ public class ExpenseIncomeChartController implements Serializable {
         Map<String, BigDecimal> incomeMonthlyAmounts = new HashMap<>();
         Map<String, BigDecimal> expenseMonthlyAmounts = new HashMap<>();
 
-        for (Category incomeCategory : incmList) {
-            for (Income income : incomeList) {
+        for (Category incomeCategory : incomeList) {
+            for (Income income : incomeExpenseList) {
                 if (income.getCategory().equals(incomeCategory)) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = incomeMonthlyAmounts.getOrDefault(month, BigDecimal.ZERO);
@@ -278,8 +280,8 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        for (Category expenseCategory : categoryList) {
-            for (Income expense : incomeList) {
+        for (Category expenseCategory : expenseList) {
+            for (Income expense : incomeExpenseList) {
                 if (expense.getCategory().equals(expenseCategory)) {
                     String month = getMonthFromDate(expense.getDate());
                     BigDecimal amount = expenseMonthlyAmounts.getOrDefault(month, BigDecimal.ZERO);
@@ -289,7 +291,6 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        // Populate the chart series with calculated amounts
         for (String month : incomeMonthlyAmounts.keySet()) {
             incomeSeries.set(month, incomeMonthlyAmounts.get(month));
         }
@@ -298,11 +299,9 @@ public class ExpenseIncomeChartController implements Serializable {
             expenseSeries.set(month, expenseMonthlyAmounts.get(month));
         }
 
-        // Add the series to the chart model
         lineChartModel.addSeries(incomeSeries);
         lineChartModel.addSeries(expenseSeries);
 
-        // Configure other chart properties as needed
         lineChartModel.setTitle("Income vs Expense Report (Monthly)");
         lineChartModel.setLegendPosition("ne");
 
@@ -313,7 +312,6 @@ public class ExpenseIncomeChartController implements Serializable {
         yAxis.setLabel("Amount");
         yAxis.setMin(0);
     }
-
     private void createWeeklyBarChartModel() {
         ChartSeries incomeSeries = new ChartSeries();
         incomeSeries.setLabel("Income");
@@ -324,8 +322,8 @@ public class ExpenseIncomeChartController implements Serializable {
         Map<Integer, BigDecimal> incomeWeeklyAmounts = new HashMap<>();
         Map<Integer, BigDecimal> expenseWeeklyAmounts = new HashMap<>();
 
-        for (Category incomeCategory : incmList) {
-            for (Income income : incomeList) {
+        for (Category incomeCategory : incomeList) {
+            for (Income income : incomeExpenseList) {
                 if (income.getCategory().equals(incomeCategory)) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(income.getDate());
@@ -338,8 +336,8 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        for (Category expenseCategory : categoryList) {
-            for (Income expense : incomeList) {
+        for (Category expenseCategory : expenseList) {
+            for (Income expense : incomeExpenseList) {
                 if (expense.getCategory().equals(expenseCategory)) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(expense.getDate());
@@ -352,7 +350,6 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        // Populate the chart series with calculated amounts
         for (Integer week : incomeWeeklyAmounts.keySet()) {
             incomeSeries.set("Week " + week, incomeWeeklyAmounts.get(week));
         }
@@ -360,12 +357,9 @@ public class ExpenseIncomeChartController implements Serializable {
         for (Integer week : expenseWeeklyAmounts.keySet()) {
             expenseSeries.set("Week " + week, expenseWeeklyAmounts.get(week));
         }
-
-        // Add the series to the chart model
         barChartModel.addSeries(incomeSeries);
         barChartModel.addSeries(expenseSeries);
 
-        // Configure other chart properties as needed
         barChartModel.setTitle("Income vs Expense Report (Weekly)");
         barChartModel.setLegendPosition("ne");
 
@@ -387,8 +381,8 @@ public class ExpenseIncomeChartController implements Serializable {
         Map<String, BigDecimal> incomeMonthlyAmounts = new HashMap<>();
         Map<String, BigDecimal> expenseMonthlyAmounts = new HashMap<>();
 
-        for (Category incomeCategory : incmList) {
-            for (Income income : incomeList) {
+        for (Category incomeCategory : incomeList) {
+            for (Income income : incomeExpenseList) {
                 if (income.getCategory().equals(incomeCategory)) {
                     String month = getMonthFromDate(income.getDate());
                     BigDecimal amount = incomeMonthlyAmounts.getOrDefault(month, BigDecimal.ZERO);
@@ -398,8 +392,8 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        for (Category expenseCategory : categoryList) {
-            for (Income expense : incomeList) {
+        for (Category expenseCategory : expenseList) {
+            for (Income expense : incomeExpenseList) {
                 if (expense.getCategory().equals(expenseCategory)) {
                     String month = getMonthFromDate(expense.getDate());
                     BigDecimal amount = expenseMonthlyAmounts.getOrDefault(month, BigDecimal.ZERO);
@@ -409,7 +403,6 @@ public class ExpenseIncomeChartController implements Serializable {
             }
         }
 
-        // Populate the chart series with calculated amounts
         for (String month : incomeMonthlyAmounts.keySet()) {
             incomeSeries.set(month, incomeMonthlyAmounts.get(month));
         }
@@ -418,11 +411,9 @@ public class ExpenseIncomeChartController implements Serializable {
             expenseSeries.set(month, expenseMonthlyAmounts.get(month));
         }
 
-        // Add the series to the chart model
         barChartModel.addSeries(incomeSeries);
         barChartModel.addSeries(expenseSeries);
 
-        // Configure other chart properties as needed
         barChartModel.setTitle("Income vs Expense Report (Monthly)");
         barChartModel.setLegendPosition("ne");
 

@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import personalfinancetrackerinweb.model.Category;
+import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
 @Path("/categorySource")
@@ -25,7 +26,17 @@ public class CategoryRestApi implements Serializable {
 
     @Inject
     private CategoryRepositoryImpl categoryRepositoryImpl;
+    
+    private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     @GET
     public Response getAllCategories() {
         List<Category> category = categoryRepositoryImpl.findByUser(1);
@@ -73,4 +84,3 @@ public class CategoryRestApi implements Serializable {
         return Response.status(202).entity(responseModel).build();
     }
 }
-

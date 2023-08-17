@@ -41,7 +41,6 @@ public class LoginApi {
             jwtToken = jwtUtils.generateJwtToken(returnedUser.getUsername());
             RestResponse responseModel = new RestResponse("true",200, "Login successfully!", jwtToken);
             return Response.status(201).entity(responseModel).build();
-            //return RestResponse.restResponse("true", "200", "Login Successful",jwtToken);
         } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Login failed. Invalid credentials.")

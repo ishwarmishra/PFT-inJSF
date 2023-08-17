@@ -10,15 +10,23 @@ public abstract class GenericAbstractRepository<T extends AbstractEntity> implem
 
     private Class<T> entityClass;
 
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+    
+
     public GenericAbstractRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
    @Override
     public List<T> findByUser(long userId) {
-        EntityManager entityManager = getEntityManager(); // Obtain the EntityManager here
-        return entityManager.createQuery(
-                "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.user.id = :userId", entityClass)
+        EntityManager entityManager = getEntityManager(); 
+        return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.user.id = :userId", entityClass)
                 .setParameter("userId", userId)
                 .getResultList();
     }

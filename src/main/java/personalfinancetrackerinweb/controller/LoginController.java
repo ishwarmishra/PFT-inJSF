@@ -62,9 +62,9 @@ public class LoginController extends AbstractMessageController implements Serial
         if (loggedInUser != null) { 
             
                 HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                        .getExternalContext().getRequest();               
-                       httpServletRequest.getSession().setAttribute("loggedInClient", loggedInUser);               
-                       userBean.setUser(loggedInUser);               
+                     .getExternalContext().getRequest();               
+                      httpServletRequest.getSession().setAttribute("loggedInClient", loggedInUser);               
+                      userBean.setUser(loggedInUser);               
             try {
                   FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
                 } 
