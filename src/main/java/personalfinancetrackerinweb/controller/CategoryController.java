@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import personalfinancetrackerinweb.model.Category;
+import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
 
@@ -43,19 +44,23 @@ public class CategoryController extends AbstractMessageController implements Ser
         this.categoryList = categoryList;
     }
 
+    public CategoryType[] getCategoryTypes() {
+        return CategoryType.values();
+    }
+
     @PostConstruct
     public void init() {
         category = new Category();
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-        .getExternalContext().getRequest();
+                .getExternalContext().getRequest();
         User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         category.setUser(user);
         findAll();
     }
 
     public void beforeCreate() {
-        
+
         category = new Category();
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
         .getExternalContext().getRequest();
@@ -68,8 +73,13 @@ public class CategoryController extends AbstractMessageController implements Ser
     }
 
     public void saveData() {
+        if (category == null) {
+            super.infoMessage("Category is null!");
+            return;
+        }
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-        .getExternalContext().getRequest();
+                .getExternalContext().getRequest();
 
         User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         category.setUser(user);
@@ -92,7 +102,7 @@ public class CategoryController extends AbstractMessageController implements Ser
 
     public void findAll() {
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-        .getExternalContext().getRequest();
+                .getExternalContext().getRequest();
         User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         categoryList = categoryRepositoryImpl.findByUser(user.getId());
     }

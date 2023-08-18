@@ -11,7 +11,7 @@
         <title>Budget</title>
     </h:head>
     <h:body>
-        
+
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml" />
         </h:form>
@@ -22,7 +22,9 @@
                 </p:outputLabel>                
             </f:facet>
             <f:facet name="right">
-                <p:commandButton icon="fa fa-plus" title="Add Budget" action="#{budgetController.beforeCreate()}" styleClass="button-style" update=":budgetForm budgetDialog"
+                <p:commandButton value="Add Budget"
+                                 action="#{budgetController.beforeCreate()}" 
+                                 update=":budgetForm budgetDialog"
                                  oncomplete="PF('budgetDialogVar').show();" />
             </f:facet>
         </p:toolbar>
@@ -34,33 +36,46 @@
         <p:dialog id="budgetDialog" widgetVar="budgetDialogVar" header=" #{budgetController.getHeader()}"  modal="true" resizable="false" width="500" height="400">
             <h:form id="budgetForm">
                 <h:panelGrid columns="2">
+
+                    <h:outputLabel id="categorylbl" for="category" value="Category:"/>
+                    <p:selectOneMenu id="category" value="#{budgetController.newBudget.category}" converter="categoryConverter"  required="true" >
+                        <f:selectItem itemLabel="Select Category name"/>
+                        <f:selectItems value="#{budgetController.categoryList}" 
+                                       var="item"
+                                       itemLabel="#{item.name}"
+                                       itemValue="#{item}"/> 
+                        <p:ajax process="@this"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel id="amountlbl" for="amount" value="Amount:"  />
+                    <p:inputText id="amount" value="#{budgetController.newBudget.amount}"  required="true">
+                        <p:ajax process="@this"/>
+                    </p:inputText>
+
+                    <h:outputLabel  id="fromlbl" for="fromDate" value="From Date: " />
+                    <p:calendar id="fromDate" value="#{budgetController.newBudget.fromDate}"  navigator="true" showOn="button" pattern="yyyy-MM-dd"  required="true">
+                        <p:ajax event="dateSelect" listener="#{budgetController.updateFromDate(event)}" process="@this"/>
+                    </p:calendar>
                     
-                        <h:outputLabel id="categorylbl" for="category" value="Category:"/>
-                        <p:selectOneMenu id="category" value="#{budgetController.budget.category}" converter="categoryConverter"  required="true" >
-                            <f:selectItem itemLabel="Select Category name"/>
-                            <f:selectItems value="#{budgetController.categoryList}" var="item" itemLabel="#{item.name}" itemValue="#{item}"/> 
-                        </p:selectOneMenu>
+                    <h:outputLabel  id="tolbl" for="toDate" value="To Date: " />
+                    <p:calendar id="toDate" value="#{budgetController.newBudget.toDate}" showOn="button" pattern="yyyy-MM-dd"  required="true">
+                        <p:ajax event="dateSelect" listener="#{budgetController.updateToDate(event)}" process="@this"/>
 
-                        <h:outputLabel id="amountlbl" for="amount" value="Amount:"  />
-                        <p:inputText id="amount" value="#{budgetController.budget.amount}"  required="true"/>
+                    </p:calendar>
 
-                        <h:outputLabel  id="fromlbl" for="fromDate" value="From Date: " />
-                        <p:calendar id="fromDate" value="#{budgetController.budget.fromDate}" showOn="button" pattern="yyyy-MM-dd"  required="true"/>
-                        
-                        
-                        <h:outputLabel  id="tolbl" for="toDate" value="To Date: " />
-                        <p:calendar id="toDate" value="#{budgetController.budget.toDate}" showOn="button" pattern="yyyy-MM-dd"  required="true"/>
-                                                                            
-                        <p:commandButton value="Save"
-                                        action="#{budgetController.saveData()}" 
-                                        styleClass="button-style"
-                                        update=":budgetListForm growl"
-                                        oncomplete="if (args &amp;&amp; !args.validationFailed)
-                                        PF('budgetDialogVar').hide();" />                         
-                    </h:panelGrid>
-             </h:form>
-           </p:dialog>
+                    <p:commandButton value="Save"
+                                     action="#{budgetController.saveData()}" 
+                                     styleClass="button-style" 
+                                     process="@this"
+                                     update=":budgetListForm budgetForm growl budgetDialog"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                     PF('budgetDialogVar').hide();" />                         
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
         <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
 
     </h:body>
 </html>
+
+

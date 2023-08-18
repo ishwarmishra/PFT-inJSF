@@ -21,7 +21,9 @@
                 </p:outputLabel>                
             </f:facet>
             <f:facet name="right">
-                <p:commandButton   icon="fa fa-plus" title="Add Category"   action="#{categoryController.beforeCreate()}"   update=":categoryForm categoryDialog"
+                <p:commandButton   icon="fa fa-plus" title="Add Category"  
+                                   action="#{categoryController.beforeCreate()}" 
+                                   update=":categoryForm categoryDialog"
                                    oncomplete="PF('categoryDialogVar').show();"  />
             </f:facet>
         </p:toolbar>
@@ -36,18 +38,21 @@
                 <h:panelGrid  columns="2">
 
                     <p:outputLabel id="namelbl" for="name" value="Category Name:" />
-                    <p:inputText id="name" value="#{categoryController.category.name}"  required="true" />
+                    <p:inputText id="name" value="#{categoryController.category.name}"  required="true" >
+                        <p:ajax process="@this"/>
+                    </p:inputText>
 
                     <p:outputLabel id="typelbl" for="type" value="Category Type:"  />                   
                     <h:selectOneMenu id="type" value="#{categoryController.category.categoryType}"  required="true">
-                        <f:selectItem itemLabel="Income" itemValue="INCOME" />
-                        <f:selectItem itemLabel="Expense" itemValue="EXPENSE" />
+                        <f:selectItems value="#{categoryController.getCategoryTypes()}" />
+                        <p:ajax process="@this"/>
                     </h:selectOneMenu>
 
                     <p:commandButton value="Save" 
                                      action="#{categoryController.saveData()}" 
                                      styleClass="button-style" 
-                                     update=":categoryListForm growl"
+                                     process="@this"
+                                     update=":categoryListForm categoryForm growl categoryDialog "
                                      oncomplete="if (args &amp;&amp; !args.validationFailed)
                                      PF('categoryDialogVar').hide();" />
 

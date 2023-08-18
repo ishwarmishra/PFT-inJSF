@@ -1,6 +1,7 @@
 package personalfinancetrackerinweb.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -14,6 +15,8 @@ import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.BudgetRepositoryImpl;
 import personalfinancetrackerinweb.repository.CategoryRepositoryImpl;
+import org.primefaces.event.SelectEvent;
+
 
 @Named
 @ViewScoped
@@ -27,11 +30,29 @@ public class BudgetController extends AbstractMessageController implements Seria
 
     private User user;
 
-    private Budget budget;
+    private Category category;
+
+    private Budget newBudget;
 
     private List<Budget> budgetList;
 
     private List<Category> categoryList;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Budget getNewBudget() {
+        return newBudget;
+    }
+
+    public void setNewBudget(Budget newBudget) {
+        this.newBudget = newBudget;
+    }
 
     public BudgetRepositoryImpl getBudgetRepositoryImpl() {
         return budgetRepositoryImpl;
@@ -47,10 +68,6 @@ public class BudgetController extends AbstractMessageController implements Seria
 
     public void setCategoryRepositoryImpl(CategoryRepositoryImpl categoryRepositoryImpl) {
         this.categoryRepositoryImpl = categoryRepositoryImpl;
-    }
-
-    public Budget getBudget() {
-        return budget;
     }
 
     public List<Budget> getBudgetList() {
@@ -79,51 +96,69 @@ public class BudgetController extends AbstractMessageController implements Seria
 
     @PostConstruct
     public void init() {
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-       .getExternalContext().getRequest();
+                .getExternalContext().getRequest();
         User managedUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
 
-        budget = new Budget();
+        newBudget = new Budget();
         categoryList = categoryRepositoryImpl.findByCategoryType(managedUser, CategoryType.EXPENSE);
-        System.out.println("");
         findAll();
+    }
+
+    public void updateFromDate(SelectEvent event) {
+        this.newBudget.setFromDate((Date)event.getObject());
+    }
+      public void updateToDate(SelectEvent event) {
+        this.newBudget.setToDate((Date)event.getObject());
     }
 
     public void beforeCreate() {
-        budget = new Budget();
-         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+
+        newBudget = new Budget();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
         User managedUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
-        budget.setUser(managedUser);
+        newBudget.setUser(managedUser);
 
-        
+        categoryList = categoryRepositoryImpl.findByCategoryType(managedUser, CategoryType.EXPENSE);
     }
 
     public void setBudget(Budget budget) {
-        this.budget = budget;
-
+        this.newBudget = budget;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+        User managedUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
+        newBudget.setUser(managedUser);
     }
-    
+
     public void saveData() {
+
+        if (newBudget == null) {
+            super.infoMessage("Budget is null!");
+            return;
+        }
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
         User managedUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
-        budget.setUser(managedUser);
+        newBudget.setUser(managedUser);
 
-        if (budget.getId() == 0) {
-            budgetRepositoryImpl.create(budget);
+        if (newBudget == null || newBudget.getCategory() == null) {
+            super.infoMessage("Budget or category is null!");
+            return;
+        }
+
+        if (newBudget.getId() == 0) {
+            budgetRepositoryImpl.create(newBudget);
             super.infoMessage("Budgeting done successfully!");
 
         } else {
-            budgetRepositoryImpl.update(budget);
+            budgetRepositoryImpl.update(newBudget);
             super.infoMessage("Budgeting update successfully!");
-
         }
-        budget = new Budget();
+        newBudget = new Budget();
         findAll();
-
     }
 
     public void deleteData(Budget budget) {
@@ -141,7 +176,7 @@ public class BudgetController extends AbstractMessageController implements Seria
     }
 
     public String getHeader() {
-        if (budget.getId() == 0) {
+        if (newBudget.getId() == 0) {
             return "Add Budget";
         } else {
             return "Update Budget";

@@ -72,7 +72,7 @@ public class SignupController extends AbstractMessageController implements Seria
     }
     public void deleteData(User user) {
         userRepository.delete(user.getId());//In AbstractGeneric Method
-        user = new User();
+        user = new  User();
         findAll();//After deletion new records of the singup is populates to 'incomeList'  
         super.warningMessage("Data deleted successfully!");
         return;
@@ -80,7 +80,7 @@ public class SignupController extends AbstractMessageController implements Seria
     } 
     
     public void findAll() {
-        userList = userRepository.findByUser(1);
+        userList = userRepository.findByUser(user.getId());
     }
 
 }

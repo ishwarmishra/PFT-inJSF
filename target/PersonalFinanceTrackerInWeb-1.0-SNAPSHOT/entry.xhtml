@@ -13,40 +13,42 @@
     <h:body>
         <h:form class="my-navbar">
             <ui:include src="topMenu.xhtml"/>
+
+            <h3>Entry </h3>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton  value="Add Income"
+                                      action="#{incomeController.beforeCreateIncome()}"
+                                      update=":incomeForm incomeDialog " 
+                                      oncomplete="PF('incomeDialogVar').show();"  />
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton  value="Add Expense"
+                                      action="#{incomeController.beforeCreateExpense()}" 
+                                      update=":incomeForm incomeDialog" 
+                                      oncomplete="PF('incomeDialogVar').show();" />
+                </f:facet>
+            </p:toolbar>
         </h:form>
 
-        <h3>Entry </h3>
-        <p:toolbar>
-            <f:facet name="left">
-                <p:commandButton  value="Add Income"
-                                  action="#{incomeController.beforeCreateIncome()}" 
-                                  update=":incomeForm incomeDialog"
-                                  oncomplete="PF('incomeDialogVar').show();"  />
-            </f:facet>
-            <f:facet name="right">
-                <p:commandButton  value="Add Expense"
-                                  action="#{incomeController.beforeCreateExpense()}" 
-                                  update=":incomeForm incomeDialog" 
-                                  oncomplete="PF('incomeDialogVar').show();" />
-            </f:facet>
-        </p:toolbar>
         <p:layoutUnit position="center">
             <h:form id="incomeListForm">
                 <ui:include src="entryReport.xhtml"/>
             </h:form>
         </p:layoutUnit>
-        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header=" #{incomeController.getHeader()}"  modal="true" resizable="false" width="500" height="400">
+        <p:dialog id="incomeDialog" widgetVar="incomeDialogVar" header=" #{incomeController.getHeader()}"  
+                  modal="true" resizable="false" width="500" height="400">
             <h:form id="incomeForm" >
 
                 <h:panelGrid columns="2">
                     <h:outputLabel  id="datelbl" for="date" value="Date:" />
-                    <p:calendar id="date" value="#{incomeController.income.date}" showOn="button" pattern="yyyy-MM-dd" required="true" />
+                    <p:calendar id="date" value="#{incomeController.newIncome.date}"  navigator="true" showOn="button" pattern="yyyy-MM-dd" required="true" />
 
                     <h:outputLabel id="amountlbl" for="amount" value="Amount:" />
-                    <p:inputText id="amount" value="#{incomeController.income.amount}" required="true"/>
+                    <p:inputText id="amount" value="#{incomeController.newIncome.amount}" required="true"/>
 
                     <h:outputLabel id="categorylbl" for="category" value="Category:" />
-                    <p:selectOneMenu id="category" value="#{incomeController.income.category}"  required="true" converter="categoryConverter"   >
+                    <p:selectOneMenu id="category" value="#{incomeController.newIncome.category}"  required="true" converter="categoryConverter"   >
                         <f:selectItem itemLabel="Select Category name" itemValue=""/>
                         <f:selectItems value="#{incomeController.categoryList}" 
                                        var="v"
@@ -55,13 +57,13 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel id="namelbl"  for="name" value="Remark:" />
-                    <p:inputText id="name"  value="#{incomeController.income.name}"  required="true" />
+                    <p:inputText id="name"  value="#{incomeController.newIncome.name}"  required="true" />
 
 
                     <p:commandButton value="Save"
-                                     action="#{incomeController.saveData()}" 
-                                     styleClass="button-style" 
-                                     update= ":incomeListForm growl "
+                                     actionListener="#{incomeController.saveData()}" 
+                                     styleClass="button-style"
+                                     update= ":incomeListForm incomeDialog incomeForm growl"
                                      oncomplete="if (args &amp;&amp; !args.validationFailed)
                                      PF('incomeDialogVar').hide();" />
                 </h:panelGrid>

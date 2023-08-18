@@ -17,7 +17,7 @@
                  paginator="true" paginatorPosition="bottom" rows="5"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  rowsPerPageTemplate="5,10,15">
-        <p:column headerText="S.N"  width="3%">
+        <p:column headerText="S.N"  width="3%" filterBy="#{rowIndex + 1}">
             <p:outputLabel> #{rowIndex + 1} </p:outputLabel> 
         </p:column>
         <p:column headerText="Date" filterBy="#{income.date}"  sortBy=" #{income.date}" width="20%">
@@ -39,8 +39,7 @@
                              action="#{incomeController.beforeEditExpense(income)}" 
                              styleClass="button-style"
                              update=":incomeForm incomeDialog"
-                             oncomplete="PF('incomeDialogVar').show();"  >
-                <f:setPropertyActionListener target="#{incomeController.income}" value="#{income}"/>
+                             oncomplete="PF('incomeDialogVar').show();" >
             </p:commandButton>
 
             <p:commandButton icon="fa fa-trash" 
