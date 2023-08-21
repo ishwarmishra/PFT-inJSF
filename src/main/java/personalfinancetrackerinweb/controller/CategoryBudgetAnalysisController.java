@@ -137,7 +137,7 @@ public class CategoryBudgetAnalysisController implements Serializable {
     public void init() {
         
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-        .getExternalContext().getRequest();
+       .getExternalContext().getRequest();
 
         User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         
@@ -151,6 +151,7 @@ public class CategoryBudgetAnalysisController implements Serializable {
 
         createBarChartModel();
     }
+    
     // For storing the budgete amount of the expense Category with in a month
     private List<Object[]> stockBudget;
 

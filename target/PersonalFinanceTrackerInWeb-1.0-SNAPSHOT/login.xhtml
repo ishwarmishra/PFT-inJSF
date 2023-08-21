@@ -42,14 +42,15 @@
     <h:body>
         <section class="login-page">
             <h:form id="loginForm" >
-                <p:growl id="messages" showDetail="true" />
+                <p:growl id="growl" showDetail="true" />
                 <section id="loginPanel" class="login-form">
                     <h2>Login</h2>
                     <p:inputText id="username" value="#{loginController.username}" required="true" placeholder="Username"/>
                     <p:password id="password" value="#{loginController.password}" required="true" placeholder="Password"/>
+                    
                     <p:commandButton value="Login" 
                                  action="#{loginController.userLogin()}" 
-                                 update="messages"
+                                 update="growl"
                                  styleClass="button-style"/>                                     
                     <p:commandButton value="Sign Up" 
                                  styleClass="button-style"
@@ -65,14 +66,15 @@
                         <p:inputText id="signupUsername" value="#{signupController.user.username}" required="true" placeholder="Username"/>
                         <p:password id="signupPassword" value="#{signupController.user.password}" required="true" placeholder="Password"/>
                         <p:inputText id="signupRole" value="#{signupController.user.roles}" required="true" placeholder="Roles"/>
+                        
                         <p:commandButton value="Submit" 
                                      action="#{signupController.saveData()}" 
-                                     update="messages"
+                                     update=":signupForm signupDialog  growl"
                                      styleClass="button-style" 
                                      oncomplete="if (args &amp;&amp; !args.validationFailed)
                                      PF('signupDialog').hide();"/>
                     </section>
-                    <p:growl id="messages" showDetail="true" />
+                    <p:growl id="growl" showDetail="true" />
                 </h:form>
             </p:dialog>
         </section>

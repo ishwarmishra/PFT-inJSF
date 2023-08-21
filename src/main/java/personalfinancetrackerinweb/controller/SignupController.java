@@ -9,16 +9,15 @@ import javax.inject.Named;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.UserRepository;
 
-
 @Named
 @ViewScoped
 public class SignupController extends AbstractMessageController implements Serializable {
 
     @Inject
     private UserRepository userRepository;
-    
+
     private User user;
-    
+
     private List<User> userList;
 
     public UserRepository getUserRepository() {
@@ -44,45 +43,45 @@ public class SignupController extends AbstractMessageController implements Seria
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         user = new User();
+        List<String> usernameList = userRepository.getUserList();
+        System.out.println("");
     }
+
     public void beforeCreate() {
         user = new User();
     }
 
-    
-     public void saveData() {
+    public void saveData() {
         if (user.getId() == 0) {
+            List<String> usernameList = userRepository.getUserList();
+
+            for (String username : usernameList) {
+                if (username != null) {
+                    if (username.equals(user.getUsername())) {
+                        super.warningMessage("Pleae Give the Unique username!");
+                        return;
+                    }
+                }
+            }
             userRepository.create(user);
-            user=new User();
-            super.infoMessage( "Sign Up successfully!");
-
-        } else {
-            userRepository.update(user);
-            user=new User();
-            super.infoMessage( " Password changed successfully!");
-
+            super.infoMessage("Sign Up Successfully!");
         }
-        user = new User();
-        findAll();
-
     }
     public void deleteData(User user) {
         userRepository.delete(user.getId());//In AbstractGeneric Method
-        user = new  User();
+        user = new User();
         findAll();//After deletion new records of the singup is populates to 'incomeList'  
         super.warningMessage("Data deleted successfully!");
         return;
-        
-    } 
-    
+
+    }
+
     public void findAll() {
         userList = userRepository.findByUser(user.getId());
     }
 
 }
-    
-    

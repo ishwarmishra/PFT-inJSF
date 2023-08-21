@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.generic.GenericAbstractRepository;
@@ -30,5 +31,18 @@ public class UserRepository extends  GenericAbstractRepository<User>{
         List<User> userList = query.getResultList();
         return userList.isEmpty() ? null : userList.get(0);
     }
+    public List<String> getUserList() {
+    List<String> result = null;
+    try {
+        Query query = entityManager.createQuery("SELECT u.username FROM User u ", String.class);
+        result = query.getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return result;
 }
+    
+   
+}
+
 
