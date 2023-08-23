@@ -23,7 +23,7 @@ public class UserRepository extends  GenericAbstractRepository<User>{
     
     public UserRepository (){
     super(User.class);
-    }
+    }    
     public User findByUsername(String username) {
         TypedQuery<User> query = entityManager.createQuery(
                 "SELECT u FROM User u WHERE u.username = :username", User.class
@@ -41,8 +41,6 @@ public class UserRepository extends  GenericAbstractRepository<User>{
     }
     return result;
 }
-    
-   
 }
 
 

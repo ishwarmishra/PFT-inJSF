@@ -151,7 +151,7 @@ public class IncomeController extends AbstractMessageController implements Seria
         newIncome = new Income();
         budget = new Budget();
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
+        .getExternalContext().getRequest();
         User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
 
         categoryList = categoryRepositoryImpl.findByCategoryType(incomeUser, ct);
@@ -208,7 +208,7 @@ public class IncomeController extends AbstractMessageController implements Seria
         }
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
+        .getExternalContext().getRequest();
 
         User incomeUser = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         newIncome.setUser(incomeUser);

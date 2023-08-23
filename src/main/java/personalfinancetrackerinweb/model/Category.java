@@ -56,7 +56,6 @@ public class Category extends AbstractEntity implements GenericEntityInterface, 
         this.user = user;
     }
     
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

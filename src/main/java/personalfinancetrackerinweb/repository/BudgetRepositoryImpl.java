@@ -68,7 +68,7 @@ public class BudgetRepositoryImpl extends GenericAbstractRepository<Budget> {
         result = query.getResultList();
     } catch (Exception e) {
         e.printStackTrace();
-     }
+    }
     return result;
     }
 }

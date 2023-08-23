@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
 
     <h:head>
         <title>Login Page</title>
@@ -47,15 +48,15 @@
                     <h2>Login</h2>
                     <p:inputText id="username" value="#{loginController.username}" required="true" placeholder="Username"/>
                     <p:password id="password" value="#{loginController.password}" required="true" placeholder="Password"/>
-                    
+
                     <p:commandButton value="Login" 
-                                 action="#{loginController.userLogin()}" 
-                                 update="growl"
-                                 styleClass="button-style"/>                                     
+                                     action="#{loginController.userLogin()}" 
+                                     update="growl"
+                                     styleClass="button-style"/>                                     
                     <p:commandButton value="Sign Up" 
-                                 styleClass="button-style"
-                                 oncomplete="PF('signupDialog').show()"
-                                 />
+                                     styleClass="button-style"
+                                     oncomplete="PF('signupDialog').show()"
+                                     />
                 </section>
             </h:form>
 
@@ -65,14 +66,19 @@
                         <h2>Sign Up</h2>
                         <p:inputText id="signupUsername" value="#{signupController.user.username}" required="true" placeholder="Username"/>
                         <p:password id="signupPassword" value="#{signupController.user.password}" required="true" placeholder="Password"/>
-                        <p:inputText id="signupRole" value="#{signupController.user.roles}" required="true" placeholder="Roles"/>
                         
+                        <p:outputLabel id="typelbl" for="type" value="Roles:"  />                   
+                        <h:selectOneMenu id="type" value="#{signupController.user.userRole}" required="true" >
+                            <f:selectItems value="#{signupController.getUserRoles()}" />
+                            <p:ajax process="@this"/>
+                        </h:selectOneMenu>
+
                         <p:commandButton value="Submit" 
-                                     action="#{signupController.saveData()}" 
-                                     update=":signupForm signupDialog  growl"
-                                     styleClass="button-style" 
-                                     oncomplete="if (args &amp;&amp; !args.validationFailed)
-                                     PF('signupDialog').hide();"/>
+                                         action="#{signupController.saveData()}" 
+                                         update=":signupForm signupDialog  growl"
+                                         styleClass="button-style" 
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed)
+                                         PF('signupDialog').hide();"/>
                     </section>
                     <p:growl id="growl" showDetail="true" />
                 </h:form>
@@ -80,3 +86,5 @@
         </section>
     </h:body>
 </html>
+
+

@@ -8,6 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import personalfinancetrackerinweb.acl.ActionType;
+import personalfinancetrackerinweb.acl.RequiredPermission;
+import personalfinancetrackerinweb.acl.ResourceType;
 import personalfinancetrackerinweb.model.Category;
 import personalfinancetrackerinweb.model.CategoryType;
 import personalfinancetrackerinweb.model.User;
@@ -53,7 +56,7 @@ public class CategoryController extends AbstractMessageController implements Ser
         category = new Category();
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
+        .getExternalContext().getRequest();
         User user = (User) httpServletRequest.getSession().getAttribute("loggedInClient");
         category.setUser(user);
         findAll();
@@ -71,7 +74,8 @@ public class CategoryController extends AbstractMessageController implements Ser
     public void setCategory(Category category) {
         this.category = category;
     }
-
+     
+    @RequiredPermission(action = ActionType.WRITE,resource = ResourceType.CATEGORY)
     public void saveData() {
         if (category == null) {
             super.infoMessage("Category is null!");

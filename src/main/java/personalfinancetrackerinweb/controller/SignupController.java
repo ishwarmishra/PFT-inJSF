@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import personalfinancetrackerinweb.acl.UserRole;
 import personalfinancetrackerinweb.model.User;
 import personalfinancetrackerinweb.repository.UserRepository;
 
@@ -43,12 +44,15 @@ public class SignupController extends AbstractMessageController implements Seria
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
+    
+     public UserRole[] getUserRoles() {
+        return UserRole.values();
+    }
 
     @PostConstruct
     public void init() {
         user = new User();
         List<String> usernameList = userRepository.getUserList();
-        System.out.println("");
     }
 
     public void beforeCreate() {
@@ -72,16 +76,14 @@ public class SignupController extends AbstractMessageController implements Seria
         }
     }
     public void deleteData(User user) {
-        userRepository.delete(user.getId());//In AbstractGeneric Method
+        userRepository.delete(user.getId());
         user = new User();
-        findAll();//After deletion new records of the singup is populates to 'incomeList'  
+        findAll();  
         super.warningMessage("Data deleted successfully!");
         return;
-
     }
 
     public void findAll() {
         userList = userRepository.findByUser(user.getId());
     }
-
 }
